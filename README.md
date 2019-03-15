@@ -1,6 +1,6 @@
-# Bullseye
+# Esquared
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.5.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli).
 
 ## Development server
 
@@ -29,11 +29,17 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 ## Steps to create Angular Build for dev environment
-cd /var/www/portaldev/bullseye
+cd <path>
 git pull
 ng build
 
 ## Steps to create Angular Build for live environment
-cd /var/www/portaltest/bullseye
+cd <path>
 git pull
 ng build
+
+## Steps to start loopback server dev environment
+cd <path>
+forever stop server/server.js
+git pull
+forever start server/server.js
