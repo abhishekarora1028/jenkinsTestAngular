@@ -1,0 +1,13 @@
+// Import variables
+@import '../variables';
+
+@import 'month-view';
+@import 'week-view';
+@import 'day-view';
+
+.inline-display{
+	display:inherit !important;
+}
+span .inline-display{
+	display:table-row-group !important;	
+}

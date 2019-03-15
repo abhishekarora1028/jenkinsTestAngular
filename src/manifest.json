@@ -1,0 +1,14 @@
+{
+    "dir": "ltr",
+    "lang": "tr",
+    "name": "Bullseye",
+    "scope": "/",
+    "display": "browser",
+    "start_url": "http://portaldev.bullseyesalesevents.com/",
+    "short_name": "Bullseye",
+    "theme_color": "transparent",
+    "description": "Bullseye",
+    "orientation": "any",
+    "background_color": "transparent",
+    "icons": []
+}

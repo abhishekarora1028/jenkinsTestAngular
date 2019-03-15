@@ -1,0 +1,54 @@
+<app-header></app-header>
+<div class="app-body">
+
+  <app-sidebar></app-sidebar>  
+  <div class="sidebar">
+    <nav class="sidebar-nav">
+      <ul class="nav">
+        <ng-template ngFor let-navitem [ngForOf]="navigation">
+          <li *ngIf="isDivider(navitem)" class="nav-divider"></li>
+          <ng-template [ngIf]="isTitle(navitem)">
+            <app-sidebar-nav-title [title]='navitem'></app-sidebar-nav-title>
+          </ng-template>
+          <ng-template [ngIf]="!isDivider(navitem)&&!isTitle(navitem)">
+            <app-sidebar-nav-item [item]='navitem'></app-sidebar-nav-item>
+          </ng-template>
+        </ng-template>        
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Main content -->
+  <main class="main">
+    <div class="preloader">
+      <div class="icon">
+        <div class="wBall" id="wBall_1">
+          <div class="wInnerBall"></div>
+        </div>
+        <div class="wBall" id="wBall_2">
+          <div class="wInnerBall"></div>
+        </div>
+        <div class="wBall" id="wBall_3">
+          <div class="wInnerBall"></div>
+        </div>
+        <div class="wBall" id="wBall_4">
+          <div class="wInnerBall"></div>
+        </div>
+        <div class="wBall" id="wBall_5">
+          <div class="wInnerBall"></div>
+        </div>
+      </div>
+  </div>
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+      <app-breadcrumbs></app-breadcrumbs>
+      <!-- Breadcrumb Menu-->
+      
+    </ol>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div><!-- /.conainer-fluid -->
+  </main>
+  <app-aside></app-aside>
+</div>
+<app-footer></app-footer>
