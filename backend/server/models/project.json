@@ -1,0 +1,20 @@
+{
+  "name": "project",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "members": {
+      "type": "belongsTo",
+      "model": "Member",
+      "foreignKey": "",
+      "through": "memberId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

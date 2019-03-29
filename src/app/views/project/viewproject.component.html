@@ -1,0 +1,89 @@
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 offset-md-3">
+            <h3>View Project</h3>
+            <div class="form-group">
+                <label for="client_name"><strong>Client Name: </strong></label>
+                {{model.client_name}} 
+            </div>
+            <div class="form-group">
+                <label for="email"><strong>Email: </strong></label>
+                {{model.email}} 
+            </div>
+            <div class="form-group">
+                <label for="project_name"><strong>Project Name (*): </strong></label>
+                {{model.project_name}} 
+            </div>
+            <div class="form-group">
+                <label for="budget"><strong>Project Budget: </strong></label>
+                ${{model.budget}} 
+            </div>
+            <div class="form-group">
+                <label for="client_name"><strong>Project Type: </strong></label>
+                {{model.project_type}} 
+            </div>
+            <div class="form-group">
+                <label for="project_time"><strong>Project Time: </strong></label>
+                {{model.project_time}} 
+            </div>
+            <div class="form-group" *ngIf="rate == 2 || model.project_type =='hourly'">
+                <label for="rate"><strong>Hourly Rate: </strong></label>
+                ${{model.rate}} 
+            </div>
+            <div class="form-group" *ngIf="rate == 1 || model.project_type =='fixed'">
+                <label for="rate"><strong>Fixed Rate: </strong></label>
+                ${{model.rate}} 
+            </div>
+            <div class="form-group">
+                <label for="description"><strong>Project Description: </strong></label>
+                {{model.description}} 
+            </div>
+            
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="checkData == 1" class="chart-wrapper" style="margin-top:40px;">
+          <div *ngIf="prodel == 1" class="text-error">
+                      Assign Project has deleted successfully!
+                      </div>
+                     
+          <div class="table-responsive"><table class="table table-striped"[mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+          <tr>
+            <th style="width: 20%">
+              <mfDefaultSorter by="projectname">Projects</mfDefaultSorter>
+            </th>
+            <th style="width: 30%">
+              <mfDefaultSorter by="">Contractors</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+              <mfDefaultSorter by="">Percentage</mfDefaultSorter>
+            </th>
+            <th style="width: 30%">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>{{item.projectname}}</td>
+            <td>{{item.contractorname}}</td>
+            <td class="text-right">{{item.percentage}}%</td>
+            <td><span><a class="btn btn-show-contact100" routerLink="/assignprojects/viewassignproject/{{item.id}}">View</a></span> <span><a class="btn btn-show-contact100" routerLink="/assignprojects/editassignproject/{{item.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delassignproject(item.id)"><i class="fa fa-trash"></i></button>
+                </span></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table></div>            
+          
+          </div>
+           <div *ngIf="checkData == 0">
+          No Data Found!
+          </div>
+</div>

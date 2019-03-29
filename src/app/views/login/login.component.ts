@@ -33,6 +33,12 @@ export class LoginComponent {
     private previousUrl: string;
 
 	constructor(@Inject(Http) private http: Http, @Inject(Router)private router:Router, toasterService: ToasterService) {
+  if(localStorage.getItem("currentUserId"))
+    {
+      this.router.navigate(['dashboard']);
+    }else{
+      this.router.navigate(['login']);
+    }
 	    this.data  = {
 	      loginname: '',
 	      password:''
@@ -61,7 +67,13 @@ export class LoginComponent {
             localStorage.setItem('currentUserRole', response.json().user.role_name);
     			localStorage.setItem('currentUser', response.json());
   				localStorage.setItem('currentUserId', response.json().user.id);
-          localStorage.setItem('currentUserName', response.json().user.name);
+          if(response.json().user.role_id == 1)
+          {
+            localStorage.setItem('currentUserName', response.json().user.name);
+          }else{
+            localStorage.setItem('currentUserName', response.json().user.fname+' '+response.json().user.lname);
+          }
+          
 
           if(response.json().user.active != 0) {
 

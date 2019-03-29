@@ -20,5 +20,13 @@
   "AccessToken": {
     "dataSource": "mongo",
     "public": true
+  },
+  "project": {
+    "dataSource": "mongo",
+    "public": true
+  },
+  "assignproject": {
+    "dataSource": "mongo",
+    "public": true
   }
 }
