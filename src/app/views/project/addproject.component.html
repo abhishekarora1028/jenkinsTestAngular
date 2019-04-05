@@ -64,23 +64,35 @@
                         </div>
                     </div>
                     <div class="form-group">
-                    <a (click)="addUser()">Add User</a>
-                    <div *ngFor="let user of users; let i = index">
+                    <div *ngFor="let user of data; let i = index; ">
                         <label>Contractors</label>
-                        <select class="form-control" [(ngModel)]="user.contractor_id" name="contractor_id"><option value="" [selected]="">--select contractor--</option><option *ngFor="let con of conData" [value]="con.id">{{con.fname+' '+con.lname}}</option></select>
+                        <select class="form-control" [(ngModel)]="data[i].id" name="member_id2[{{i}}]" disabled="disabled"><option value="">--select contractor--</option><option [value]="data[i].id">{{data[i].fullname}}</option></select>
                         <label>% Pay</label>
-                       <input type="text" class="form-control" [(ngModel)]="user.percentage" name="percentage" (keypress)="keyPress($event)" maxlength=3 style="width: 20%;" />
-                        <a (click)="removeUser(i)">Remove</a>
+                       <input type="text" class="form-control" [(ngModel)]="data[i].percentage" name="percentage2[{{i}}]" (keypress)="keyPress($event)" maxlength=3 style="width: 20%;" required />
+                        <a (click)="removeUser(i, 1, data[i].id)" style="cursor: pointer;">Remove</a>
+                    </div>
+                    </div>
+                    <div class="form-group">
+                    <a (click)="addUser()" style="cursor: pointer;">Assign Contractor</a>
+                    <div *ngFor="let user of users; let j = index">
+                        <label>Contractors</label>
+                        <select class="form-control" [(ngModel)]="users[j].member_id" name="member_id[{{j}}]"><option value="">--select contractor--</option><option *ngFor="let con of conData" [value]="con.id">{{con.fname+' '+con.lname}}</option></select>
+                        <label>% Pay</label>
+                       <input type="text" class="form-control" [(ngModel)]="users[j].percentage" name="percentage[{{j}}]" value="{{users[j].percentage}}" (keypress)="keyPress($event)" maxlength=3 style="width: 20%;" />
+                        <a (click)="removeUser(j)" style="cursor: pointer;">Remove</a>
                     </div>
                     </div>
                     <div *ngIf="proStatus == 1" class="text-error">
                       Project has save successfully!
                       </div>
-                      <div *ngIf="proEditStatus == 1" class="text-error">
+                      <div *ngIf="proEditStatus == 1 && checkUser==0" class="text-error">
                       Project has updated successfully!
                       </div>
                       <div *ngIf="proStatus == 2" class="text-error">
                       Error!
+                      </div>
+                      <div *ngIf="checkUser == 1" class="text-error">
+                      Contractor has already exist!
                       </div>
                     <div class="form-group">
                         <button class="btn btn-large btn-primary" type="submit" *ngIf="editparam.action == 'add'" [disabled] = "!f.form.valid" >Save</button>               

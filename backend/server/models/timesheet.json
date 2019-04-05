@@ -1,5 +1,5 @@
 {
-  "name": "assignproject",
+  "name": "timesheet",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {

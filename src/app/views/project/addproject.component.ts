@@ -22,6 +22,7 @@ export class AddprojectComponent {
   proStatus:any = 0;
   proEditStatus:any = 0;
   rate:any = 0;
+  checkUser:any = 0;
   conData:any;
   private data: any;
   model: any = {};
@@ -49,10 +50,24 @@ export class AddprojectComponent {
 
 	    	this.http.get(API_URL+'/projects/'+ this.editparam.id, options)
 	        .subscribe(response => {
-	        	//console.log(response.json());	
 	        	this.model = response.json();
 	        	this.editparam.action = "edit";
 		    });
+
+        let projectId = this.editparam.id;
+        let userId = localStorage.getItem("currentUserId");
+
+        this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"}]}}', options)
+          .subscribe(response => {
+            this.data = response.json();
+        for(let i=0; i<this.data.length; i++){
+            this.http.get(API_URL+'/Members/'+this.data[i].member_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
+            .subscribe(response => {      
+              this.data[i].fullname = response.json().fname+' '+response.json().lname; 
+              
+            });
+          }
+        });
         
   }else{
   	this.editparam = {
@@ -110,11 +125,24 @@ keyPress(event: any) {
 
 
 addUser(){
-    this.users.push({});//push empty object of type user
+    this.users.push({});
 }
 
-removeUser(i){
-    this.users.splice(i, 1);    
+removeUser(i, dcon, assignid){
+  if(dcon == 1)
+  { 
+      let options = new RequestOptions();
+            options.headers = new Headers();
+            options.headers.append('Content-Type', 'application/json');
+            options.headers.append('Accept', 'application/json');
+
+    this.http.delete(API_URL+'/assignprojects/'+assignid, options)
+                      .subscribe(response => {
+        this.data.splice(i, 1);               
+    });
+  }else{
+    this.users.splice(i, 1);
+  }
 }  
 
    onSubmit() {
@@ -123,12 +151,75 @@ removeUser(i){
    	  let options = new RequestOptions();
 	          options.headers = new Headers();
 	          options.headers.append('Content-Type', 'application/json');
-	          options.headers.append('Accept', 'application/json');
+	          options.headers.append('Accept', 'application/json');     
 
-			this.http.post(API_URL+'/projects/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', this.model,  options)
+     //this.proData.member_id    = this.model.member_id;       
+     this.proData.client_name    = this.model.client_name;
+     this.proData.email          = this.model.email;
+     this.proData.project_name   = this.model.project_name;
+     this.proData.budget         = this.model.budget;
+     this.proData.project_type   = this.model.project_type;
+     this.proData.rate           = this.model.rate;
+     this.proData.project_time   = this.model.project_time;
+     this.proData.description    = this.model.description;
+
+     if(this.users.length || this.data.length)
+     {
+        this.proData.assign  = 1;
+     }else{
+        this.proData.assign  = 0;
+     }
+      
+
+			this.http.post(API_URL+'/projects/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', this.proData,  options)
 	        .subscribe(data => {
 	      if(data)
 	      {
+          this.sData   = data.json();
+
+          if(this.data.length)
+          {
+
+               for(let i=0; i< this.data.length; i++ ) {
+                  let projectId             = this.editparam.id; 
+                  let memberId              = this.data[i].member_id;
+                  let assId                 = this.data[i].id;
+                  this.assData.percentage   = this.data[i].percentage; 
+
+                  this.http.post(API_URL+'/assignprojects/update?where=%7B%22id%22%3A%22'+assId+'%22%7D', this.assData,  options)
+                  .subscribe(data => {
+
+                  });  
+              }   
+          }
+
+          if(this.users.length)
+          {
+             
+             for(let i=0; i< this.users.length; i++ ) { 
+              this.assData.project_id    = this.editparam.id; 
+              this.assData.member_id     = this.users[i].member_id; 
+              this.assData.percentage    = this.users[i].percentage;  
+
+              this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+this.users[i].member_id+'"},{"project_id":"'+this.editparam.id+'"}]}}', options)
+            .subscribe(response => {      
+              
+              if(response.json().length)
+              {
+                this.checkUser = 1;
+              }else{
+                  this.http.post(API_URL+'/assignprojects?access_token='+localStorage.getItem('currentUserToken'), this.assData, options).subscribe(data => {
+
+                });
+                this.checkUser = 0;
+              }
+
+            });
+              
+              
+
+              }
+          }
 	        this.proEditStatus = 1;
 	      }else{
 	        this.proEditStatus = 2;
@@ -153,6 +244,13 @@ removeUser(i){
      this.proData.project_time = this.model.project_time;
      this.proData.description  = this.model.description;
 
+     if(this.users.length)
+     {
+        this.proData.assign  = 1;
+     }else{
+        this.proData.assign  = 0;
+     }
+
 	   this.http.post(API_URL+'/projects?access_token='+localStorage.getItem('currentUserToken'), this.proData, options).subscribe(data => {
 	      if(data)
 	      {
@@ -161,7 +259,7 @@ removeUser(i){
           {
              for(let i=0; i< this.users.length; i++ ) { 
               this.assData.project_id    = this.sData.id; 
-              this.assData.contractor_id = this.users[i].contractor_id; 
+              this.assData.member_id     = this.users[i].member_id; 
               this.assData.percentage    = this.users[i].percentage;  
               
               this.http.post(API_URL+'/assignprojects?access_token='+localStorage.getItem('currentUserToken'), this.assData, options).subscribe(data => {

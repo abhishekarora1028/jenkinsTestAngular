@@ -41,12 +41,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of mf.data">
+          <tr *ngFor="let item of mf.data;let i = index">
             <td>{{item.client_name}}</td>
             <td>{{item.project_name}}</td>
-            <td class="text-right">{{item.email}}</td>
+            <td class="text-left">{{item.email}}</td>
             <td>${{item.budget}}</td>
-            <td><span><a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item.id}}">View</a></span> <span><a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delproject(item.id)"><i class="fa fa-trash"></i></button>
+            <td><span><a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item.id}}">View</a></span> <span *ngIf="currentUserID == item.member_id || currentUserRole == 1"><a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item.id}}">Edit</a></span>  <span *ngIf="currentUserID == item.member_id || currentUserRole == 1"><button class="btn btn-small btn-outline-primary " (click) ="delproject(item.id,i)"><i class="fa fa-trash"></i></button>
                 </span></td>
           </tr>
         </tbody>

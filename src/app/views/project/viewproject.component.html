@@ -42,8 +42,17 @@
             
             </div>
         </div>
+        
+        <a *ngIf="disCon == 1" class="btn btn-show-contact100" routerLink="/projects/editproject/{{model.id}}">Assign Contractor</a>
     </div>
-
+    <div class="row mb-3" *ngIf="checkData == 1">
+        <div class="col-md-4 offset-md-8">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="filterQuery" placeholder="Search projects"/>
+          </div>
+        </div>
+      </div> 
     <div *ngIf="checkData == 1" class="chart-wrapper" style="margin-top:40px;">
           <div *ngIf="prodel == 1" class="text-error">
                       Assign Project has deleted successfully!
@@ -52,25 +61,20 @@
           <div class="table-responsive"><table class="table table-striped"[mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
         <thead>
           <tr>
-            <th style="width: 20%">
-              <mfDefaultSorter by="projectname">Projects</mfDefaultSorter>
+            <th style="width: 30%">
+              <mfDefaultSorter by="contractorname">Contractors</mfDefaultSorter>
             </th>
             <th style="width: 30%">
-              <mfDefaultSorter by="">Contractors</mfDefaultSorter>
-            </th>
-            <th style="width: 10%">
               <mfDefaultSorter by="">Percentage</mfDefaultSorter>
             </th>
-            <th style="width: 30%">Action</th>
+            <th style="width: 40%">Action</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of mf.data">
-            <td>{{item.projectname}}</td>
             <td>{{item.contractorname}}</td>
-            <td class="text-right">{{item.percentage}}%</td>
-            <td><span><a class="btn btn-show-contact100" routerLink="/assignprojects/viewassignproject/{{item.id}}">View</a></span> <span><a class="btn btn-show-contact100" routerLink="/assignprojects/editassignproject/{{item.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delassignproject(item.id)"><i class="fa fa-trash"></i></button>
-                </span></td>
+            <td class="text-left">{{item.percentage}}%</td>
+            <td><span><a class="btn btn-show-contact100" routerLink="/contractors/viewcontractor/{{item.member_id}}">View</a></span></td>
           </tr>
         </tbody>
         <tfoot>
@@ -84,6 +88,6 @@
           
           </div>
            <div *ngIf="checkData == 0">
-          No Data Found!
+          Assign contractor not Found!
           </div>
 </div>

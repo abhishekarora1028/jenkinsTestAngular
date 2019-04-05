@@ -44,13 +44,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of mf.data">
+          <tr *ngFor="let item of mf.data;let i = index">
             <td>{{item.fname}}</td>
             <td>{{item.lname}}</td>
             <td class="text-left">{{item.email}}</td>
             <td class="text-left">{{item.phone}}</td>
             <td class="text-left" style="text-transform: capitalize;">{{item.gender}}</td>
-            <td><span><a class="btn btn-show-contact100" routerLink="/contractors/viewcontractor/{{item.id}}">View</a></span><span><a class="btn btn-show-contact100" routerLink="/contractors/editcontractor/{{item.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delcontractor(item.id)"><i class="fa fa-trash"></i></button>
+            <td><span><a class="btn btn-show-contact100" routerLink="/contractors/viewcontractor/{{item.id}}">View</a></span><span><a class="btn btn-show-contact100" routerLink="/contractors/editcontractor/{{item.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delcontractor(item.id, index)"><i class="fa fa-trash"></i></button>
                 </span></td>
           </tr>
         </tbody>

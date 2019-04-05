@@ -12,7 +12,7 @@ module.exports = async function(app)
   {
     // used the models
   
-    const {Member, Project} = app.models;
+    const {Member, Project, Assignproject} = app.models;
 
 
 
@@ -88,11 +88,24 @@ module.exports = async function(app)
     Project.defineProperty('memberId', {
       type: ObjectID,
     });
+
+    Assignproject.defineProperty('projectId', {
+      type: ObjectID,
+    });
+
+    Assignproject.defineProperty('memberId', {
+      type: ObjectID,
+    });
     
 
     // Helps to get the include relationship
-    Project.belongsTo(Member);
-    Member.hasMany(Project, {foreignKey: 'memberId'});
+    //Project.belongsTo(Member);
+    //Assignproject.belongsTo(Project);
+    //Assignproject.belongsTo(Member);
+    //Member.hasMany(Project, {foreignKey: 'memberId'});
+    //Member.hasMany(Assignproject, {foreignKey: 'memberId'});
+    //Project.hasMany(Assignproject, {foreignKey: 'projectId'});
+
   }
   catch (roleCreationErr)
   {

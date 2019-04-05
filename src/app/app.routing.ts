@@ -85,6 +85,14 @@ export const routes: Routes = [
         loadChildren: './views/setting/setting.module#SettingModule'
       },
       {
+        path: 'timesheets',
+        component: FullLayoutComponent, 
+        data: {
+          nav:"timesheets"
+        },
+        loadChildren: './views/timesheet/timesheet.module#TimesheetModule'
+      },
+      {
         path: 'base',
         component: FullLayoutComponent,
         loadChildren: './views/base/base.module#BaseModule'

@@ -15,6 +15,7 @@ import { API_URL } from '../../globals';
 export class DashboardComponent {
 countProject: any;
 countContractor: any;
+userRoleId: any;
 checkData: any = 0;
 checkCont: any = 0;
 checkAssignPro: any = 0;
@@ -28,7 +29,7 @@ assignpro: any = [];
     {
       this.router.navigate(['login']);
     }
-
+    this.userRoleId = localStorage.getItem('currentUserRoleId');
     let options = new RequestOptions();
           options.headers = new Headers();
           options.headers.append('Content-Type', 'application/json');
@@ -88,11 +89,54 @@ assignpro: any = [];
         });
   }else{
   let userID = localStorage.getItem('currentUserId');
-    this.http.get(API_URL+'/projects?filter={"where":{"and":[{"user_id":"userID"}]}}', options)
+    this.http.get(API_URL+'/projects?filter={"where":{"member_id":"'+userID+'"}}', options)
           .subscribe(response => {
           this.countProject = response.json().length;
-          console.log(this.countProject)
         });
+
+    this.http.get(API_URL+'/Members/count?where=%7B%22role_id%22%3A%20%222%22%7D', options)
+          .subscribe(response => {
+          this.countContractor = response.json();
+          this.countContractor = this.countContractor.count;
+        });  
+        
+    this.http.get(API_URL+'/projects?filter={"where":{"and":[{"member_id":"'+userID+'"}]},"order":"id DESC"}', options)
+          .subscribe(response => {
+          if(response.json().length)
+          {
+            this.model = response.json();
+            this.checkData = 1;
+          }else{
+            this.checkData = 0;
+          }
+          
+        });  
+        
+    this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC", "limit":"10"}', options)
+          .subscribe(response => {
+          if(response.json().length)
+          {
+            this.data = response.json();
+            this.checkCont = 0;
+            this.checkCont = 1;
+          }else{
+            this.checkCont = 0;
+          }
+            
+        });    
+
+      this.http.get(API_URL+'/projects?filter={"where":{"and":[{"member_id":"'+userID+'"},{"assign":0}]},"order":"id DESC"}', options)
+          .subscribe(response => {
+          if(response.json().length)
+          {
+            this.assignpro = response.json();
+            this.checkAssignPro = 1;
+          }else{
+            this.checkAssignPro = 0;
+          }
+          
+        });       
+
   }        
 
         

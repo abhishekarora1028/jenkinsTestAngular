@@ -34,10 +34,16 @@ export class FullLayoutComponent {
 		  	});
 	  	}else{
 		  		this.navigation.push({
-		    	name: 'Projects',
-		    	url: '/projects',
-		    	icon: '',
-		  	});
+			    	name: 'Projects',
+			    	url: '/projects',
+			    	icon: '',
+		  		});
+
+		  		this.navigation.push({
+			    	name: 'Timesheets',
+			    	url: '/timesheets',
+			    	icon: '',
+		  		});
 	  	}
 
 	  	

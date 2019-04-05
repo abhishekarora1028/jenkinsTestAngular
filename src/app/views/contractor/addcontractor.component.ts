@@ -43,8 +43,7 @@ export class AddcontractorComponent {
 	        options.headers.append('Accept', 'application/json');
 
 	    	this.http.get(API_URL+'/members/'+ this.editparam.id, options)
-	        .subscribe(response => {
-	        	//console.log(response.json());	
+	        .subscribe(response => {	
 	        	this.model = response.json();
 	        	this.editparam.action = "edit";
 		    });
@@ -84,7 +83,6 @@ keyPress(event: any) {
             options.headers.append('Accept', 'application/json');
             
      this.http.get(API_URL+'/Members?filter=%7B%22where%22%3A%7B%22email%22%3A%20%22'+event+'%22%7D%7D', options).subscribe(data => {
-     //console.log(data._body)
         if(data.json().length)
         {
           this.uniqueEmail = 0;

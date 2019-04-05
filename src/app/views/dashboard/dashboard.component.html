@@ -97,13 +97,13 @@
                       </div>
           <div class="col-sm-12">
               <label for="client_name"><strong>Name</strong></label> 
-              <label for="action" style="margin-left: 100px;"><strong>Action</strong></label>   
+              <label for="action" style="margin-left: 100px;" *ngIf="userRoleId == 1"><strong>Action</strong></label>   
             </div>
           <div class="row" *ngFor="let item2 of data">
             <div class="col-sm-6" style="float:left;">
               <div>{{item2.fname}}{{item2.lname}}</div>          
             </div>
-            <div class="col-sm-6" style="float:left;">
+            <div class="col-sm-6" style="float:left;" *ngIf="userRoleId == 1">
                 <div><span><a class="btn btn-show-contact100" routerLink="/contractors/editcontractor/{{item2.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delcontractor(item2.id)"><i class="fa fa-trash"></i></button>
                 </span><br/></div>        
             </div>

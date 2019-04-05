@@ -11,8 +11,17 @@
     "members": {
       "type": "belongsTo",
       "model": "Member",
-      "foreignKey": "",
-      "through": "memberId"
+      "foreignKey": "memberId"
+    },
+    "assignprojects": {
+      "type": "hasMany",
+      "model": "Assignproject",
+      "foreignKey": "projectId"
+    },
+    "timesheets": {
+      "type": "hasMany",
+      "model": "Timesheet",
+      "foreignKey": "projectId"
     }
   },
   "acls": [],

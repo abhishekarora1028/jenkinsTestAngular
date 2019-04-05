@@ -44,7 +44,7 @@ public filterQuery = '';
    
   }
 
-  delcontractor(proid){
+  delcontractor(proid, index){
   if(proid)
   {
   	let options = new RequestOptions();
@@ -56,6 +56,9 @@ public filterQuery = '';
 	        .subscribe(response => {
 	        	this.prodel = 1;
 		    });	
+
+		    this.data.splice(index, 1); 
+		    setTimeout(function(){$('.text-error').fadeOut();}, 2000); 
   }
 
   }

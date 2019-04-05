@@ -20,10 +20,13 @@ import { API_URL } from '../../globals';
 export class ViewprojectComponent {
   editparam: any;
   proStatus:any = 0;
+  checkData:any = 0;
   proEditStatus:any = 0;
   rate:any = 0;
+  public disCon:any = 0;
   private data: any;
   model: any = {};
+  data2: any = {};
   assignProData: any = {};
   constructor(@Inject(Http) private http: Http, @Inject(Router)private router:Router,private route: ActivatedRoute) {
   if(!localStorage.getItem("currentUserId"))
@@ -47,8 +50,40 @@ export class ViewprojectComponent {
 	        .subscribe(response => {
 	        	//console.log(response.json());	
 	        	this.model = response.json();
+            if(this.model.member_id == localStorage.getItem("currentUserId"))
+            {
+              this.disCon = 1;
+            }else{
+              this.disCon = 0;
+            }
 	        	this.editparam.action = "edit"; 
 		    });
+
+        let projectID = this.editparam.id;
+        //console.log(projectID)
+
+        this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectID+'"}]},"order":"id DESC"}', options)
+          .subscribe(response => {
+          if(response.json().length)
+          {
+            this.data = response.json();
+            if(this.data.length)
+            {
+               for(let i=0; i< this.data.length; i++ ) { 
+
+                this.http.get(API_URL+'/Members/'+this.data[i].member_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
+                .subscribe(response => {      
+                  this.data[i].contractorname = response.json().fname+' '+response.json().lname;  
+                }); 
+              }
+            }
+            //console.log(this.data)
+            this.checkData = 1;
+          }else{
+            this.checkData = 0;
+          }
+          
+        });
   }else{
   	this.editparam = {
     		id: '',

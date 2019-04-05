@@ -9,16 +9,16 @@ const app = require('../server.js');
 var async = require('async');
 //const {ObjectId} = require('mongodb');
 
-module.exports = function(Assignproject) {
+module.exports = function(Timesheet) {
 
 	var ObjectID = require('mongodb').ObjectID
 
-	 Assignproject.observe('before save', function(ctx, next) {
-      const {Assignproject} = app.models;
-      console.log(ctx.instance)
+	 Timesheet.observe('before save', function(ctx, next) {
+	 	console.log(ctx.instance)
+      const {Timesheet} = app.models;
 
       if (ctx.instance) {
-      	ctx.instance.member_id = new ObjectID(ctx.instance.member_id),
+      	ctx.instance.member_id  = new ObjectID(ctx.instance.member_id),
       	ctx.instance.project_id = new ObjectID(ctx.instance.project_id)
       }
 
