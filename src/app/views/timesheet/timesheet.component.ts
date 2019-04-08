@@ -172,16 +172,15 @@ public filterQuery = '';
     if(ftime!=undefined)
     {
       
-      let fixedRate = 0, fixedHour = 0, fixedMin = 0, totalHours = 0;
+      let fixedRate, fixedHour = 0, fixedMin = 0, totalHours;
       if(ftime.split(':')[0] != '0')
       {
         let fixedRateH = 0, fixedRateM = 0;
-        fixedHour  = ftime.split(':')[0];
+        fixedHour  = parseInt(ftime.split(':')[0]);
         fixedMin   = (ftime.split(':')[1] / 60);
-        console.log(fixedHour+'========'+fixedMin+'======'+famt)
-        totalHours = (parseInt(fixedHour) + parseFloat(fixedMin));
-        console.log(totalHours)
-        return fixedRate  = (famt / totalHours).toFixed(0);
+        totalHours = (fixedHour + fixedMin);
+        fixedRate  = Math.round(famt / totalHours);
+        return fixedRate;
       }else{
         if(ftime.split(':')[1]=='00')
         {
@@ -363,15 +362,13 @@ onPickSheet(pickDate)
                   } 
                   
                 }
-                //console.log(this.data) 
+                
               this.checkData = 1;
             }else{
               this.checkData = 2;
             }
 
           }); 
-
-  //console.log(this.datesData)
 }
 
   onSubmit()
@@ -381,8 +378,6 @@ onPickSheet(pickDate)
             options.headers = new Headers();
             options.headers.append('Content-Type', 'application/json');
             options.headers.append('Accept', 'application/json');
-
-            //console.log(this.sheetStatus)
 
             if(this.sheetStatus=='add')
             {
@@ -394,10 +389,8 @@ onPickSheet(pickDate)
 
 
             	this.http.post(API_URL+'/timesheets?access_token='+localStorage.getItem('currentUserToken'), this.sheetData, options).subscribe(response => {
-            	//console.log(response.json())
 		          let keys = Object.keys(response.json());
 				  let len = keys.length;
-				  //console.log(len)
 		              if(len == 6)
 		              {
 		                //this.data = response.json();
@@ -408,7 +401,6 @@ onPickSheet(pickDate)
 
 		           });
             }else{
-            //console.log(this.sheetData)
             	this.sheetData.stime       = this.model.stime;
 	            this.sheetData.description = this.model.description;
 	            let cdate                  = localStorage.getItem("cDate");
@@ -425,9 +417,6 @@ onPickSheet(pickDate)
                   .subscribe(data => {
 
                   }); 
-
-            	//console.log(this.sheetStatus)
-            	//console.log(this.model)
             	this.addData = 2;
             }
 
