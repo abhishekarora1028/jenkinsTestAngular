@@ -17,7 +17,22 @@
     "dataSource": "mongo",
     "public": true
   },
+  "Email": {
+    "dataSource": "Email"
+  },
   "AccessToken": {
+    "dataSource": "mongo",
+    "public": true
+  },
+  "project": {
+    "dataSource": "mongo",
+    "public": true
+  },
+  "assignproject": {
+    "dataSource": "mongo",
+    "public": true
+  },
+  "timesheet": {
     "dataSource": "mongo",
     "public": true
   }

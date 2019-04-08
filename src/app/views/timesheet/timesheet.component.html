@@ -1,0 +1,125 @@
+  <style>
+.timesheet tr th, .timesheet tr td {
+  text-align:center;
+    vertical-align: middle !important;
+}
+.date {
+  font-weight:normal;
+}
+.placeholder {
+border-radius:50%;
+}
+.glyphicon {
+  cursor:pointer;
+}
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+ <!-- 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
+ <form name="form" (ngSubmit)="sf.form.valid && onSubmitSheettime()" #sf="ngForm" novalidate>
+ <div style="float: left;">
+<input type="text" class="form-control" name="sheettime" [(ngModel)]="model.sheettime" #sheettime="ngModel" readonly #sdp="bsDatepicker" bsDatepicker (ngModelChange)="onPickSheet($event)" [ngClass]="{ 'is-invalid': sf.submitted && sheettime.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required placeholder="Select Date" style="width: 200px;float: left;" />
+</div>
+</form>
+  <div class="table-responsive timesheet" style="background: #FFF; padding-top: 35px; ">
+  <table class="table table-striped text-center">
+    <thead>
+      <tr>
+        <th>&nbsp;</th>
+        <th>&nbsp;</th>
+        <th *ngFor="let itemdate of datesData;">{{itemdate.split('_')[0]}} <div class="date">{{itemdate.split('_')[1]}} {{itemdate.split('_')[2]}} </div></th>
+       <!--  <th>Tue <div class="date">Jan 15</div></th>
+        <th>Wed <div class="date">Jan 16</div></th>
+        <th>Thu <div class="date">Jan 17</div></th>
+        <th>Fri <div class="date">Jan 18</div></th>
+        <th>Sat <div class="date">Jan 19</div></th>
+        <th>Sun <div class="date">Jan 20</div></th> -->
+        <th><div class="date">Hours</div></th>
+        <th><div class="date">Rate</div></th>
+        <th><div class="date">Amount</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of data;let i = index">
+        <td><img src="https://via.placeholder.com/64/eee" class="img-responsive placeholder"/></td>
+        <td>{{item.projectname}}</td>
+        <td><span *ngIf="item.stime">{{item.stime.split('_')[0]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[0].split('_')[3],item.project_id,item.stime.split('_')[0],item.des.split('_')[0],item.tsId.split('_')[0]);dealerModal.show();" *ngIf="item.assign == 1"></span>
+        </td>
+        <td><span *ngIf="item.stime">{{item.stime.split('_')[1]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[1].split('_')[3],item.project_id,item.stime.split('_')[1],item.des.split('_')[1],item.tsId.split('_')[1]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
+
+        <td><span *ngIf="item.stime">{{item.stime.split('_')[2]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[2].split('_')[3],item.project_id,item.stime.split('_')[2],item.des.split('_')[2],item.tsId.split('_')[2]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
+
+        <td><span *ngIf="item.stime">{{item.stime.split('_')[3]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[3].split('_')[3],item.project_id,item.stime.split('_')[3],item.des.split('_')[3],item.tsId.split('_')[3]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
+
+        <td><span *ngIf="item.stime">{{item.stime.split('_')[4]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[4].split('_')[3],item.project_id,item.stime.split('_')[4],item.des.split('_')[4],item.tsId.split('_')[4]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
+
+        <td><span *ngIf="item.stime">{{item.stime.split('_')[5]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[5].split('_')[3],item.project_id,item.stime.split('_')[5],item.des.split('_')[5],item.tsId.split('_')[5]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
+
+        <td><span *ngIf="item.stime">{{item.stime.split('_')[6]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[6].split('_')[3],item.project_id,item.stime.split('_')[6],item.des.split('_')[6],item.tsId.split('_')[6]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
+        <!-- <td><span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#myModal"></span></td> -->
+        <td>{{item.totalStime}}</td>
+        <td *ngIf="item.type == 'fixed'">{{getFixedRate(item.amount,item.totalStime)}}$/h</td>
+        <td *ngIf="item.type == 'hourly'">{{item.hourlyRate}}$/h</td>
+        <td *ngIf="item.type == 'fixed' && item.totalStime != '0:00'">${{item.amount}}</td>
+        <td *ngIf="item.type == 'fixed' && item.totalStime == '0:00'">$0</td>
+        <td *ngIf="item.type == 'hourly'">${{getAmount(item.totalStime, item.hourlyRate)}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="checkData == 2">
+          No Timesheet Found!
+  </div>
+  </div>
+  
+ 
+
+<!-- Modal -->
+
+<div bsModal #dealerModal="bs-modal" class="modal fade dealer-detail-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-primary" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Time</h4>
+        <button type="button" class="close" (click)="resetTimeForm(); dealerModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class="row">
+            <div class="col-md-6 offset-md-3">
+            <form name="form" (ngSubmit)="f.form.valid && onSubmit();" #f="ngForm">
+                <div class="form-group">
+                        <label for="stime">Time</label>
+                        <input type="text" class="form-control" name="stime" [(ngModel)]="model.stime" #stime="ngModel" [ngClass]="{ 'is-invalid': f.submitted && stime.invalid }" value="{{cuStime}}" required />
+                        <div *ngIf="f.submitted && stime.invalid" class="invalid-feedback">
+                            <div *ngIf="stime.errors.required">Time is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input type="text" class="form-control" name="description" value="{{cuDes}}" [(ngModel)]="model.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required />
+                        <div *ngIf="f.submitted && description.invalid" class="invalid-feedback">
+                            <div *ngIf="description.errors.required">Description is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-large btn-primary" type="submit" [disabled] = "!f.form.valid && cuStime=='0'" >Save</button>
+                    </div>
+                    </form>
+               </div>
+
+               <div *ngIf="addData == 1" class="text-error">
+                Project Time has save successfully!
+                </div>
+                <div *ngIf="addData == 2" class="text-error">
+                Project Time has updated successfully!
+                </div>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="resetTimeForm(); dealerModal.hide()">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

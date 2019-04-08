@@ -18,7 +18,7 @@ import {
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'register',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
@@ -52,7 +52,6 @@ export const routes: Routes = [
       title: 'Home'
     },
     children: [
-      
       {
         path: 'dashboard',
         component: FullLayoutComponent, 
@@ -61,7 +60,38 @@ export const routes: Routes = [
         },
         loadChildren: './views/dashboard/dashboard.module#DashboardModule'
       },
-
+      {
+        path: 'projects',
+        component: FullLayoutComponent, 
+        data: {
+          nav:"projects"
+        },
+        loadChildren: './views/project/project.module#ProjectModule'
+      },
+      {
+        path: 'contractors',
+        component: FullLayoutComponent, 
+        data: {
+          nav:"contractors"
+        },
+        loadChildren: './views/contractor/contractor.module#ContractorModule'
+      },
+      {
+        path: 'settings',
+        component: FullLayoutComponent, 
+        data: {
+          nav:"settings"
+        },
+        loadChildren: './views/setting/setting.module#SettingModule'
+      },
+      {
+        path: 'timesheets',
+        component: FullLayoutComponent, 
+        data: {
+          nav:"timesheets"
+        },
+        loadChildren: './views/timesheet/timesheet.module#TimesheetModule'
+      },
       {
         path: 'base',
         component: FullLayoutComponent,

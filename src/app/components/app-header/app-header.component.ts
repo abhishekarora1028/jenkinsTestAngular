@@ -31,10 +31,12 @@ export class AppHeaderComponent {
 	private profilePath: any ='';
   	private countries: any;
   	private userRoleName: any;
+  	route: any;
+  	private conStatus: any = 0;
 	private userLoggedInName:any = localStorage.getItem('currentUserName');
 	
 	constructor( private router:Router, private http: Http) {
-
+		this.route = this.router.url;
 		this.userRoleName =  localStorage.getItem('currentUserRole');
 
 	    if(localStorage.getItem('currentUserRole') != null) { 
@@ -43,6 +45,11 @@ export class AppHeaderComponent {
 	   } else {   
 
 	   }
+
+	  if(localStorage.getItem('currentUserRoleId') == "2")
+       { 
+       		this.conStatus = "1";
+       }
   	}
 
 	logout() {

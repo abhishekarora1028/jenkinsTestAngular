@@ -1,0 +1,94 @@
+<div class="animated fadeIn" >
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-5">
+              <h4 class="card-title mb-0">Contractors List</h4>
+              <!-- <div class="small text-muted">November 2017</div> -->
+            </div><!--/.col-->
+          </div><!--/.row-->
+          <div class="row mb-3">
+        <div class="col-md-4 offset-md-8">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="filterQuery" placeholder="Search contractors"/>
+          </div>
+        </div>
+      </div> 
+          <div *ngIf="checkData == 1" class="chart-wrapper" style="margin-top:40px;">
+          <div *ngIf="prodel == 1" class="text-error">
+                      Contractor has deleted successfully!
+                      </div>
+
+           <div class="table-responsive"><table class="table table-striped"[mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+          <tr>
+            <th style="width: 20%">
+              <mfDefaultSorter by="fname">First Name</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="">Last Name</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">
+              <mfDefaultSorter by="">Email</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+              <mfDefaultSorter by="">Phone Number</mfDefaultSorter>
+            </th>
+            <th style="width: 10%">
+              <mfDefaultSorter by="">Gender</mfDefaultSorter>
+            </th>
+            <th style="width: 20%">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data;let i = index">
+            <td>{{item.fname}}</td>
+            <td>{{item.lname}}</td>
+            <td class="text-left">{{item.email}}</td>
+            <td class="text-left">{{item.phone}}</td>
+            <td class="text-left" style="text-transform: capitalize;">{{item.gender}}</td>
+            <td><span><a class="btn btn-show-contact100" routerLink="/contractors/viewcontractor/{{item.id}}">View</a></span><span><a class="btn btn-show-contact100" routerLink="/contractors/editcontractor/{{item.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delcontractor(item.id, index)"><i class="fa fa-trash"></i></button>
+                </span></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table></div>            
+          <!-- <div class="col-sm-12">
+              <label for="client_name"><strong>First Name</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+              <label for="email" style="margin-left: 100px;"><strong>Last Name</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+              <label for="email" style="margin-left: 100px;"><strong>Email</strong></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+              <label for="action" style="margin-left: 100px;"><strong>Action</strong></label>   
+            </div>
+          <div class="row" *ngFor="let item of model">
+            <div class="col-sm-2" style="float:left;">
+              <div>{{item.fname}}</div>          
+            </div>
+            <div class="col-sm-2" style="float:left;">
+              <div>{{item.lname}}</div>          
+            </div>
+            <div class="col-sm-3" style="float:left;">
+                <div>{{item.email}}</div>        
+            </div>
+            <div class="col-sm-2" style="float:left;">
+                <div><span><a class="btn btn-show-contact100" routerLink="/contractors/editcontractor/{{item.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delcontractor(item.id)"><i class="fa fa-trash"></i></button>
+                </span><br/></div>        
+            </div>
+            </div> -->
+          </div>
+          <div *ngIf="checkData == 0">
+          No Data Found!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!--/.card2-->
+</div>

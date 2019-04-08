@@ -18,6 +18,35 @@ export class FullLayoutComponent {
 	    	url: '/dashboard',
 	    	icon: 'icon-speedometer',
 	  	});
+
+	  	if(localStorage.getItem('currentUserRoleId') == '1')
+	  	{
+		  		this.navigation.push({
+		    	name: 'Projects',
+		    	url: '/projects',
+		    	icon: '',
+		  	});
+
+		  	this.navigation.push({
+		    	name: 'Contractors',
+		    	url: '/contractors',
+		    	icon: '',
+		  	});
+	  	}else{
+		  		this.navigation.push({
+			    	name: 'Projects',
+			    	url: '/projects',
+			    	icon: '',
+		  		});
+
+		  		this.navigation.push({
+			    	name: 'Timesheets',
+			    	url: '/timesheets',
+			    	icon: '',
+		  		});
+	  	}
+
+	  	
 	    
 		this.navigation = [...this.navigation];
   	}

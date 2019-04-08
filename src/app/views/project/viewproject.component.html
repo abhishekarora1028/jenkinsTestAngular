@@ -1,0 +1,93 @@
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 offset-md-3">
+            <h3>View Project</h3>
+            <div class="form-group">
+                <label for="client_name"><strong>Client Name: </strong></label>
+                {{model.client_name}} 
+            </div>
+            <div class="form-group">
+                <label for="email"><strong>Email: </strong></label>
+                {{model.email}} 
+            </div>
+            <div class="form-group">
+                <label for="project_name"><strong>Project Name (*): </strong></label>
+                {{model.project_name}} 
+            </div>
+            <div class="form-group">
+                <label for="budget"><strong>Project Budget: </strong></label>
+                ${{model.budget}} 
+            </div>
+            <div class="form-group">
+                <label for="client_name"><strong>Project Type: </strong></label>
+                {{model.project_type}} 
+            </div>
+            <div class="form-group">
+                <label for="project_time"><strong>Project Time: </strong></label>
+                {{model.project_time}} 
+            </div>
+            <div class="form-group" *ngIf="rate == 2 || model.project_type =='hourly'">
+                <label for="rate"><strong>Hourly Rate: </strong></label>
+                ${{model.rate}} 
+            </div>
+            <div class="form-group" *ngIf="rate == 1 || model.project_type =='fixed'">
+                <label for="rate"><strong>Fixed Rate: </strong></label>
+                ${{model.rate}} 
+            </div>
+            <div class="form-group">
+                <label for="description"><strong>Project Description: </strong></label>
+                {{model.description}} 
+            </div>
+            
+            </div>
+        </div>
+        
+        <a *ngIf="disCon == 1" class="btn btn-show-contact100" routerLink="/projects/editproject/{{model.id}}">Assign Contractor</a>
+    </div>
+    <div class="row mb-3" *ngIf="checkData == 1">
+        <div class="col-md-4 offset-md-8">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control" [(ngModel)]="filterQuery" placeholder="Search projects"/>
+          </div>
+        </div>
+      </div> 
+    <div *ngIf="checkData == 1" class="chart-wrapper" style="margin-top:40px;">
+          <div *ngIf="prodel == 1" class="text-error">
+                      Assign Project has deleted successfully!
+                      </div>
+                     
+          <div class="table-responsive"><table class="table table-striped"[mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
+        <thead>
+          <tr>
+            <th style="width: 30%">
+              <mfDefaultSorter by="contractorname">Contractors</mfDefaultSorter>
+            </th>
+            <th style="width: 30%">
+              <mfDefaultSorter by="">Percentage</mfDefaultSorter>
+            </th>
+            <th style="width: 40%">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of mf.data">
+            <td>{{item.contractorname}}</td>
+            <td class="text-left">{{item.percentage}}%</td>
+            <td><span><a class="btn btn-show-contact100" routerLink="/contractors/viewcontractor/{{item.member_id}}">View</a></span></td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+        </tfoot>
+      </table></div>            
+          
+          </div>
+           <div *ngIf="checkData == 0">
+          Assign contractor not Found!
+          </div>
+</div>

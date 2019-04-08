@@ -1,6 +1,6 @@
 {
-  "name": "Member",
-  "base": "User",
+  "name": "project",
+  "base": "PersistedModel",
   "idInjection": true,
   "options": {
     "validateUpsert": true
@@ -8,20 +8,20 @@
   "properties": {},
   "validations": [],
   "relations": {
+    "members": {
+      "type": "belongsTo",
+      "model": "Member",
+      "foreignKey": "memberId"
+    },
     "assignprojects": {
       "type": "hasMany",
       "model": "Assignproject",
-      "foreignKey": "memberId"
-    },
-    "projects": {
-      "type": "hasMany",
-      "model": "Project",
-      "foreignKey": "memberId"
+      "foreignKey": "projectId"
     },
     "timesheets": {
       "type": "hasMany",
       "model": "Timesheet",
-      "foreignKey": "memberId"
+      "foreignKey": "projectId"
     }
   },
   "acls": [],
