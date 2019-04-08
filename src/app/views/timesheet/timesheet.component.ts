@@ -165,73 +165,47 @@ public filterQuery = '';
   	this.formValues.resetForm();
   }
 
-  getFraction(decimal) {
 
-    if (!decimal) {
-        decimal = this;
-
-    }
-    let whole = String(decimal).split('.')[0];
-    decimal = parseFloat("." + String(decimal).split('.')[1]);
-    let num = "1";
-    for (let z = 0; z < String(decimal).length - 2; z++) {
-        num += "0";
-    }
-    decimal = decimal * num;
-    num = parseInt(num);
-    for (z = 2; z < decimal + 1; z++) {
-        if (decimal % z == 0 && num % z == 0) {
-            decimal = decimal / z;
-            num = num / z;
-            z = 2;
-        }
-    }
-    //if format of fraction is xx/xxx
-    if (decimal.toString().length == 2 && num.toString().length == 3) {
-        //reduce by removing trailing 0's
-        decimal = Math.round(Math.round(decimal) / 10);
-        num = Math.round(Math.round(num) / 10);
-    }
-    //if format of fraction is xx/xx
-    else if (decimal.toString().length == 2 && num.toString().length == 2) {
-        decimal = Math.round(decimal / 10);
-        num = Math.round(num / 10);
-    }
-    //get highest common factor to simplify
-    //var t = HCF(decimal, num);
-
-    //return the fraction after simplifying it
-    return ((whole == 0) ? "" : whole + " ") + decimal  + "/" + num ;
-}
 
   getFixedRate(famt, ftime)
   {
     if(ftime!=undefined)
     {
       
-      let fixedRate = 0, fixedHour = 0, fixedMin = 0, totalHours;
+      let fixedRate = 0, fixedHour = 0, fixedMin = 0, totalHours = 0;
       if(ftime.split(':')[0] != '0')
       {
         let fixedRateH = 0, fixedRateM = 0;
         fixedHour  = ftime.split(':')[0];
         fixedMin   = (ftime.split(':')[1] / 60);
-        totalHours = parseInt(fixedHour) + parseFloat(fixedMin);
-        fixedRate  = (famt / totalHours);
+        console.log(fixedHour+'========'+fixedMin+'======'+famt)
+        totalHours = (parseInt(fixedHour) + parseFloat(fixedMin));
+        console.log(totalHours)
+        return fixedRate  = (famt / totalHours).toFixed(0);
       }else{
         if(ftime.split(':')[1]=='00')
         {
           
           fixedRate = 0;
         }else{
+        let fixedMins;
+         if(ftime.split(':')[1] == '.5')
+         {
+            fixedMins = '1/2';
+         }
+         if(ftime.split(':')[1] == '.75')
+         {
+            fixedMins = '3/4';
+         }
           fixedHour = 0;
-          fixedMin   = this.getFraction(ftime.split(':')[1] / 60);
-          totalHours = fixedMin.split('/');
-          fixedRate = (famt * parseInt(totalHours[0]) / parseInt(totalHours[1]);
+          //fixedMin   = this.getFraction(ftime.split(':')[1] / 60);
+          fixedMins = fixedMins.split('/');
+          fixedRate = (famt * parseInt(fixedMins[0]) / parseInt(fixedMins[1]));
         }
         
-
+        return fixedRate;
       }
-      return parseInt(fixedRate);
+      
     }
   }
 
