@@ -42,10 +42,17 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="project_time">Project Time</label>
-                        <input type="text" class="form-control" name="project_time" [(ngModel)]="model.project_time" #project_time="ngModel" readonly #sdp="bsDatepicker" bsDatepicker [ngClass]="{ 'is-invalid': f.submitted && project_time.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required />
-                        <div *ngIf="f.submitted && project_time.invalid" class="invalid-feedback">
-                            <div *ngIf="project_time.errors.required">Project Time is required</div>
+                        <label for="sdate">Project Start Date</label>
+                        <input type="text" class="form-control" name="sdate" [(ngModel)]="model.sdate" #sdate="ngModel" readonly #sdp="bsDatepicker" bsDatepicker [ngClass]="{ 'is-invalid': f.submitted && sdate.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required />
+                        <div *ngIf="f.submitted && sdate.invalid" class="invalid-feedback">
+                            <div *ngIf="sdate.errors.required">Project Start Date is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="edate">Project End Date</label>
+                        <input type="text" class="form-control" name="edate" [(ngModel)]="model.edate" #edate="ngModel" readonly #sdp="bsDatepicker" bsDatepicker [ngClass]="{ 'is-invalid': f.submitted && edate.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required />
+                        <div *ngIf="f.submitted && edate.invalid" class="invalid-feedback">
+                            <div *ngIf="edate.errors.required">Project End Date is required</div>
                         </div>
                     </div>
                     <div class="form-group" *ngIf="rate == 2 || model.project_type =='hourly'">
@@ -76,9 +83,9 @@
                     <a (click)="addUser()" style="cursor: pointer;">Assign Contractor</a>
                     <div *ngFor="let user of users; let j = index">
                         <label>Contractors</label>
-                        <select class="form-control" [(ngModel)]="users[j].member_id" name="member_id[{{j}}]"><option value="">--select contractor--</option><option *ngFor="let con of conData" [value]="con.id">{{con.fname+' '+con.lname}}</option></select>
+                        <select class="form-control" [(ngModel)]="users[j].member_id" name="member_id[{{j}}]" required><option value="">--select contractor--</option><option *ngFor="let con of conData" [value]="con.id">{{con.fname+' '+con.lname}}</option></select>
                         <label>% Pay</label>
-                       <input type="text" class="form-control" [(ngModel)]="users[j].percentage" name="percentage[{{j}}]" value="{{users[j].percentage}}" (keypress)="keyPress($event)" maxlength=3 style="width: 20%;" />
+                       <input type="text" class="form-control" [(ngModel)]="users[j].percentage" name="percentage[{{j}}]" value="{{users[j].percentage}}" (keypress)="keyPress($event)" maxlength=3 style="width: 20%;" required />
                         <a (click)="removeUser(j)" style="cursor: pointer;">Remove</a>
                     </div>
                     </div>

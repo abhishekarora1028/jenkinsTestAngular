@@ -66,12 +66,12 @@
               <label for="client_name"><strong>Project Name</strong></label> 
               <label for="action" style="margin-left: 100px;"><strong>Action</strong></label>   
             </div>
-          <div class="row" *ngFor="let item of model">
+          <div class="row" *ngFor="let item of model" style="margin-top: 10px;">
             <div class="col-sm-3" style="float:left;">
               <div>{{item.project_name}}</div>          
             </div>
             <div class="col-sm-3" style="float:left;">
-                <div><span><a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delproject(item.id)"><i class="fa fa-trash"></i></button>
+                <div><span><a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item.id}}">View</a></span><span><a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delproject(item.id)"><i class="fa fa-trash"></i></button>
                 </span><br/></div>        
             </div>
             </div>
@@ -100,11 +100,11 @@
               <label for="action" style="margin-left: 100px;" *ngIf="userRoleId == 1"><strong>Action</strong></label>   
             </div>
           <div class="row" *ngFor="let item2 of data">
-            <div class="col-sm-6" style="float:left;">
+            <div class="col-sm-4" style="float:left;">
               <div>{{item2.fname}}{{item2.lname}}</div>          
             </div>
-            <div class="col-sm-6" style="float:left;" *ngIf="userRoleId == 1">
-                <div><span><a class="btn btn-show-contact100" routerLink="/contractors/editcontractor/{{item2.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delcontractor(item2.id)"><i class="fa fa-trash"></i></button>
+            <div class="col-sm-8" style="float:left;" *ngIf="userRoleId == 1">
+                <div><span><a class="btn btn-show-contact100" routerLink="/projects/viewcontractor/{{item2.id}}">View</a></span><span><a class="btn btn-show-contact100" routerLink="/contractors/editcontractor/{{item2.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delcontractor(item2.id)"><i class="fa fa-trash"></i></button>
                 </span><br/></div>        
             </div>
             </div>
@@ -136,12 +136,14 @@
               <label for="action" style="margin-left: 100px;"><strong>Action</strong></label>   
             </div>
           <div class="row" *ngFor="let item3 of assignpro">
-            <div class="col-sm-3" style="float:left;">
+          <div *ngIf="item3.unass == '0'" style="width: 55%;">
+            <div class="col-sm-4" style="float:left;">
               <div>{{item3.project_name}}</div>          
             </div>
-            <div class="col-sm-3" style="float:left;">
-                <div><span><a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item3.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delproject(item3.id)"><i class="fa fa-trash"></i></button>
+            <div class="col-sm-4" style="float:left;">
+                <div><span><a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item3.id}}">View</a></span> <span *ngIf="userId == item3.member_id || userRoleId==1"><a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item3.id}}">Edit</a></span>  <span *ngIf="userId == item3.member_id || userRoleId==1"><button class="btn btn-small btn-outline-primary " (click) ="delproject(item3.id)"><i class="fa fa-trash"></i></button>
                 </span><br/></div>        
+            </div>
             </div>
             </div>
           </div>

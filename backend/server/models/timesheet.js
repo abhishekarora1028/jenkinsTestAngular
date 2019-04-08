@@ -14,7 +14,6 @@ module.exports = function(Timesheet) {
 	var ObjectID = require('mongodb').ObjectID
 
 	 Timesheet.observe('before save', function(ctx, next) {
-	 	console.log(ctx.instance)
       const {Timesheet} = app.models;
 
       if (ctx.instance) {

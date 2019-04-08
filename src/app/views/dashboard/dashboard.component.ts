@@ -16,6 +16,7 @@ export class DashboardComponent {
 countProject: any;
 countContractor: any;
 userRoleId: any;
+userId: any;
 checkData: any = 0;
 checkCont: any = 0;
 checkAssignPro: any = 0;
@@ -30,6 +31,7 @@ assignpro: any = [];
       this.router.navigate(['login']);
     }
     this.userRoleId = localStorage.getItem('currentUserRoleId');
+    this.userId     = localStorage.getItem('currentUserId');
     let options = new RequestOptions();
           options.headers = new Headers();
           options.headers.append('Content-Type', 'application/json');
@@ -76,7 +78,7 @@ assignpro: any = [];
             
         }); 
 
-         this.http.get(API_URL+'/projects?filter={"where":{"and":[{"assign":"0"}]},"order":"id DESC", "limit":"10"}', options)
+         /*this.http.get(API_URL+'/projects?filter={"where":{"and":[{"assign":"0"}]},"order":"id DESC", "limit":"10"}', options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -86,13 +88,54 @@ assignpro: any = [];
             this.checkAssignPro = 0;
           }
           
+        });*/
+
+        this.http.get(API_URL+'/projects?filter={"order":"id DESC", "limit":"10"}', options)
+          .subscribe(response => {
+          if(response.json().length)
+          {
+            this.assignpro = response.json();
+
+            for(let i=0; i< this.assignpro.length; i++ ) {
+            let projectId = this.assignpro[i].id;
+            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"}]},"order":"id DESC"}', options)
+            .subscribe(response2 => {      
+            if(!response2.json().length)
+            {
+              //console.log(response.json())
+              //this.assignpro = response.json(); 
+              this.assignpro[i].unass = '0'; 
+              this.checkAssignPro = 1;
+            }else{
+              this.assignpro[i].unass = '1';
+              this.checkAssignPro = 0;
+              //this.assignpro.splice([i], 1)
+            }
+
+            
+            });   
+          }
+            
+            console.log(this.assignpro)
+            
+          }else{
+            //this.checkAssignPro = 0;
+          }
+          
         });
+
   }else{
   let userID = localStorage.getItem('currentUserId');
-    this.http.get(API_URL+'/projects?filter={"where":{"member_id":"'+userID+'"}}', options)
+    /*this.http.get(API_URL+'/projects?filter={"where":{"member_id":"'+userID+'"}}', options)
           .subscribe(response => {
           this.countProject = response.json().length;
-        });
+        });*/
+
+   this.http.get(API_URL+'/projects/count', options)
+          .subscribe(response => {
+          this.countProject = response.json();
+          this.countProject = this.countProject.count;
+        });     
 
     this.http.get(API_URL+'/Members/count?where=%7B%22role_id%22%3A%20%222%22%7D', options)
           .subscribe(response => {
@@ -125,17 +168,45 @@ assignpro: any = [];
             
         });    
 
-      this.http.get(API_URL+'/projects?filter={"where":{"and":[{"member_id":"'+userID+'"},{"assign":0}]},"order":"id DESC"}', options)
+
+        this.http.get(API_URL+'/projects?filter={"where":{"and":[{"member_id":"'+userID+'"}]},"order":"id DESC"}', options)
           .subscribe(response => {
           if(response.json().length)
           {
             this.assignpro = response.json();
-            this.checkAssignPro = 1;
+
+            for(let i=0; i< this.assignpro.length; i++ ) {
+            let projectId = this.assignpro[i].id;
+            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"1"}]},"order":"id DESC"}', options)
+            .subscribe(response2 => {      
+            if(!response2.json().length)
+            {
+              //console.log(response.json())
+              //this.assignpro = response.json(); 
+              this.assignpro[i].unass = 0; 
+            }else{
+              this.assignpro[i].unass = 1;
+              this.assignpro.splice([i], 1)
+            }
+
+            if(this.assignpro.length)
+            {
+              this.checkAssignPro = 1;
+            }else{
+              this.checkAssignPro = 0;
+            }
+            });   
+          }
+            
+            console.log(this.assignpro)
+            
           }else{
             this.checkAssignPro = 0;
           }
           
-        });       
+        });
+
+
 
   }        
 

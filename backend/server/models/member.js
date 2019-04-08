@@ -26,10 +26,8 @@ module.exports = function(Member) {
      const {Email,EmailContent} = app.models;
     //console.log('Finding customer with id', userEmail);
     const member = await Member.findOne({where: {email: userEmail}});
-    console.log(11111111111)
     //const emailHtml = await EmailContent.findOne({where : {code : 'forgot-password'}});
    //console.log(emailHtml);
-   console.log(22222222222)
 
     const url = app.get('portalUrl')+`/#/resetpassword/${member.id}/${info.accessToken.id}`;
 

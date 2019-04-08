@@ -15,7 +15,6 @@ module.exports = function(Assignproject) {
 
 	 Assignproject.observe('before save', function(ctx, next) {
       const {Assignproject} = app.models;
-      console.log(ctx.instance)
 
       if (ctx.instance) {
       	ctx.instance.member_id = new ObjectID(ctx.instance.member_id),
