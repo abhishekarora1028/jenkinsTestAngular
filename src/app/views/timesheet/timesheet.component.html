@@ -17,7 +17,7 @@ border-radius:50%;
  <!-- 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> -->
- <form name="form" (ngSubmit)="sf.form.valid && onSubmitSheettime()" #sf="ngForm" novalidate>
+ <form name="form" (ngSubmit)="sf.form.valid" #sf="ngForm" novalidate>
  <div style="float: left;">
 <input type="text" class="form-control" name="sheettime" [(ngModel)]="model.sheettime" #sheettime="ngModel" readonly #sdp="bsDatepicker" bsDatepicker (ngModelChange)="onPickSheet($event)" [ngClass]="{ 'is-invalid': sf.submitted && sheettime.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required placeholder="Select Date" style="width: 200px;float: left;" />
 </div>
@@ -81,7 +81,7 @@ border-radius:50%;
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Add Time</h4>
-        <button type="button" class="close" (click)="resetTimeForm(); dealerModal.hide()" aria-label="Close">
+        <button type="button" class="close" (click)="resetTimeForm($event); dealerModal.hide()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -92,6 +92,11 @@ border-radius:50%;
                 <div class="form-group">
                         <label for="stime">Time</label>
                         <input type="text" class="form-control" name="stime" [(ngModel)]="model.stime" #stime="ngModel" [ngClass]="{ 'is-invalid': f.submitted && stime.invalid }" value="{{cuStime}}" required />
+
+                        <!-- <timepicker [(ngModel)]="model.stime" name="stime" [hourStep]="hstep"
+          [minuteStep]="mstep" [showMeridian]="ismeridian"
+          [readonlyInput]="!isEnabled"></timepicker> -->
+
                         <div *ngIf="f.submitted && stime.invalid" class="invalid-feedback">
                             <div *ngIf="stime.errors.required">Time is required</div>
                         </div>
@@ -118,7 +123,7 @@ border-radius:50%;
       </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="resetTimeForm(); dealerModal.hide()">Close</button>
+        <button type="button" class="btn btn-secondary" (click)="resetTimeForm($event); dealerModal.hide()">Close</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

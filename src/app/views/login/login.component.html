@@ -1,64 +1,97 @@
-<div class="app flex-row align-items-center login-form">
-<div class="container">
-    <div class="row" style="margin:15% 0">
-        <div class="col-sm-4 col-sm-offset-4" style="margin:auto;">
-            <div class="card login-block">         
-              <form class="form-horizontal ng-untouched ng-pristine ng-valid" novalidate="" (ngSubmit)="onSubmit()" #loginForm="ngForm"> 
-                <div class="text-center img-responsive input-group" style="margin-top: 10px;">
-                  <!-- <img src="/assets/img/logo.png" style="width:150px" > -->
-                  <span>Welcome to Esquared</span>
-                  <hr/>
-                </div>
-                <div class="card-body">                    
-                    <p class="text-black">Please login to Continue</p>   
-                    <div class="alert alert-danger" [hidden]="!error">Username or password doesn't match!</div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-addon"><i class="icon-user"></i></span>
-                          </div>
-                          <input class="form-control" name="loginname" placeholder="Username/Email" type="text" [(ngModel)]="data.loginname" required>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-addon"><i class="icon-lock"></i></span>
-                          </div>
-                          <input class="form-control" name="password" placeholder="Password" type="password" [(ngModel)]="data.password"  required>
-                        </div>
-                      </div>
-                    </div> 
-                    <!-- <div class="form-group row">
-                      <div class="col-md-12">
-                        <div class="input-group">
-                          <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-user-secret"></i></span>
-                          </div>
-                          <select class="form-control" name="role" [(ngModel)]="data.role" >
-                            <option value="">Please select</option>
-                            <option value="admin">Admin</option>
-                            <option value="staff">Staff Member</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>  -->
-                    <div class="form-group row">
-                      <div class="col-md-6">                     
-                         <button class="btn btn-large btn-primary" type="submit" [disabled] = "!loginForm.form.valid" >Sign In</button>
-                      </div>
-                      <div class="col-md-6">
-                        <a class="pull-right" href="#" routerLink='/forgot' >Forgot Password?</a>
-                      </div>
-                    </div> 
-                </div>                 
-              </form>
-            </div>
-        </div>
+<div class="app align-items-center login-form bg-white">
+  <div class="container-fluid p-0">
+    <div class="row d-flex bg-dark">
+      <div class="col-12 d-flex align-items-center justify-content-center mt-2 mb-2">
+        <span class="text-white">Site Title</span>
+      </div>
     </div>
-</div>
+    <div class="row d-flex border-bottom">
+      <div class="col-12 d-flex align-items-center justify-content-center mt-3 mb-3">
+        <a href="" class="col-lg-2 col-md-3 col-sm-4 col-xs-6 col-8">
+          <img src="data:image/png;base64,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" class="img-fluid" />
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-4 offset-lg-4 col-md-6 offset-md-3 col-sm-6 offset-sm-3 col-12 mt-4 mb-4 border rounded p-0">
+              <div class="card login-block mb-0">         
+                <form class="form-horizontal ng-untouched ng-pristine ng-valid" novalidate="" (ngSubmit)="onSubmit()" #loginForm="ngForm"> 
+                <div class="row d-flex p-15 border-bottom">
+                    <div class="col-12 d-flex align-items-center justify-content-center input-group">
+                      <span>Welcome to Esquared</span>
+                    </div>
+                  </div>
+                  <div class="card-body">                    
+                      <p class="text-black text-center">Please login to Continue</p>   
+                      <div class="alert alert-danger" [hidden]="!error">Username or password doesn't match!</div>
+                      <div class="form-group row">
+                        <div class="col-12 p-0">
+                          <div class="input-group">
+                            <div class="input-group-prepend mr-1 col-3 p-0">
+                              <span class="input-group-addon">Email</span>
+                            </div>
+                            <input class="form-control" name="loginname" placeholder="" type="text" [(ngModel)]="data.loginname" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="col-12 p-0">
+                          <div class="input-group">
+                            <div class="input-group-prepend mr-1 col-3 p-0">
+                              <span class="input-group-addon">Password</span>
+                            </div>
+                            <input class="form-control" name="password" placeholder="" type="password" [(ngModel)]="data.password"  required>
+                          </div>
+                        </div>
+                      </div> 
+                      <!-- <div class="form-group row">
+                        <div class="col-md-12">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fa fa-user-secret"></i></span>
+                            </div>
+                            <select class="form-control" name="role" [(ngModel)]="data.role" >
+                              <option value="">Please select</option>
+                              <option value="admin">Admin</option>
+                              <option value="staff">Staff Member</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>  -->
+                      <div class="form-group row d-flex">
+                        <div class="col-12 p-0 d-flex align-items-center justify-content-center">                     
+                           <button class="btn btn-md btn-success rounded" type="submit" [disabled] = "!loginForm.form.valid" >Login</button>
+                        </div>
+                      </div> 
+                  </div> 
+                  <div class="form-group row d-flex mb-0 border-top p-15">
+                    <div class="col-6 p-0 d-flex align-items-center justify-content-start">                     
+                       <a class="text-left remember-me d-flex align-items-center" href="#" routerLink='/forgot' ><input type="checkbox" class="mr-1" /> Remember Me</a>
+                    </div>
+                    <div class="col-6 p-0 d-flex align-items-center justify-content-end">
+                      <a class="text-right" href="#" routerLink='/forgot' >Forgot Password?</a>
+                    </div>
+                  </div>
+                  <!-- Sign Up button -->
+                    <!-- <div class="row d-flex pt-2 pb-2 border-top">
+                      <div class="col-12 d-flex align-items-center justify-content-end input-group">
+                        <button class="btn btn-md btn-primary rounded" type="submit" [disabled] = "!loginForm.form.valid" >Sign Up</button>
+                      </div>
+                    </div> -->
+                  <!-- Sign Up button -->                
+                </form>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="container-fluid p-0 fixed-bottom">
+    <div class="row d-flex bg-light">
+      <div class="col-12 d-flex align-items-center justify-content-center mt-2 mb-2">
+        <span class="text-dark">@2019 All Rights Reserved.</span>
+      </div>
+    </div>
+  </div>
 </div>
 <toaster-container [toasterconfig]="toasterconfig"></toaster-container>

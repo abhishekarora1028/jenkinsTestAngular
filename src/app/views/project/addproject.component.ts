@@ -54,7 +54,6 @@ export class AddprojectComponent {
 	    	this.http.get(API_URL+'/projects/'+ this.editparam.id, options)
 	        .subscribe(response => {
 	        	this.model = response.json();
-            console.log(this.model)
 	        	this.editparam.action = "edit";
 		    });
 
@@ -165,9 +164,10 @@ removeUser(i, dcon, assignid){
 	          options.headers.append('Content-Type', 'application/json');
 	          options.headers.append('Accept', 'application/json'); 
 
-     let sDate = (this.model.sdate.getMonth()+1) + "/" + this.model.sdate.getDate() + "/" + this.model.sdate.getFullYear();
+     let sDate = this.model.sdate;
+     let eDate = this.model.edate;
 
-     let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();           
+     //let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();           
 
      //this.proData.member_id    = this.model.member_id;       
      this.proData.client_name    = this.model.client_name;

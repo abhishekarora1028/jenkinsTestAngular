@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { DataTableModule } from 'angular-6-datatable';
 import { HttpModule } from '@angular/http';
 import { DataFilterPipe } from './datafilterpipe';
+import { StriphtmlPipe } from './striphtml.pipe';
 
 import { ContractorsComponent } from './contractor.component';
 import { AddcontractorComponent } from './addcontractor.component';
@@ -25,6 +26,6 @@ import { ContractorsRoutingModule } from './contractor-routing.module';
     BsDropdownModule,
     ButtonsModule.forRoot()
   ],
-  declarations: [ ContractorsComponent, AddcontractorComponent, ViewcontractorComponent, DataFilterPipe ]
+  declarations: [ ContractorsComponent, AddcontractorComponent, ViewcontractorComponent, DataFilterPipe, StriphtmlPipe ]
 })
 export class ContractorModule { }

@@ -1,116 +1,141 @@
-<div class="animated fadeIn" >
+<div class="animated fadeIn dashboard-component" >
   <div class="row">
-    <div class="col-sm-4 col-lg-4">
+    <div class="col-sm-4 col-lg-4 pr-0">
       <div class="card">
-        <div class="card-body pb-0">
-          <div class="btn-group float-right" dropdown>
-            <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
-              <i class="icon-settings"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+        <div class="card-body row d-flex pt-2 pb-2">
+          <div class="col-3 d-flex align-items-center justify-content-center">
+            <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
           </div>
-          <h4 class="mb-0" >125 Emails</h4>
-          <p  >6 new arrivals</p>
+          <div class="col-9 p-0 d-flex flex-wrap align-items-center justify-content-start">
+            <h4 class="mb-0 width" >125 Emails</h4>
+            <p class="mb-0">6 new arrivals</p>
+          </div>
         </div>
       </div>
     </div><!--/.col-->
-    <div class="col-sm-8 col-lg-4">
+    <div class="col-sm-4 col-lg-4 pr-0">
       <div class="card">
-        <div class="card-body pb-0">
-          <button type="button" class="btn btn-transparent p-0 float-right">
-            <i class="icon-location-pin"></i>
-          </button>
-          <h4 class="mb-0">{{countProject}} Projects</h4>
-          <p>38 open</p>
+        <div class="card-body row d-flex pt-2 pb-2">
+          <div class="col-3 d-flex align-items-center justify-content-center">
+            <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+          </div>
+          <div class="col-9 p-0 d-flex flex-wrap align-items-center justify-content-start">
+            <h4 class="mb-0 width">{{countProject}} Projects</h4>
+            <p class="mb-0">38 open</p>
+          </div>
         </div>
       </div>
     </div><!--/.col-->
-    <div class="col-sm-8 col-lg-4">
+    <div class="col-sm-8 col-lg-4 pr-0">
       <div class="card">
-        <div class="card-body pb-0">
-          <div class="btn-group float-right" dropdown>
-            <button type="button" class="btn btn-transparent dropdown-toggle p-0" dropdownToggle>
-              <i class="icon-settings"></i>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" *dropdownMenu>
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
+        <div class="card-body row d-flex pt-2 pb-2">
+          <div class="col-3 d-flex align-items-center justify-content-center">
+            <i class="fa fa-users" aria-hidden="true"></i>
           </div>
-          <h4 class="mb-0">{{countContractor}} Contractors</h4>
-          <p>2 new</p>
+          <div class="col-9 p-0 d-flex flex-wrap align-items-center justify-content-start">
+            <h4 class="mb-0 width">{{countContractor}} Contractors</h4>
+            <p class="mb-0">2 new</p>
+          </div>
         </div>
       </div>
     </div>
   </div><!--/.row-->
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-8 pr-0">
       <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-5">
-              <h4 class="card-title mb-0">Active Projects</h4>
+        <div class="card-body p-0">
+          <div class="row d-flex border-bottom pt-2 pb-2">
+            <div class="col-5 d-flex align-items-center justify-content-start">
+              <h5 class="card-title mb-0">Active Projects</h5>
               <!-- <div class="small text-muted">November 2017</div> -->
-            </div><!--/.col-->
+            </div>
+            <div class="col-7">
+              <button class="btn btn-sm btn-info rounded text-white" type="button">8</button>
+            </div>
           </div><!--/.row-->
-            <div *ngIf="checkData == 1" class="chart-wrapper" style="height:300px;margin-top:40px;">
-            <div *ngIf="prodel == 1" class="text-error">
-                      Project has deleted successfully!
-                      </div>
-          <div class="col-sm-12">
-              <label for="client_name"><strong>Project Name</strong></label> 
-              <label for="action" style="margin-left: 100px;"><strong>Action</strong></label>   
+            <div *ngIf="checkData == 1" class="chart-wrapper" style="height:300px;">
+            <div *ngIf="prodel == 1" class="alert alert-success">
+              <strong>Project</strong> has deleted successfully!
             </div>
-          <div class="row" *ngFor="let item of model" style="margin-top: 10px;">
-            <div class="col-sm-3" style="float:left;">
-              <div>{{item.project_name}}</div>          
-            </div>
-            <div class="col-sm-3" style="float:left;">
-                <div><span><a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item.id}}">View</a></span><span><a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delproject(item.id)"><i class="fa fa-trash"></i></button>
-                </span><br/></div>        
-            </div>
+          <div class="row d-flex pt-2 pb-2" *ngFor="let item of model">
+             <div class="col-lg-8 col-md-8 col-sm-6 col-12 d-flex align-items-center justify-content-start">
+              <div class="card P-0 border-0 width mb-0">
+                <div class="card-body row d-flex p-0">
+                  <div class="col-12 d-flex flex-wrap align-items-center justify-content-start">
+                    <h4 class="mb-0 width"><span class="btn btn-outline-secondary rounded mr-2">B</span> {{item.project_name}}</h4>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-6 col-12 d-flex align-items-center justify-content-end">
+                <div class="display-inline">
+                  <span>
+                    <a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  </span>
+                  <span>
+                    <a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  </span>  
+                  <span>
+                    <button class="btn btn-small btn-outline-0 p-0 bg-transparent " (click) ="delproject(item.id)"><i class="fa fa-times" aria-hidden="true"></i></button>
+                  </span>
+                </div> 
+              </div>
             </div>
           </div>
           <div class="chart-wrapper" *ngIf="checkData == 0">
-          No Data Found!
+          <div class="row p-3 pb-3">
+              <div class="col-12 p-0">No Data Found!</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-4 pr-0">
       <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-5 mw-100">
-              <h4 class="card-title mb-0">Active Contractors</h4>
+        <div class="card-body p-0">
+          <div class="row d-flex border-bottom pt-2 pb-2">
+            <div class="col-10 d-flex align-items-center justify-content-start">
+              <h5 class="card-title mb-0">Active Contractors</h5>
               <!-- <div class="small text-muted">November 2017</div> -->
-            </div><!--/.col-->
+            </div>
+            <div class="col-2 p-0 d-flex align-items-center justify-content-start">
+              <button class="btn btn-sm btn-info rounded text-white" type="button">2</button>
+            </div>
           </div><!--/.row-->
-           <div *ngIf="checkCont == 1" class="chart-wrapper" style="height:300px;margin-top:40px;">
-           <div *ngIf="condel == 1" class="text-error">
-                      Contractor has deleted successfully!
-                      </div>
-          <div class="col-sm-12">
-              <label for="client_name"><strong>Name</strong></label> 
-              <label for="action" style="margin-left: 100px;" *ngIf="userRoleId == 1"><strong>Action</strong></label>   
+           <div *ngIf="checkCont == 1" class="chart-wrapper" style="height:300px;">
+            <div *ngIf="condel == 1" class="alert alert-success">
+              <strong>Contractor</strong> has deleted successfully!
             </div>
-          <div class="row" *ngFor="let item2 of data">
-            <div class="col-sm-4" style="float:left;">
-              <div>{{item2.fname}}{{item2.lname}}</div>          
-            </div>
-            <div class="col-sm-8" style="float:left;" *ngIf="userRoleId == 1">
-                <div><span><a class="btn btn-show-contact100" routerLink="/projects/viewcontractor/{{item2.id}}">View</a></span><span><a class="btn btn-show-contact100" routerLink="/contractors/editcontractor/{{item2.id}}">Edit</a></span>  <span><button class="btn btn-small btn-outline-primary " (click) ="delcontractor(item2.id)"><i class="fa fa-trash"></i></button>
-                </span><br/></div>        
-            </div>
+            <div class="row d-flex flex-wrap mb-3" *ngFor="let item2 of data">
+              <div class="col-12 d-flex align-items-center justify-content-end">
+                <div class="card p-0 border-0 width mb-0">
+                  <div class="card-body row d-flex p-0">
+                    <div class="col-3 p-0 d-flex align-items-center justify-content-center">
+                      <img class="img-fluid rounded-circle placeholder" src="https://via.placeholder.com/64/eee">
+                    </div>
+                    <div class="col-9 d-flex flex-wrap align-items-center justify-content-start">
+                      <h4 class="mb-0 width">{{item2.fname}}{{item2.lname}}</h4>
+                      <div *ngIf="userRoleId == 1">
+                        <span>
+                          <a class="btn btn-show-contact100 pl-0" routerLink="/projects/viewcontractor/{{item2.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                        </span>
+                        <span>
+                          <a class="btn btn-show-contact100 pl-0" routerLink="/contractors/editcontractor/{{item2.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        </span>  
+                        <span>
+                          <button class="btn btn-small btn-outline-0 p-0 bg-transparent" (click) ="delcontractor(item2.id)"><i class="fa fa-times" aria-hidden="true"></i></button>
+                        </span>
+                      </div> 
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="chart-wrapper" *ngIf="checkCont == 0">
-          No Data Found!
+            <div class="row p-3 pb-3">
+              <div class="col-12 p-0">No Data Found!</div>
+            </div>
           </div>
         </div>
       </div>
@@ -118,37 +143,50 @@
   </div>
   <!--/.card-->
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-12 pr-0">
       <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-5">
+        <div class="card-body p-0">
+          <div class="row d-flex border-bottom pt-2 pb-2">
+            <div class="col-12">
               <h4 class="card-title mb-0">Un-Assigned Projects</h4>
               <!-- <div class="small text-muted">November 2017</div> -->
             </div><!--/.col-->
           </div><!--/.row-->
-          <div *ngIf="checkAssignPro == 1" class="chart-wrapper" style="height:300px;margin-top:40px;">
-            <div *ngIf="prodel == 1" class="text-error">
-                      Project has deleted successfully!
-                      </div>
-          <div class="col-sm-12">
-              <label for="client_name"><strong>Project Name</strong></label> 
-              <label for="action" style="margin-left: 100px;"><strong>Action</strong></label>   
+          <div *ngIf="checkAssignPro == 1" class="chart-wrapper">
+            <div *ngIf="prodel == 1" class="alert alert-success">
+              <strong>Project</strong> has deleted successfully!
             </div>
-          <div class="row" *ngFor="let item3 of assignpro">
-          <div *ngIf="item3.unass == '0'" style="width: 55%;">
-            <div class="col-sm-4" style="float:left;">
-              <div>{{item3.project_name}}</div>          
-            </div>
-            <div class="col-sm-4" style="float:left;">
-                <div><span><a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item3.id}}">View</a></span> <span *ngIf="userId == item3.member_id || userRoleId==1"><a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item3.id}}">Edit</a></span>  <span *ngIf="userId == item3.member_id || userRoleId==1"><button class="btn btn-small btn-outline-primary " (click) ="delproject(item3.id)"><i class="fa fa-trash"></i></button>
-                </span><br/></div>        
-            </div>
-            </div>
+            <div class="row d-flex pt-2 pb-2" *ngFor="let item3 of assignpro">
+             <div class="col-lg-8 col-md-8 col-sm-6 col-12 d-flex align-items-center justify-content-start" *ngIf="item3.unass == '0'">
+              <div class="card P-0 border-0 width mb-0">
+                <div class="card-body row d-flex p-0">
+                  <div class="col-12 pl-0 d-flex flex-wrap align-items-center justify-content-start">
+                    <h4 class="mb-0 width"><span class="btn btn-outline-secondary rounded mr-2">B</span> {{item3.project_name}}</h4>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-6 col-12 d-flex align-items-center justify-content-end">
+                <div>
+                  <span>
+                    <a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item3.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  </span> 
+                  <span *ngIf="userId == item3.member_id || userRoleId==1">
+                    <a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item3.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  </span>  
+                  <span *ngIf="userId == item3.member_id || userRoleId==1">
+                    <button class="btn btn-small btn-outline-0 p-0 bg-transparent  " (click) ="delproject(item3.id)">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
           <div class="chart-wrapper" *ngIf="checkAssignPro == 0">
-          No Data Found!
+            <div class="row p-3 pb-3">
+              <div class="col-12 p-0">No Data Found!</div>
+            </div>
           </div>
         </div>
       </div>
