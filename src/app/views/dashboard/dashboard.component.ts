@@ -102,7 +102,6 @@ assignpro: any = [];
             .subscribe(response2 => {      
             if(!response2.json().length)
             {
-              //console.log(response.json())
               //this.assignpro = response.json(); 
               this.assignpro[i].unass = '0'; 
               this.checkAssignPro = 1;
@@ -115,8 +114,7 @@ assignpro: any = [];
             
             });   
           }
-            
-            console.log(this.assignpro)
+          
             
           }else{
             //this.checkAssignPro = 0;
@@ -181,7 +179,6 @@ assignpro: any = [];
             .subscribe(response2 => {      
             if(!response2.json().length)
             {
-              //console.log(response.json())
               //this.assignpro = response.json(); 
               this.assignpro[i].unass = 0; 
             }else{
@@ -197,8 +194,7 @@ assignpro: any = [];
             }
             });   
           }
-            
-            console.log(this.assignpro)
+          
             
           }else{
             this.checkAssignPro = 0;

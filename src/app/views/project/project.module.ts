@@ -12,6 +12,7 @@ import { DataFilterPipe } from './datafilterpipe';
 import { FormsModule } from '@angular/forms';
 
 import { BsDatepickerModule } from 'ngx-bootstrap';
+import { StriphtmlPipe } from './striphtml.pipe';
 
 
 import { ProjectsComponent } from './project.component';
@@ -30,6 +31,6 @@ import { ProjectsRoutingModule } from './project-routing.module';
     BsDatepickerModule.forRoot(),
     ButtonsModule.forRoot()
   ],
-  declarations: [ ProjectsComponent, AddprojectComponent, ViewprojectComponent, DataFilterPipe ]
+  declarations: [ ProjectsComponent, AddprojectComponent, ViewprojectComponent, DataFilterPipe, StriphtmlPipe ]
 })
 export class ProjectModule { }
