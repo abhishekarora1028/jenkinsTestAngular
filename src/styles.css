@@ -100,13 +100,16 @@
 .p-15 {
 	padding: 10px 15px !important;
 }
+.pl-30 {
+	padding-left: 31px !important;
+}
 .width {
 	width: 100% !important;
 }
 .dashboard-component .card i.fa {
     font-size: 20px;
 }
-.dashboard-component h4, .project-component h4, .add-project-heading h4 {
+h4 {
     font-weight: normal;
     text-transform: capitalize;
     font-size: 15px;
@@ -144,10 +147,71 @@
     margin-bottom: 15px;
 }
 .proj-desc label {
-	width: 20%;
+	width: 16.2%;
 	max-width: 100%;
 }
 .proj-desc textarea {
-	width: calc(100% - 20%) !important;
+	width: calc(100% - 16.2%) !important;
 	max-width: 100%;
+}
+.assign-contractor a {
+    font-weight: bold;
+    color: #424242 !important;
+}
+.assign-contractor a span {
+    font-size: 16px;
+    padding: 0;
+    width: 25px;
+    height: 25px;
+}
+.assign-contractor-fields span.btn {
+    padding: 0;
+    width: 35px;
+    height: 35px;
+    vertical-align: middle;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.add-contrator {
+	position: relative;
+}
+.add-contrator .add-icon {
+    position: absolute;
+    right: 15px;
+}
+.common-button {
+	color: #212121;
+	border-color: #212121;
+    padding: 10px 38px;
+    font-size: 14px;
+}
+.solid-btn {
+	padding: 10px 38px;
+    font-size: 14px;
+    background: #5cb85c;
+}
+@media screen and (max-width: 767px) {
+	.container.add-project-heading {
+	    max-width: 100%;
+	}
+	.proj-desc label {
+		width: 33.3%;
+		max-width: 100%;
+	}
+	.proj-desc textarea {
+	    width: calc(100% - 33.3%) !important;
+	    max-width: 100%;
+	}
+}
+@media screen and (max-width: 600px) {
+	.main .container-fluid {
+		padding: 0;
+	}
+	.project-component h4 span {
+	    margin-bottom: 8px;
+	}
 }

@@ -1,62 +1,79 @@
 <div>
-    <div class="container">
+    <div class="container bg-white p-0 add-project-heading mb-4">
+        <div class="row d-flex border-bottom">
+            <div class="col-12 pt-3 pb-3 pl-30">
+                <h4 class="mb-0">Profile</h4>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-md-6 offset-md-3">
-            <h3>Profile</h3>
+            <div class="col-md-10 offset-md-1 p-0">
                 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-                    <div class="form-group">
-                        <label for="fname">First Name</label>
-                        <input type="text" class="form-control" name="fname" [(ngModel)]="model.fname" #fname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && fname.invalid }" required />
-                        <div *ngIf="f.submitted && fname.invalid" class="invalid-feedback">
-                            <div *ngIf="fname.errors.required">First Name is required</div>
+                    <div class="row d-flex pl-3 pr-3">
+                        <div class="col-12 mt-4 mb-2">
+                            <div *ngIf="proEditStatus == 1" class="alert alert-success">
+                                <strong>Profile</strong> has updated successfully!
+                            </div>
+                            <div *ngIf="proStatus == 2" class="alert alert-danger">
+                                <strong>Error!</strong> 
+                            </div>  
                         </div>
-                    </div>
-                     <div class="form-group">
-                        <label for="lname">Last Name</label>
-                        <input type="text" class="form-control" name="lname" [(ngModel)]="model.lname" #lname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lname.invalid }" required />
-                        <div *ngIf="f.submitted && lname.invalid" class="invalid-feedback">
-                            <div *ngIf="lname.errors.required">Last Name is required</div>
+                        <div class="col-sm-6 col-12">
+                            <div class="form-group">
+                                <input type="text" placeholder="First Name" class="form-control" name="fname" [(ngModel)]="model.fname" #fname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && fname.invalid }" required />
+                                <div *ngIf="f.submitted && fname.invalid" class="invalid-feedback">
+                                    <div *ngIf="fname.errors.required">First Name is required</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" (change)="onChange($event.target.value)" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
-                        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
-                            <div *ngIf="email.errors.required">Email is required</div>
-                            <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                        <div class="col-sm-6 col-12">
+                            <div class="form-group">
+                                <input type="text" placeholder="Last Name" class="form-control" name="lname" [(ngModel)]="model.lname" #lname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lname.invalid }" required />
+                                <div *ngIf="f.submitted && lname.invalid" class="invalid-feedback">
+                                    <div *ngIf="lname.errors.required">Last Name is required</div>
+                                </div>
+                            </div>
                         </div>
-                        <div *ngIf="uniqueEmail == 1" class="text-error">
-                      Email already exist!
-                      </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="text" class="form-control" name="phone" [(ngModel)]="model.phone" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid }" required minlength=10 maxlength=10 />
-                        <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
-                            <div *ngIf="phone.errors.required">Phone Number is required</div>
+                        <div class="col-sm-12 col-12">
+                            <div class="form-group">
+                                <input type="text" placeholder="Email" class="form-control" name="email" (change)="onChange($event.target.value)" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+                                <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                                    <div *ngIf="email.errors.required">Email is required</div>
+                                    <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                                </div>
+                                <div *ngIf="uniqueEmail == 1" class="text-error">
+                              Email already exist!
+                              </div>
+                            </div>
                         </div>
-                        <div *ngIf="phone.errors?.minlength">Phone Number must be at least 10 numbers</div>
-                        <div *ngIf="phone.errors?.pattern">Phone Number must be numbers only</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender</label>
-                        <select class="form-control" name="gender" [(ngModel)]="model.gender" #gender="ngModel" [ngClass]="{ 'is-invalid': f.submitted && gender.invalid }" required><option value="" [selected]="">--Gender--</option><option value="male">Male</option><option value="female">Female</option></select>
-                        <div *ngIf="f.submitted && gender.invalid" class="invalid-feedback">
-                            <div *ngIf="gender.errors.required">Gender is required</div>
+                        <div class="col-sm-12 col-12">
+                            <div class="form-group">
+                                <input type="text" placeholder="Phone Number" class="form-control" name="phone" [(ngModel)]="model.phone" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid }" required minlength=10 maxlength=10 />
+                                <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
+                                    <div *ngIf="phone.errors.required">Phone Number is required</div>
+                                </div>
+                                <div *ngIf="phone.errors?.minlength">Phone Number must be at least 10 numbers</div>
+                                <div *ngIf="phone.errors?.pattern">Phone Number must be numbers only</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="about">About Yourself</label>
-                        <textarea class="form-control" name="about" [(ngModel)]="model.about" #about="ngModel"></textarea>
-                    </div>
-                      <div *ngIf="proEditStatus == 1" class="text-error">
-                      Profile has updated successfully!
-                      </div>
-                      <div *ngIf="proStatus == 2" class="text-error">
-                      Error!
-                      </div>
-                    <div class="form-group">
-                        <button class="btn btn-large btn-primary" type="submit" [disabled] = "!f.form.valid || uniqueEmail == 1" >Save</button>               
+                        <div class="col-sm-12 col-12">
+                            <div class="form-group">
+                                <select class="form-control" name="gender" [(ngModel)]="model.gender" #gender="ngModel" [ngClass]="{ 'is-invalid': f.submitted && gender.invalid }" required><option value="" [selected]="">--Gender--</option><option value="male">Male</option><option value="female">Female</option></select>
+                                <div *ngIf="f.submitted && gender.invalid" class="invalid-feedback">
+                                    <div *ngIf="gender.errors.required">Gender is required</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-12 pt-3">
+                            <div class="form-group border-top pt-3">
+                                <label for="about">About Yourself</label>
+                                <textarea class="form-control" placeholder="About Yourself" name="about" [(ngModel)]="model.about" #about="ngModel"></textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-12 pt-3">
+                            <div class="form-group">
+                                <button class="btn btn-large btn-success solid-btn rounded" type="submit" [disabled] = "!f.form.valid || uniqueEmail == 1" >Save</button>               
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
