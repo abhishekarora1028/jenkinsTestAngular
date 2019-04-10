@@ -1,93 +1,108 @@
 <div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 offset-md-3">
-            <h3>View Project</h3>
-            <div class="form-group">
-                <label for="client_name"><strong>Client Name: </strong></label>
-                {{model.client_name}} 
-            </div>
-            <div class="form-group">
-                <label for="email"><strong>Email: </strong></label>
-                {{model.email}} 
-            </div>
-            <div class="form-group">
-                <label for="project_name"><strong>Project Name (*): </strong></label>
-                {{model.project_name}} 
-            </div>
-            <div class="form-group">
-                <label for="budget"><strong>Project Budget: </strong></label>
-                ${{model.budget}} 
-            </div>
-            <div class="form-group">
-                <label for="client_name"><strong>Project Type: </strong></label>
-                {{model.project_type}} 
-            </div>
-            <div class="form-group">
-                <label for="project_time"><strong>Project Time: </strong></label>
-                {{model.project_time}} 
-            </div>
-            <div class="form-group" *ngIf="rate == 2 || model.project_type =='hourly'">
-                <label for="rate"><strong>Hourly Rate: </strong></label>
-                ${{model.rate}} 
-            </div>
-            <div class="form-group" *ngIf="rate == 1 || model.project_type =='fixed'">
-                <label for="rate"><strong>Fixed Rate: </strong></label>
-                ${{model.rate}} 
-            </div>
-            <div class="form-group">
-                <label for="description"><strong>Project Description: </strong></label>
-                {{model.description}} 
-            </div>
+    <div class="container bg-white p-0 mb-3">
+      <div class="row d-flex border-bottom">
+          <div class="col-12 pt-3 pb-3">
+            <h4 class="mb-0">View Project</h4>
+          </div>
+      </div>
+        <div class="row d-flex mt-3 mb-3">
+            <div class="col-12">
+              <div class="form-group">
+                  <label for="client_name" class="col-lg-3 col-md-3 col-sm-4 col-6 pl-0"><strong><h4>Client Name: </h4></strong></label>
+                  <span class="col-lg-9 col-md-9 col-sm-8 col-6 pl-0">{{model.client_name}}</span> 
+              </div>
+              <div class="form-group">
+                  <label for="email" class="col-lg-3 col-md-3 col-sm-4 col-6 pl-0"><strong><h4>Email: </h4></strong></label>
+                  <span class="col-lg-9 col-md-9 col-sm-8 col-6 pl-0">{{model.email}}</span> 
+              </div>
+              <div class="form-group">
+                  <label for="project_name" class="col-lg-3 col-md-3 col-sm-4 col-6 pl-0"><strong><h4>Project Name (*): </h4></strong></label>
+                  <span class="col-lg-9 col-md-9 col-sm-8 col-6 pl-0">{{model.project_name}} </span>
+              </div>
+              <div class="form-group">
+                  <label for="budget" class="col-lg-3 col-md-3 col-sm-4 col-6 pl-0"><strong><h4>Project Budget: </h4></strong></label>
+                  <span class="col-lg-9 col-md-9 col-sm-8 col-6 pl-0">${{model.budget}} </span>
+              </div>
+              <div class="form-group">
+                  <label for="client_name" class="col-lg-3 col-md-3 col-sm-4 col-6 pl-0"><strong><h4>Project Type: </h4></strong></label>
+                  <span class="col-lg-9 col-md-9 col-sm-8 col-6 pl-0">{{model.project_type}} </span>
+              </div>
+              <div class="form-group">
+                  <label for="project_time" class="col-lg-3 col-md-3 col-sm-4 col-6 pl-0"><strong><h4>Project Time: </h4></strong></label>
+                  <span class="col-lg-9 col-md-9 col-sm-8 col-6 pl-0">{{model.project_time}}</span> 
+              </div>
+              <div class="form-group" *ngIf="rate == 2 || model.project_type =='hourly'">
+                  <label for="rate" class="col-lg-3 col-md-3 col-sm-4 col-6 pl-0"><strong><h4>Hourly Rate: </h4></strong></label>
+                  <span class="col-lg-9 col-md-9 col-sm-8 col-6 pl-0">${{model.rate}} </span>
+              </div>
+              <div class="form-group" *ngIf="rate == 1 || model.project_type =='fixed'">
+                  <label for="rate" class="col-lg-3 col-md-3 col-sm-4 col-6 pl-0"><strong><h4>Fixed Rate: </h4></strong></label>
+                  <span class="col-lg-9 col-md-9 col-sm-8 col-6 pl-0">${{model.rate}} </span>
+              </div>
+              <div class="form-group">
+                  <label for="description" class="col-lg-3 col-md-3 col-sm-4 col-6 pl-0"><strong><h4>Project Description: </h4></strong></label>
+                  <span class="col-lg-9 col-md-9 col-sm-8 col-6 pl-0">{{model.description}}</span> 
+              </div>
             
             </div>
         </div>
-        
-        <a *ngIf="disCon == 1" class="btn btn-show-contact100" routerLink="/projects/editproject/{{model.id}}">Assign Contractor</a>
+        </div>
+  <div class="container bg-white mt-3 mb-3 p-0">
+    <div class="col-12 assign-contractor border-bottom pt-2 pb-2" *ngIf="disCon == 1">
+        <a class="btn btn-show-contact100" routerLink="/projects/editproject/{{model.id}}">Assign Contractor</a>
     </div>
-    <div class="row mb-3" *ngIf="checkData == 1">
-        <div class="col-md-4 offset-md-8">
+    <div class="row pb-3 project-list d-flex border-bottom" *ngIf="checkData == 1">
+        <div class="col-md-4 offset-md-8 mt-3">
           <div class="input-group">
             <span class="input-group-addon"><i class="fa fa-search"></i></span>
             <input type="text" class="form-control" [(ngModel)]="filterQuery" placeholder="Search projects"/>
           </div>
         </div>
       </div> 
-    <div *ngIf="checkData == 1" class="chart-wrapper" style="margin-top:40px;">
-          <div *ngIf="prodel == 1" class="text-error">
-                      Assign Project has deleted successfully!
-                      </div>
-                     
-          <div class="table-responsive"><table class="table table-striped"[mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
-        <thead>
-          <tr>
-            <th style="width: 30%">
-              <mfDefaultSorter by="contractorname">Contractors</mfDefaultSorter>
-            </th>
-            <th style="width: 30%">
-              <mfDefaultSorter by="">Percentage</mfDefaultSorter>
-            </th>
-            <th style="width: 40%">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of mf.data">
-            <td>{{item.contractorname}}</td>
-            <td class="text-left">{{item.percentage}}%</td>
-            <td><span><a class="btn btn-show-contact100" routerLink="/contractors/viewcontractor/{{item.member_id}}">View</a></span></td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="4">
-              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
-            </td>
-          </tr>
-        </tfoot>
-      </table></div>            
-          
-          </div>
-           <div *ngIf="checkData == 0">
-          Assign contractor not Found!
-          </div>
+    <div *ngIf="prodel == 1" class="chart-wrapper">
+    <div *ngIf="condel == 1" class="alert alert-success">
+      <strong>Assign</strong> Project has deleted successfully!
+    </div>           
+      <div class="table-responsive project-component">
+        <table class="table" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
+          <thead>
+            <tr>
+              <th>
+                <mfDefaultSorter by="contractorname"><h4>Contractors</h4></mfDefaultSorter>
+              </th>
+              <th>
+                <mfDefaultSorter by=""><h4>Percentage</h4></mfDefaultSorter>
+              </th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of mf.data">
+              <td>
+                <div class="card p-0 border-0 width mb-0">
+                <div class="card-body row d-flex p-0">
+                  <div class="col-12 d-flex flex-wrap align-items-center justify-content-start pl-0">
+                    <h4 class="mb-0 width">{{item.contractorname}}</h4>
+                  </div>
+                </div>
+              </div>
+              </td>
+              <td class="text-left">{{item.percentage}}%</td>
+              <td><span><a class="btn btn-show-contact100" routerLink="/contractors/viewcontractor/{{item.member_id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a></span></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4">
+                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <div class="col-12 assign-contractor border-bottom pt-2 pb-2" *ngIf="checkData == 0">
+      <span>Assign contractor not Found!</span>
+    </div>
+  </div>
 </div>

@@ -1,75 +1,99 @@
 <div>
-    <div class="container">
+    <div class="container bg-white p-0 add-project-heading">
+        <div class="row d-flex border-bottom">
+            <div class="col-12 pt-3 pb-3 pl-30">
+                <h4 *ngIf="editparam.action == 'add'">Add New Contractor</h4>
+                <h4 *ngIf="editparam.action == 'edit'">Edit Contractor</h4>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-md-6 offset-md-3">
-            <h3 *ngIf="editparam.action == 'add'">Add New Contractor</h3>
-            <h3 *ngIf="editparam.action == 'edit'">Edit Contractor</h3>
-                <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-                    <div class="form-group">
-                        <label for="fname">First Name</label>
-                        <input type="text" class="form-control" name="fname" [(ngModel)]="model.fname" #fname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && fname.invalid }" required />
-                        <div *ngIf="f.submitted && fname.invalid" class="invalid-feedback">
-                            <div *ngIf="fname.errors.required">First Name is required</div>
+            <div class="col-12 p-0">
+                <form name="form" class="form-inline add-project mt-3 mb-3" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                <div class="row d-flex pl-3 pr-3">
+                    <div class="col-12 p-0 mt-3 mb-3">
+                        <div *ngIf="proStatus == 1" class="alert alert-success">
+                            <strong>Contractor</strong> has added successfully!
+                        </div>
+                        <div *ngIf="proEditStatus == 1" class="alert alert-success">
+                            <strong>Contractor</strong> has updated successfully!
+                        </div>
+                        <div *ngIf="proStatus == 2" class="alert alert-danger">
+                            <strong>Error!</strong> has updated successfully!
                         </div>
                     </div>
-                     <div class="form-group">
-                        <label for="lname">Last Name</label>
-                        <input type="text" class="form-control" name="lname" [(ngModel)]="model.lname" #lname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lname.invalid }" required />
-                        <div *ngIf="f.submitted && lname.invalid" class="invalid-feedback">
-                            <div *ngIf="lname.errors.required">Last Name is required</div>
+                    <div class="col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="fname" class="col-4 p-0 d-flex align-items-center justify-content-start">First Name</label>
+                            <input type="text" class="form-control col-8 pr-0" name="fname" [(ngModel)]="model.fname" #fname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && fname.invalid }" required />
+                            <div *ngIf="f.submitted && fname.invalid" class="invalid-feedback">
+                                <div *ngIf="fname.errors.required">First Name is required</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" (change)="onChange($event.target.value)" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
-                        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
-                            <div *ngIf="email.errors.required">Email is required</div>
-                            <div *ngIf="email.errors.email">Email must be a valid email address</div>
-                        </div>
-                        <div *ngIf="uniqueEmail == 1" class="text-error">
-                      Email already exist!
-                      </div>
-                    </div>
-                    <div class="form-group" *ngIf="editparam.action == 'add'">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required />
-                        <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
-                            <div *ngIf="password.errors.required">Password is required</div>
+                    <div class="col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="lname" class="col-4 p-0 d-flex align-items-center justify-content-start">Last Name</label>
+                            <input type="text" class="form-control col-8 pr-0" name="lname" [(ngModel)]="model.lname" #lname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lname.invalid }" required />
+                            <div *ngIf="f.submitted && lname.invalid" class="invalid-feedback">
+                                <div *ngIf="lname.errors.required">Last Name is required</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="phone">Phone Number</label>
-                        <input type="text" class="form-control" (keypress)="keyPress($event)" name="phone" [(ngModel)]="model.phone" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid }" required minlength=10 maxlength=10 />
-                        <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
-                            <div *ngIf="phone.errors.required">Phone Number is required</div>
-                        </div>
-                        <div *ngIf="phone.errors?.minlength">Phone Number must be at least 10 numbers</div>
-                        <div *ngIf="phone.errors?.pattern">Phone Number must be numbers only</div>
-                    </div>
-                    <div class="form-group">
-                        <label for="gender">Gender</label>
-                        <select class="form-control" name="gender" [(ngModel)]="model.gender" #gender="ngModel" [ngClass]="{ 'is-invalid': f.submitted && gender.invalid }" required><option value="" [selected]="">--Gender--</option><option value="male">Male</option><option value="female">Female</option></select>
-                        <div *ngIf="f.submitted && gender.invalid" class="invalid-feedback">
-                            <div *ngIf="gender.errors.required">Gender is required</div>
+                    <div class="col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="email" class="col-4 p-0 d-flex align-items-center justify-content-start">Email</label>
+                            <input type="text" class="form-control col-8 pr-0" name="email" (change)="onChange($event.target.value)" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+                            <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+                                <div *ngIf="email.errors.required">Email is required</div>
+                                <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                            </div>
+                            <div *ngIf="uniqueEmail == 1" class="text-error">
+                          Email already exist!
+                          </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="about">About Yourself</label>
-                        <textarea class="form-control" name="about" [(ngModel)]="model.about" #about="ngModel"></textarea>
+                    <div class="col-sm-6 col-12" *ngIf="editparam.action == 'add'">
+                        <div class="form-group">
+                            <label for="password" class="col-4 p-0 d-flex align-items-center justify-content-start">Password</label>
+                            <input type="password" class="form-control col-8 pr-0" name="password" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required />
+                            <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+                                <div *ngIf="password.errors.required">Password is required</div>
+                            </div>
+                        </div>
                     </div>
-                    <div *ngIf="proStatus == 1" class="text-error">
-                      Contractor has added successfully!
-                      </div>
-                      <div *ngIf="proEditStatus == 1" class="text-error">
-                      Contractor has updated successfully!
-                      </div>
-                      <div *ngIf="proStatus == 2" class="text-error">
-                      Error!
-                      </div>
-                    <div class="form-group">
-                        <button class="btn btn-large btn-primary" type="submit" *ngIf="editparam.action == 'add'" [disabled] = "!f.form.valid || uniqueEmail == 1" >Save</button>               
-                         <button class="btn btn-large btn-primary" type="submit" *ngIf="editparam.action == 'edit'" [disabled] = "!f.form.valid || uniqueEmail == 1">Update</button>
+                    <div class="col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="phone" class="col-4 p-0 d-flex align-items-center justify-content-start">Phone Number</label>
+                            <input type="text" class="form-control col-8 pr-0" (keypress)="keyPress($event)" name="phone" [(ngModel)]="model.phone" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid }" required minlength=10 maxlength=10 />
+                            <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
+                                <div *ngIf="phone.errors.required">Phone Number is required</div>
+                            </div>
+                            <div *ngIf="phone.errors?.minlength">Phone Number must be at least 10 numbers</div>
+                            <div *ngIf="phone.errors?.pattern">Phone Number must be numbers only</div>
+                        </div>
                     </div>
+                    <div class="col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="gender" class="col-4 p-0 d-flex align-items-center justify-content-start">Gender</label>
+                            <select class="form-control col-8 pr-0" name="gender" [(ngModel)]="model.gender" #gender="ngModel" [ngClass]="{ 'is-invalid': f.submitted && gender.invalid }" required><option value="" [selected]="">--Gender--</option><option value="male">Male</option><option value="female">Female</option></select>
+                            <div *ngIf="f.submitted && gender.invalid" class="invalid-feedback">
+                                <div *ngIf="gender.errors.required">Gender is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-12">
+                        <div class="form-group">
+                            <label for="about" class="col-4 p-0 d-flex align-items-center justify-content-start">About Yourself</label>
+                            <textarea class="form-control col-8 pr-0" name="about" [(ngModel)]="model.about" #about="ngModel"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <div class="form-group">
+                            <button class="btn btn-large btn-outline-seconday rounded bg-transparent common-button" type="submit" *ngIf="editparam.action == 'add'" [disabled] = "!f.form.valid || uniqueEmail == 1" >Save</button>               
+                             <button class="btn btn-large btn-outline-seconday rounded bg-transparent common-button" type="submit" *ngIf="editparam.action == 'edit'" [disabled] = "!f.form.valid || uniqueEmail == 1">Update</button>
+                        </div>
+                    </div>
+                </div>
                 </form>
             </div>
         </div>
