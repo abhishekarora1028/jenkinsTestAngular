@@ -27,6 +27,7 @@ public datesData:any = [];
 checkData: any = 0;
 cuStime: any = 0;
 addData: any = 0;
+memberId: any = 0;
 cuDes  : any;
 sheetStatus  : any = '';
 public data: any = [];
@@ -37,6 +38,7 @@ public filterQuery = '';
     {
       this.router.navigate(['login']);
     }
+    this.memberId    = localStorage.getItem('currentUserId');
     this.checkData = 0;
     this.sheetStatus = '';
     let todayDate = new Date();
@@ -64,7 +66,104 @@ public filterQuery = '';
 		        options.headers.append('Content-Type', 'application/json');
 		        options.headers.append('Accept', 'application/json');
 
+          if(localStorage.getItem('currentUserRoleId') == '1')
+          {  
 
+            this.http.get(API_URL+'/assignprojects?filter={"order":"id DESC"}', options)
+            .subscribe(response => {
+            if(response.json().length)
+            {
+              this.data = response.json();
+              
+              let stime = '', des = '', tsId = '';
+              for(let i=0; i< this.data.length; i++ ) {
+                  this.http.get(API_URL+'/projects/'+this.data[i].project_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
+                  .subscribe(response => {      
+                    this.data[i].projectname = response.json().project_name;  
+                    this.data[i].member_id   = this.data[i].member_id;  
+                    this.data[i].rate        = response.json().rate;  
+                    this.data[i].type        = response.json().project_type;  
+                    this.data[i].budget      = response.json().budget;  
+                    this.data[i].hourlyRate  = (response.json().rate * this.data[i].percentage) / 100;  
+                    if(response.json().project_type =='fixed')
+                    {
+                      this.data[i].amount = (response.json().budget * this.data[i].percentage) / 100; 
+                    }
+                  });  
+                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0;
+                  for(let j=0; j< this.datesData.length; j++ ) {
+                    let userID    = localStorage.getItem('currentUserId');
+                    let projectID = this.data[i].project_id;
+                    let cDate     = this.datesData[j].split('_')[3];
+                
+                  this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+projectID+'"},{"cdate":"'+cDate+'"}]}}', options)
+                    .subscribe(response => {    
+                    if(response.json().length)
+                    {
+                        
+
+                      if(ci == 1)
+                      {
+                        this.data[i].tsId   = response.json()[0].id+'_';
+                        this.data[i].stime  = response.json()[0].stime+'_';
+                        this.data[i].des    = response.json()[0].description+'_';
+                        totalTime           = Number(response.json()[0].stime.split(':')[0]);
+                        totalMin            = Number(response.json()[0].stime.split(':')[1]);
+                        
+                        //this.data[i].totalStime = totalTime+':'+totalMin;
+                      }else{
+                        totalTime     += Number(response.json()[0].stime.split(':')[0]);
+                        totalMin      += Number(response.json()[0].stime.split(':')[1]);
+                        if(this.data[i].stime!=undefined)
+                        {
+                          this.data[i].stime += response.json()[0].stime+'_';
+                          this.data[i].des   += response.json()[0].description+'_';
+                          this.data[i].tsId  += response.json()[0].id+'_';
+                        }else{
+                          this.data[i].stime = response.json()[0].stime+'_';
+                          this.data[i].des   = response.json()[0].description+'_';
+                          this.data[i].tsId  += response.json()[0].id+'_';
+                        }
+                        
+                      }
+                        this.data[i].totalStime = totalTime+':'+totalMin;
+                      
+                    }else{
+                    if(this.data[i].totalStime==undefined)
+                    {
+                      this.data[i].totalStime = "0:00";
+                    }
+                      if(ci == 1)
+                      {
+                        this.data[i].tsId  = '-'+'_';
+                        this.data[i].stime = '-'+'_';
+                        this.data[i].des   = '-'+'_';
+                      }else{
+                        if(this.data[i].stime!=undefined)
+                        {
+                          this.data[i].tsId  += '-'+'_';
+                          this.data[i].stime += '-'+'_';
+                          this.data[i].des   += '-'+'_';
+                        }else{
+                          this.data[i].tsId  = '-'+'_';
+                          this.data[i].stime = '-'+'_';
+                          this.data[i].des   = '-'+'_';
+                        }
+                      }
+                    }
+                  
+                   });
+                     ci++;
+                  } 
+                  
+                }
+              this.checkData = 1;
+            }else{
+              this.checkData = 2;
+            }
+            
+          }); 
+          }else{
 		        this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+userID+'"}]},"order":"id DESC"}', options)
 		        .subscribe(response => {
 		        if(response.json().length)
@@ -157,6 +256,9 @@ public filterQuery = '';
 		        }
 
 		      });	
+
+      }
+
    
   }
 
@@ -208,15 +310,16 @@ public filterQuery = '';
     }
   }
 
-  getDate(cDate, proId, stime, des, tsId)
+  getDate(cDate, proId, stime, des, tsId, memId)
   {
-    
+    console.log(memId)
     this.sheetStatus = '';
     this.checkData = 0;
   	this.addData = 0;
   	localStorage.setItem("cDate", cDate);
     localStorage.setItem("proId", proId);
-  	localStorage.setItem("tsId", tsId);
+    localStorage.setItem("tsId", tsId);
+  	localStorage.setItem("memId", memId);
   	this.cuStime = stime;
   	this.cuDes   = des;
   	if(stime =='-' || des == '-')
@@ -264,6 +367,7 @@ onPickSheet(pickDate)
       let strDate = (nextDay.getMonth()+1) + "/" + nextDay.getDate() + "/" + nextDay.getFullYear();
 
       this.datesData[i]   = days[nextDay.getDay()]+'_'+months[todayDate.getMonth()]+'_'+nextDay.getDate()+'_'+strDate;
+
       
   }
 
@@ -274,6 +378,104 @@ onPickSheet(pickDate)
             options.headers.append('Content-Type', 'application/json');
             options.headers.append('Accept', 'application/json');
 
+            if(localStorage.getItem('currentUserRoleId') == '1')
+          {  
+
+            this.http.get(API_URL+'/assignprojects?filter={"order":"id DESC"}', options)
+            .subscribe(response => {
+            if(response.json().length)
+            {
+              this.data = response.json();
+              //console.log(this.data)
+              let stime = '', des = '', tsId = '';
+              for(let i=0; i< this.data.length; i++ ) {
+                  this.http.get(API_URL+'/projects/'+this.data[i].project_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
+                  .subscribe(response => {      
+                    this.data[i].projectname = response.json().project_name;  
+                    this.data[i].member_id   = this.data[i].member_id;  
+                    this.data[i].rate        = response.json().rate;  
+                    this.data[i].type        = response.json().project_type;  
+                    this.data[i].budget      = response.json().budget;  
+                    this.data[i].hourlyRate  = (response.json().rate * this.data[i].percentage) / 100;  
+                    if(response.json().project_type =='fixed')
+                    {
+                      this.data[i].amount = (response.json().budget * this.data[i].percentage) / 100; 
+                    }
+                  });  
+                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0;
+                  for(let j=0; j< this.datesData.length; j++ ) {
+                    let userID    = localStorage.getItem('currentUserId');
+                    let projectID = this.data[i].project_id;
+                    let cDate     = this.datesData[j].split('_')[3];
+                
+                  this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+projectID+'"},{"cdate":"'+cDate+'"}]}}', options)
+                    .subscribe(response => {    
+                    if(response.json().length)
+                    {
+                        
+
+                      if(ci == 1)
+                      {
+                        this.data[i].tsId   = response.json()[0].id+'_';
+                        this.data[i].stime  = response.json()[0].stime+'_';
+                        this.data[i].des    = response.json()[0].description+'_';
+                        totalTime           = Number(response.json()[0].stime.split(':')[0]);
+                        totalMin            = Number(response.json()[0].stime.split(':')[1]);
+                        
+                        //this.data[i].totalStime = totalTime+':'+totalMin;
+                      }else{
+                        totalTime     += Number(response.json()[0].stime.split(':')[0]);
+                        totalMin      += Number(response.json()[0].stime.split(':')[1]);
+                        if(this.data[i].stime!=undefined)
+                        {
+                          this.data[i].stime += response.json()[0].stime+'_';
+                          this.data[i].des   += response.json()[0].description+'_';
+                          this.data[i].tsId  += response.json()[0].id+'_';
+                        }else{
+                          this.data[i].stime = response.json()[0].stime+'_';
+                          this.data[i].des   = response.json()[0].description+'_';
+                          this.data[i].tsId  += response.json()[0].id+'_';
+                        }
+                        
+                      }
+                        this.data[i].totalStime = totalTime+':'+totalMin;
+                      
+                    }else{
+                    if(this.data[i].totalStime==undefined)
+                    {
+                      this.data[i].totalStime = "0:00";
+                    }
+                      if(ci == 1)
+                      {
+                        this.data[i].tsId  = '-'+'_';
+                        this.data[i].stime = '-'+'_';
+                        this.data[i].des   = '-'+'_';
+                      }else{
+                        if(this.data[i].stime!=undefined)
+                        {
+                          this.data[i].tsId  += '-'+'_';
+                          this.data[i].stime += '-'+'_';
+                          this.data[i].des   += '-'+'_';
+                        }else{
+                          this.data[i].tsId  = '-'+'_';
+                          this.data[i].stime = '-'+'_';
+                          this.data[i].des   = '-'+'_';
+                        }
+                      }
+                    }
+                  
+                   });
+                     ci++;
+                  } 
+                  
+                }
+              this.checkData = 1;
+            }else{
+              this.checkData = 2;
+            }
+            
+          }); 
+          }else{
 
             this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+userID+'"}]},"order":"id DESC"}', options)
             .subscribe(response => {
@@ -285,6 +487,7 @@ onPickSheet(pickDate)
                   this.http.get(API_URL+'/projects/'+this.data[i].project_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                   .subscribe(response => {      
                     this.data[i].projectname = response.json().project_name;  
+                    this.data[i].member_id   = this.data[i].member_id;  
                     this.data[i].rate        = response.json().rate;  
                     this.data[i].type        = response.json().project_type;  
                     this.data[i].budget      = response.json().budget;  
@@ -297,17 +500,18 @@ onPickSheet(pickDate)
                   });  
                   let ci = 1, totalStime=0, totalMin = 0, totalTime=0;
                   for(let j=0; j< this.datesData.length; j++ ) {
-                    let userID    = localStorage.getItem('currentUserId');
+                    //let userID    = localStorage.getItem('currentUserId');
+                    let userID    = this.data[i].member_id;
                     let projectID = this.data[i].project_id;
                     let cDate     = this.datesData[j].split('_')[3];
+
                 
                   this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"member_id":"'+userID+'"}, {"project_id":"'+projectID+'"},{"cdate":"'+cDate+'"}]}}', options)
                     .subscribe(response => {    
                     if(response.json().length)
-                    {
-
-                      if(ci == 1)
-                      {
+                    {console.log(response.json()[0].stime)
+                        if(ci == 1)
+                       {
                         this.data[i].tsId   = response.json()[0].id+'_';
                         this.data[i].stime  = response.json()[0].stime+'_';
                         this.data[i].des    = response.json()[0].description+'_';
@@ -330,9 +534,9 @@ onPickSheet(pickDate)
                           this.data[i].des   = response.json()[0].description+'_';
                           this.data[i].tsId  = response.json()[0].id+'_';
                         }
-                        this.data[i].totalStime = totalTime+':'+totalMin;
                       }
-                      
+                        this.data[i].totalStime = totalTime+':'+totalMin;
+
                     }else{
                     if(this.data[i].totalStime==undefined)
                     {
@@ -369,6 +573,9 @@ onPickSheet(pickDate)
             }
 
           }); 
+
+
+      }
 }
 
   onSubmit()
@@ -385,7 +592,7 @@ onPickSheet(pickDate)
               this.sheetData.description = this.model.description;
               this.sheetData.cdate       = localStorage.getItem("cDate");
               this.sheetData.project_id  = localStorage.getItem("proId");
-              this.sheetData.member_id   = localStorage.getItem('currentUserId');
+              this.sheetData.member_id   = localStorage.getItem('memId');
 
 
             	this.http.post(API_URL+'/timesheets?access_token='+localStorage.getItem('currentUserToken'), this.sheetData, options).subscribe(response => {
@@ -406,7 +613,7 @@ onPickSheet(pickDate)
 	            let cdate                  = localStorage.getItem("cDate");
               let projectId              = localStorage.getItem("proId");
 	            let tsId                   = localStorage.getItem("tsId");
-	            let memberId               = localStorage.getItem('currentUserId');
+	            let memberId               = localStorage.getItem('memId');
               //tsId                       = tsId.split('undefined')[0];
 
               if(tsId.indexOf(undefined) != -1){
