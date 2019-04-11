@@ -32,6 +32,12 @@ export class FullLayoutComponent {
 		    	url: '/contractors',
 		    	icon: '',
 		  	});
+
+		  	this.navigation.push({
+			    	name: 'Timesheets',
+			    	url: '/timesheets',
+			    	icon: '',
+		  		});
 	  	}else{
 		  		this.navigation.push({
 			    	name: 'Projects',
