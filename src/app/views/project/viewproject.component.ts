@@ -62,7 +62,7 @@ export class ViewprojectComponent {
         let projectID = this.editparam.id;
         //console.log(projectID)
 
-        this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectID+'"}]},"order":"id DESC"}', options)
+        this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"assign":"1"},{"project_id":"'+projectID+'"}]},"order":"id DESC"}', options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -77,7 +77,7 @@ export class ViewprojectComponent {
                 }); 
               }
             }
-            //console.log(this.data)
+            
             this.checkData = 1;
           }else{
             this.checkData = 0;

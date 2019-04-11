@@ -66,29 +66,27 @@ public filterQuery = '';
 		        if(response.json().length)
 		        {
 		        	this.data = response.json();
-
-		        	console.log(response.json())
 		        	this.checkData = 1;
 		        }else{
 		        	this.checkData = 0;
 		        }
+		        
+			    });	
 
-		        this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+userID+'"}]}}', options)
+			    this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+userID+'"}]}}', options)
 		        	.subscribe(response => {
 		        	//this.checkData = 1;
 		        	for(let i=0; i< response.json().length; i++ ) {
 			            this.http.get(API_URL+'/projects/'+response.json()[i].project_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
 			            .subscribe(response => {   
-			            //if(response.json().member_id!=userID)
-			            //{
-			            	this.data[i+1] = response.json(); 
-			            //}   
+			            if(response.json().member_id!=userID)
+			            {
+			            	this.data[i] = response.json(); 
+			            }   
 			              
 			            });  
 			          }
 		        });	
-		        
-			    });	
 	}
    
   }

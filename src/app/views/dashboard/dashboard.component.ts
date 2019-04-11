@@ -98,15 +98,16 @@ assignpro: any = [];
 
             for(let i=0; i< this.assignpro.length; i++ ) {
             let projectId = this.assignpro[i].id;
-            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"}]},"order":"id DESC"}', options)
+            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"0"}]},"order":"id DESC"}', options)
             .subscribe(response2 => {      
-            if(!response2.json().length)
+            if(response2.json().length)
             {
-              //this.assignpro = response.json(); 
-              this.assignpro[i].unass = '0'; 
+              this.assignpro[i].unass = '1'; 
+              //this.assignpro = response2.json(); 
+              console.log(this.assignpro)
               this.checkAssignPro = 1;
             }else{
-              this.assignpro[i].unass = '1';
+              this.assignpro[i].unass = '0';
               this.checkAssignPro = 0;
               //this.assignpro.splice([i], 1)
             }
@@ -175,14 +176,14 @@ assignpro: any = [];
 
             for(let i=0; i< this.assignpro.length; i++ ) {
             let projectId = this.assignpro[i].id;
-            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"1"}]},"order":"id DESC"}', options)
+            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"0"}]},"order":"id DESC"}', options)
             .subscribe(response2 => {      
-            if(!response2.json().length)
+            if(response2.json().length)
             {
               //this.assignpro = response.json(); 
-              this.assignpro[i].unass = 0; 
+              this.assignpro[i].unass = 1; 
             }else{
-              this.assignpro[i].unass = 1;
+              this.assignpro[i].unass = 0;
               this.assignpro.splice([i], 1)
             }
 

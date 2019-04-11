@@ -13,6 +13,7 @@ import { TimesheetsComponent } from './timesheet.component';
 import { TimesheetsRoutingModule } from './timesheet-routing.module';
 
 import { BsDatepickerModule } from 'ngx-bootstrap';
+import { TimepickerModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
     TimesheetsRoutingModule,
     ChartsModule,
     BsDropdownModule,
+    TimepickerModule.forRoot(),
     BsDatepickerModule.forRoot(),
     ModalModule.forRoot(),
     ButtonsModule.forRoot()
