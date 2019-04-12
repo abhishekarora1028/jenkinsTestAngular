@@ -27,7 +27,7 @@ border-radius:50%;
 </div> 
  <form name="form" (ngSubmit)="sf.form.valid" #sf="ngForm" novalidate>
  <div style="float: left;">
- <input type="text" class="form-control mt-3" name="sheettime" [(ngModel)]="model.sheettime" #sheettime="ngModel" readonly #sdp="bsDatepicker" bsDatepicker (ngModelChange)="onPickSheet($event)" [ngClass]="{ 'is-invalid': sf.submitted && sheettime.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required placeholder="Select Date" style="width: 200px;float: left;" />
+ <input type="text" class="form-control mt-3" name="sheettime" id="sheettime" [(ngModel)]="model.sheettime" #sheettime="ngModel" readonly #sdp="bsDaterangepicker" bsDaterangepicker (ngModelChange)="onPickSheet($event)" [ngClass]="{ 'is-invalid': sf.submitted && sheettime.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required placeholder="Select Date" style="width: 200px;float: left;" />
 </div>
 </form>
   <div class="table-responsive timesheet" style="background: #FFF; padding-top: 35px; ">
@@ -36,7 +36,7 @@ border-radius:50%;
       <tr>
         <th>Contractor</th>
         <th>Project</th>
-        <th *ngFor="let itemdate of datesData;">{{itemdate.split('_')[0]}} <div class="date">{{itemdate.split('_')[1]}} {{itemdate.split('_')[2]}} </div></th>
+        <th *ngFor="let itemdate of datesData">{{itemdate.split('_')[0]}} <div class="date">{{itemdate.split('_')[1]}} {{itemdate.split('_')[2]}} </div></th>
        <!--  <th>Tue <div class="date">Jan 15</div></th>
         <th>Wed <div class="date">Jan 16</div></th>
         <th>Thu <div class="date">Jan 17</div></th>
@@ -49,22 +49,13 @@ border-radius:50%;
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of data;let i = index ">  
+      <tr *ngFor="let item of data;let j = index ">  
         <td>{{item.membername}}</td>
         <td>{{item.projectname}}</td>
-        <td><span *ngIf="item.stime">{{item.stime.split('_')[0]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[0].split('_')[3],item.project_id,item.stime.split('_')[0],item.des.split('_')[0],item.tsId.split('_')[0], item.member_id, item.fullstime.split('@')[0]);dealerModal.show();" *ngIf="item.assign == 1"></span>
+        <td *ngFor="let itemdate of datesData;let i = index " style="padding-left: 30px;">
+        <span *ngIf="item.stime">{{item.stime.split('_')[i]}}</span> 
+         <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[i].split('_')[3],item.project_id,item.stime.split('_')[i],item.des.split('_')[i],item.tsId.split('_')[i], item.member_id, item.fullstime.split('@')[i]);dealerModal.show();" *ngIf="item.assign == 1"></span>
         </td>
-        <td><span *ngIf="item.stime">{{item.stime.split('_')[1]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[1].split('_')[3],item.project_id,item.stime.split('_')[1],item.des.split('_')[1],item.tsId.split('_')[1],item.member_id, item.fullstime.split('@')[1]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
-
-        <td><span *ngIf="item.stime">{{item.stime.split('_')[2]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[2].split('_')[3],item.project_id,item.stime.split('_')[2],item.des.split('_')[2],item.tsId.split('_')[2],item.member_id, item.fullstime.split('@')[2]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
-
-        <td><span *ngIf="item.stime">{{item.stime.split('_')[3]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[3].split('_')[3],item.project_id,item.stime.split('_')[3],item.des.split('_')[3],item.tsId.split('_')[3],item.member_id, item.fullstime.split('@')[3]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
-
-        <td><span *ngIf="item.stime">{{item.stime.split('_')[4]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[4].split('_')[3],item.project_id,item.stime.split('_')[4],item.des.split('_')[4],item.tsId.split('_')[4],item.member_id, item.fullstime.split('@')[4]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
-
-        <td><span *ngIf="item.stime">{{item.stime.split('_')[5]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[5].split('_')[3],item.project_id,item.stime.split('_')[5],item.des.split('_')[5],item.tsId.split('_')[5],item.member_id, item.fullstime.split('@')[5]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
-
-        <td><span *ngIf="item.stime">{{item.stime.split('_')[6]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[6].split('_')[3],item.project_id,item.stime.split('_')[6],item.des.split('_')[6],item.tsId.split('_')[6],item.member_id, item.fullstime.split('@')[6]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
         <!-- <td><span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#myModal"></span></td> -->
         <td>{{item.totalStime}}</td>
          <td>{{getRate(item.totalStime, item.type, item.budget, item.rate, item.percentage)}}$/h</td>
@@ -96,7 +87,7 @@ border-radius:50%;
             <form name="form" (ngSubmit)="f.form.valid && onSubmit();" #f="ngForm">
                 <div class="form-group">
                         <label for="stime">Time</label>
-                        <timepicker [(ngModel)]="model.stime" name="stime" [hourStep]="hstep"
+                        <timepicker [(ngModel)]="model.stime" #stime="ngModel" name="stime" [hourStep]="hstep"
           [minuteStep]="mstep" [showMeridian]="ismeridian"
           [readonlyInput]="!isEnabled"></timepicker>
                         <!-- <input type="text" class="form-control" name="stime" [(ngModel)]="model.stime" #stime="ngModel" [ngClass]="{ 'is-invalid': f.submitted && stime.invalid }" value="{{cuStime}}" required /> -->
