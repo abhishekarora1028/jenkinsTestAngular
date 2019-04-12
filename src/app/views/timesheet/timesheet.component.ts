@@ -21,7 +21,9 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 export class TimesheetsComponent {
 @ViewChild('f') formValues;
 editparam: any;
+seldate: any;
 sheetData: any = {};
+editsheetData: any = {};
 prodel: any;
 public datesData:any = [];
 checkData: any = 0;
@@ -240,7 +242,7 @@ public options:any = {
                           this.data[i].totalStime = totalTime+':'+totalMin;
                   });
               }
-              console.log(this.data)
+              
               this.checkData = 1;
             }else{
               this.checkData = 2;
@@ -337,7 +339,7 @@ public options:any = {
 
   getDate(cDate, proId, stime, des, tsId, memId, fullstime)
   {
-    
+
     this.sheetStatus = '';
     this.checkData = 0;
   	this.addData = 0;
@@ -427,11 +429,10 @@ onPickSheet(pickDate)
 {
   //let strDate = pickDate.getDate() + "/" + (pickDate.getMonth()+1) + "/" + pickDate.getFullYear();
 
-  console.log(pickDate)
-
+    this.seldate = pickDate;
     this.checkData = 0;
     this.sheetStatus = '';
-    let todayDate = new Date(pickDate);
+    let todayDate = new Date(pickDate[0]);
     //let tMonth  = todayDate.getMonth()+1;
     let tDay      = todayDate.getDate();
     let months    = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -439,8 +440,10 @@ onPickSheet(pickDate)
     let days      = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     let curDay    = todayDate.getDay();
 
-    for(let i=0; i<= 6; i++ ) {
-    let nextDay = new Date(pickDate);
+    var tDays =  Math.floor(( Date.parse(pickDate[1]) - Date.parse(pickDate[0]) ) / 86400000); 
+
+    for(let i=0; i<= tDays; i++ ) {
+    let nextDay = new Date(pickDate[0]);
       nextDay.setDate(nextDay.getDate() + i);
       let strDate = (nextDay.getMonth()+1) + "/" + nextDay.getDate() + "/" + nextDay.getFullYear();
 
@@ -501,7 +504,7 @@ onPickSheet(pickDate)
                        fullstime += '@';
                        des += '-'+'_';
                     }
-                    //console.log(stime)
+                   
                     this.data[i].tsId  = tsId;
                     this.data[i].stime = stime;
                     this.data[i].fullstime = fullstime;
@@ -532,6 +535,7 @@ onPickSheet(pickDate)
                           this.data[i].totalStime = totalTime+':'+totalMin;
                   });
               }
+              
               this.checkData = 1;
             }else{
               this.checkData = 2;
@@ -584,7 +588,7 @@ onPickSheet(pickDate)
                        fullstime += '@';
                        des += '-'+'_';
                     }
-                    //console.log(stime)
+                    
                     this.data[i].tsId  = tsId;
                     this.data[i].stime = stime;
                     this.data[i].fullstime = fullstime;
@@ -654,13 +658,20 @@ onPickSheet(pickDate)
 
 
             	this.http.post(API_URL+'/timesheets?access_token='+localStorage.getItem('currentUserToken'), this.sheetData, options).subscribe(response => {
-		          let keys = Object.keys(response.json());
-				  let len = keys.length;
-		              if(len == 6)
+              let keys = Object.keys(response.json());
+              let len = keys.length;
+		              if(len > 0)
 		              {
 		                //this.data = response.json();
 		                this.addData = 1;
-                    setTimeout(function(){location.reload();}, 1000);
+                    //setTimeout(function(){location.reload();}, 1000);
+                    if(this.seldata==undefined)
+                    {
+                      this.onPickSheet(new Date());
+                    }else{
+                      this.onPickSheet(this.seldate);
+                    }
+                    setTimeout(function(){$(".close").trigger("click");}, 1000);
 		              }else{
 		                this.addData = 0;
 		              }
@@ -668,7 +679,7 @@ onPickSheet(pickDate)
 		           });
             }else{
             	//this.sheetData.stime       = this.model.stime;
-	            this.sheetData.description = this.model.description;
+	            this.editsheetData.description = this.model.description;
 	            let cdate                  = localStorage.getItem("cDate");
               let projectId              = localStorage.getItem("proId");
 	            let tsId                   = localStorage.getItem("tsId");
@@ -684,19 +695,27 @@ onPickSheet(pickDate)
                 minutes = '00';
               }
 
-              this.sheetData.stime       = hours+':'+minutes;
-              this.sheetData.fullstime   = this.model.stime;
+              this.editsheetData.stime       = hours+':'+minutes;
+              this.editsheetData.fullstime   = this.model.stime;
 
               if(tsId.indexOf(undefined) != -1){
                   tsId = tsId.split('undefined')[1];
               }
 
-              this.http.post(API_URL+'/timesheets/update?where=%7B%22id%22%3A%22'+tsId+'%22%7D', this.sheetData,  options)
+              this.http.post(API_URL+'/timesheets/update?where=%7B%22id%22%3A%22'+tsId+'%22%7D', this.editsheetData,  options)
                   .subscribe(data => {
 
                   }); 
             	this.addData = 2;
-              setTimeout(function(){location.reload();}, 1000);
+              if(this.seldata==undefined)
+              {
+                this.onPickSheet(new Date());
+              }else{
+                this.onPickSheet(this.seldate);
+              }
+              
+              setTimeout(function(){$(".close").trigger("click");}, 1000);
+              //setTimeout(function(){location.reload();}, 1000);
               
             }
 
