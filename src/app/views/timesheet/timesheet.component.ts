@@ -21,7 +21,7 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
 export class TimesheetsComponent {
 @ViewChild('f') formValues;
 editparam: any;
-seldate: any;
+public seldata: any = {};
 sheetData: any = {};
 editsheetData: any = {};
 prodel: any;
@@ -429,7 +429,7 @@ onPickSheet(pickDate)
 {
   //let strDate = pickDate.getDate() + "/" + (pickDate.getMonth()+1) + "/" + pickDate.getFullYear();
 
-    this.seldate = pickDate;
+    this.seldata = pickDate;
     this.checkData = 0;
     this.sheetStatus = '';
     let todayDate = new Date(pickDate[0]);
@@ -669,7 +669,7 @@ onPickSheet(pickDate)
                     {
                       this.onPickSheet(new Date());
                     }else{
-                      this.onPickSheet(this.seldate);
+                      this.onPickSheet(this.seldata);
                     }
                     setTimeout(function(){$(".close").trigger("click");}, 1000);
 		              }else{
@@ -711,7 +711,7 @@ onPickSheet(pickDate)
               {
                 this.onPickSheet(new Date());
               }else{
-                this.onPickSheet(this.seldate);
+                this.onPickSheet(this.seldata);
               }
               
               setTimeout(function(){$(".close").trigger("click");}, 1000);
@@ -719,7 +719,6 @@ onPickSheet(pickDate)
               
             }
 
-          
   	
   }
 
