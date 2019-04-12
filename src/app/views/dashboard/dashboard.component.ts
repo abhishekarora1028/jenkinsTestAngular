@@ -16,6 +16,7 @@ export class DashboardComponent {
 countProject: any;
 countContractor: any;
 userRoleId: any;
+unassdata: any;
 userId: any;
 checkData: any = 0;
 checkCont: any = 0;
@@ -24,7 +25,7 @@ condel: any = 0;
 prodel: any = 0;
 model: any = [];
 data: any = [];
-assignpro: any = [];
+assignpro: any = {};
   constructor(@Inject(Http) private http: Http, @Inject(Router)private router:Router) {
   if(!localStorage.getItem("currentUserId"))
     {
@@ -94,37 +95,32 @@ assignpro: any = [];
           .subscribe(response => {
           if(response.json().length)
           {
-            this.assignpro = response.json();
+            this.unassdata = response.json();
 
-            for(let i=0; i< this.assignpro.length; i++ ) {
-            let projectId = this.assignpro[i].id;
+            for(let i=0; i< this.unassdata.length; i++ ) {
+            let projectId = this.unassdata[i].id;
             this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"0"}]},"order":"id DESC"}', options)
-            .subscribe(response2 => {      
-            if(response2.json().length)
+            .subscribe(response => {      
+            if(response.json().length)
             {
-              this.assignpro[i].unass = '1'; 
-              //this.assignpro = response2.json(); 
-              console.log(this.assignpro)
+
+              this.unassdata[i].unass = 1; 
               this.checkAssignPro = 1;
             }else{
-            if(this.assignpro[i].assign == 0)
-            {
-              this.assignpro[i].unass = '1';
-            }else{
-            this.assignpro[i].unass = '0';
-            }
+              if(this.unassdata[i].assign == 0)
+              {
+                this.unassdata[i].unass = 1;
+              }else{
+                this.unassdata[i].unass = 0;
+              }
               
-              this.checkAssignPro = 0;
-              //this.assignpro.splice([i], 1)
             }
-
             
             });   
           }
-          
             
           }else{
-            //this.checkAssignPro = 0;
+            this.checkAssignPro = 0;
           }
           
         });
@@ -185,30 +181,29 @@ assignpro: any = [];
           .subscribe(response => {
           if(response.json().length)
           {
-            this.assignpro = response.json();
+            this.unassdata = response.json();
 
-            for(let i=0; i< this.assignpro.length; i++ ) {
-            let projectId = this.assignpro[i].id;
+            for(let i=0; i< this.unassdata.length; i++ ) {
+            let projectId = this.unassdata[i].id;
             this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"0"}]},"order":"id DESC"}', options)
-            .subscribe(response2 => {      
-            if(response2.json().length)
+            .subscribe(response => {      
+            if(response.json().length)
             {
-              //this.assignpro = response.json(); 
-              this.assignpro[i].unass = 1; 
-            }else{
-              this.assignpro[i].unass = 0;
-              this.assignpro.splice([i], 1)
-            }
 
-            if(this.assignpro.length)
-            {
+              this.unassdata[i].unass = 1; 
               this.checkAssignPro = 1;
             }else{
-              this.checkAssignPro = 0;
+              if(this.unassdata[i].assign == 0)
+              {
+                this.unassdata[i].unass = 1;
+              }else{
+                this.unassdata[i].unass = 0;
+              }
+              
             }
+            
             });   
           }
-          
             
           }else{
             this.checkAssignPro = 0;
