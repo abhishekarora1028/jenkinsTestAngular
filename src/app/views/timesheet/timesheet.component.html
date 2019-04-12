@@ -12,6 +12,9 @@ border-radius:50%;
 .glyphicon {
   cursor:pointer;
 }
+.btn.btn-default.text-center{
+  display: none !important;
+}
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
  <!-- 
@@ -46,22 +49,22 @@ border-radius:50%;
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of data;let i = index">
+      <tr *ngFor="let item of data;let i = index">  
         <td><img src="https://via.placeholder.com/64/eee" class="img-responsive placeholder"/></td>
         <td>{{item.projectname}}</td>
         <td><span *ngIf="item.stime">{{item.stime.split('_')[0]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[0].split('_')[3],item.project_id,item.stime.split('_')[0],item.des.split('_')[0],item.tsId.split('_')[0], item.member_id, item.fullstime.split('@')[0]);dealerModal.show();" *ngIf="item.assign == 1"></span>
         </td>
-        <td><span *ngIf="item.stime">{{item.stime.split('_')[1]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[1].split('_')[3],item.project_id,item.stime.split('_')[1],item.des.split('_')[1],item.tsId.split('_')[1],item.member_id, item.fullstime.split('@')[0]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
+        <td><span *ngIf="item.stime">{{item.stime.split('_')[1]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[1].split('_')[3],item.project_id,item.stime.split('_')[1],item.des.split('_')[1],item.tsId.split('_')[1],item.member_id, item.fullstime.split('@')[1]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
 
-        <td><span *ngIf="item.stime">{{item.stime.split('_')[2]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[2].split('_')[3],item.project_id,item.stime.split('_')[2],item.des.split('_')[2],item.tsId.split('_')[2],item.member_id, item.fullstime.split('@')[0]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
+        <td><span *ngIf="item.stime">{{item.stime.split('_')[2]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[2].split('_')[3],item.project_id,item.stime.split('_')[2],item.des.split('_')[2],item.tsId.split('_')[2],item.member_id, item.fullstime.split('@')[2]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
 
-        <td><span *ngIf="item.stime">{{item.stime.split('_')[3]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[3].split('_')[3],item.project_id,item.stime.split('_')[3],item.des.split('_')[3],item.tsId.split('_')[3],item.member_id, item.fullstime.split('@')[0]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
+        <td><span *ngIf="item.stime">{{item.stime.split('_')[3]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[3].split('_')[3],item.project_id,item.stime.split('_')[3],item.des.split('_')[3],item.tsId.split('_')[3],item.member_id, item.fullstime.split('@')[3]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
 
-        <td><span *ngIf="item.stime">{{item.stime.split('_')[4]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[4].split('_')[3],item.project_id,item.stime.split('_')[4],item.des.split('_')[4],item.tsId.split('_')[4],item.member_id, item.fullstime.split('@')[0]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
+        <td><span *ngIf="item.stime">{{item.stime.split('_')[4]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[4].split('_')[3],item.project_id,item.stime.split('_')[4],item.des.split('_')[4],item.tsId.split('_')[4],item.member_id, item.fullstime.split('@')[4]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
 
-        <td><span *ngIf="item.stime">{{item.stime.split('_')[5]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[5].split('_')[3],item.project_id,item.stime.split('_')[5],item.des.split('_')[5],item.tsId.split('_')[5],item.member_id, item.fullstime.split('@')[0]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
+        <td><span *ngIf="item.stime">{{item.stime.split('_')[5]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[5].split('_')[3],item.project_id,item.stime.split('_')[5],item.des.split('_')[5],item.tsId.split('_')[5],item.member_id, item.fullstime.split('@')[5]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
 
-        <td><span *ngIf="item.stime">{{item.stime.split('_')[6]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[6].split('_')[3],item.project_id,item.stime.split('_')[6],item.des.split('_')[6],item.tsId.split('_')[6],item.member_id, item.fullstime.split('@')[0]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
+        <td><span *ngIf="item.stime">{{item.stime.split('_')[6]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[6].split('_')[3],item.project_id,item.stime.split('_')[6],item.des.split('_')[6],item.tsId.split('_')[6],item.member_id, item.fullstime.split('@')[6]);dealerModal.show();" *ngIf="item.assign == 1"></span></td>
         <!-- <td><span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#myModal"></span></td> -->
         <td>{{item.totalStime}}</td>
          <td>{{getRate(item.totalStime, item.type, item.budget, item.rate, item.percentage)}}$/h</td>
