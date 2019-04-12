@@ -1,6 +1,6 @@
 <div class="animated fadeIn dashboard-component" >
   <div class="row">
-    <!-- <div class="col-sm-4 col-lg-4 pr-0">
+    <!-- <div class="col-sm-4 col-lg-4 px-0">
       <div class="card">
         <div class="card-body row d-flex pt-2 pb-2">
           <div class="col-3 d-flex align-items-center justify-content-center">
@@ -13,7 +13,7 @@
         </div>
       </div>
     </div> --><!--/.col-->
-    <div class="col-sm-4 col-lg-6 pr-0">
+    <div class="col-sm-4 col-lg-6 px-0">
       <div class="card">
         <div class="card-body row d-flex pt-2 pb-2">
           <div class="col-3 d-flex align-items-center justify-content-center">
@@ -41,7 +41,7 @@
     </div>
   </div><!--/.row-->
   <div class="row">
-    <div class="col-sm-8 pr-0">
+    <div class="col-sm-8 px-0">
       <div class="card">
         <div class="card-body p-0">
           <div class="row d-flex border-bottom pt-2 pb-2">
@@ -69,15 +69,9 @@
               </div>
               <div class="col-lg-4 col-md-4 col-sm-6 col-12 d-flex align-items-center justify-content-end">
                 <div class="display-inline">
-                  <span>
-                    <a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                  </span>
-                  <span>
-                    <a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                  </span>  
-                  <span>
-                    <button class="btn btn-small btn-outline-0 p-0 bg-transparent " (click) ="delproject(item.id)"><i class="fa fa-times" aria-hidden="true"></i></button>
-                  </span>
+                  <a class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/viewproject/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/editproject/{{item.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  <a class="btn btn-small btn-outline-0 p-1 bg-transparent " (click) ="delproject(item.id)"><i class="fa fa-times" aria-hidden="true"></i></a>
                 </div> 
               </div>
             </div>
@@ -116,15 +110,9 @@
                     <div class="col-9 d-flex flex-wrap align-items-center justify-content-start">
                       <h4 class="mb-0 width">{{item2.fname}}{{item2.lname}}</h4>
                       <div *ngIf="userRoleId == 1">
-                        <span>
-                          <a class="btn btn-show-contact100 pl-0" routerLink="/projects/viewcontractor/{{item2.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                        </span>
-                        <span>
-                          <a class="btn btn-show-contact100 pl-0" routerLink="/contractors/editcontractor/{{item2.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                        </span>  
-                        <span>
-                          <button class="btn btn-small btn-outline-0 p-0 bg-transparent" (click) ="delcontractor(item2.id)"><i class="fa fa-times" aria-hidden="true"></i></button>
-                        </span>
+			<a class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/viewcontractor/{{item2.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+			<a class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/editcontractor/{{item2.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+			<a class="btn btn-small btn-outline-0 p-1 bg-transparent " (click) ="delcontractor(item2.id)"><i class="fa fa-times" aria-hidden="true"></i></a>
                       </div> 
                     </div>
                   </div>
@@ -143,12 +131,12 @@
   </div>
   <!--/.card-->
   <div class="row">
-    <div class="col-12 pr-0">
+    <div class="col-12 px-0">
       <div class="card">
         <div class="card-body p-0">
           <div class="row d-flex border-bottom pt-2 pb-2">
             <div class="col-12">
-              <h4 class="card-title mb-0">Un-Assigned Projects</h4>
+              <h5 class="card-title mb-0">Un-Assigned Projects</h5>
               <!-- <div class="small text-muted">November 2017</div> -->
             </div><!--/.col-->
           </div><!--/.row-->
@@ -168,17 +156,9 @@
               </div>
               <div class="col-lg-4 col-md-4 col-sm-6 col-12 d-flex align-items-center justify-content-end" *ngIf="item3.unass == '1'">
                 <div>
-                  <span>
-                    <a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item3.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                  </span> 
-                  <span *ngIf="userId == item3.member_id || userRoleId==1">
-                    <a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item3.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                  </span>  
-                  <span *ngIf="userId == item3.member_id || userRoleId==1">
-                    <button class="btn btn-small btn-outline-0 p-0 bg-transparent  " (click) ="delproject(item3.id)">
-                      <i class="fa fa-times" aria-hidden="true"></i>
-                    </button>
-                  </span>
+ 		  <a class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/viewproject/{{item3.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a *ngIf="userId == item3.member_id || userRoleId==1" class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/editproject/{{item3.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  <a *ngIf="userId == item3.member_id || userRoleId==1" class="btn btn-small btn-outline-0 p-1 bg-transparent " (click) ="delproject(item3.id)"><i class="fa fa-times" aria-hidden="true"></i></a>
                 </div>
               </div>
             </div>
