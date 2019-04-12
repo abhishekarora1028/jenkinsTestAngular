@@ -27,15 +27,15 @@ border-radius:50%;
 </div> 
  <form name="form" (ngSubmit)="sf.form.valid" #sf="ngForm" novalidate>
  <div style="float: left;">
-<input type="text" class="form-control mt-3" name="sheettime" [(ngModel)]="model.sheettime" #sheettime="ngModel" readonly #sdp="bsDatepicker" bsDatepicker (ngModelChange)="onPickSheet($event)" [ngClass]="{ 'is-invalid': sf.submitted && sheettime.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required placeholder="Select Date" style="width: 200px;float: left;" />
+ <input type="text" class="form-control mt-3" name="sheettime" [(ngModel)]="model.sheettime" #sheettime="ngModel" readonly #sdp="bsDatepicker" bsDatepicker (ngModelChange)="onPickSheet($event)" [ngClass]="{ 'is-invalid': sf.submitted && sheettime.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required placeholder="Select Date" style="width: 200px;float: left;" />
 </div>
 </form>
   <div class="table-responsive timesheet" style="background: #FFF; padding-top: 35px; ">
   <table class="table text-center">
     <thead>
       <tr>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
+        <th>Contractor</th>
+        <th>Project</th>
         <th *ngFor="let itemdate of datesData;">{{itemdate.split('_')[0]}} <div class="date">{{itemdate.split('_')[1]}} {{itemdate.split('_')[2]}} </div></th>
        <!--  <th>Tue <div class="date">Jan 15</div></th>
         <th>Wed <div class="date">Jan 16</div></th>
@@ -49,8 +49,8 @@ border-radius:50%;
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of data;let i = index">  
-        <td><img src="https://via.placeholder.com/64/eee" class="img-responsive placeholder"/></td>
+      <tr *ngFor="let item of data;let i = index ">  
+        <td>{{item.membername}}</td>
         <td>{{item.projectname}}</td>
         <td><span *ngIf="item.stime">{{item.stime.split('_')[0]}}</span> <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[0].split('_')[3],item.project_id,item.stime.split('_')[0],item.des.split('_')[0],item.tsId.split('_')[0], item.member_id, item.fullstime.split('@')[0]);dealerModal.show();" *ngIf="item.assign == 1"></span>
         </td>

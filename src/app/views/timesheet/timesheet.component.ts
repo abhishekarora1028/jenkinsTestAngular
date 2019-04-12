@@ -87,7 +87,7 @@ public options:any = {
               this.data = response.json();
               
               for(let i=0; i< this.data.length; i++ ) {
-              let stime = '', des = '', tsId = '', fullstime = '';
+              let stime = '', des = '', tsId = '';
                   this.http.get(API_URL+'/projects/'+this.data[i].project_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                   .subscribe(response => {      
                     this.data[i].projectname = response.json().project_name;  
@@ -95,9 +95,14 @@ public options:any = {
                     this.data[i].rate        = response.json().rate;  
                     this.data[i].type        = response.json().project_type;  
                     this.data[i].budget      = response.json().budget;  
+
+                    this.http.get(API_URL+'/Members/'+this.data[i].member_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
+                  .subscribe(response => { 
+                      this.data[i].membername = response.json().fname+' '+response.json().lname;
+                  });
                     
                   });  
-                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = 0;
+                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = '';
                   for(let j=0; j< this.datesData.length; j++ ) {
                     let userID    = localStorage.getItem('currentUserId');
                     let projectID = this.data[i].project_id;
@@ -105,23 +110,13 @@ public options:any = {
                 
                   this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+projectID+'"},{"cdate":"'+cDate+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
                     .subscribe(response => {    
-                    this.data[i].stime = '';
+                    //this.data[i].stime = '';
                     if(response.json().length)
                     {
-                        tDate   = new Date(response.json()[0].stime);
-                        hours   = tDate.getHours(); 
-                        minutes = tDate.getMinutes(); 
-
-                        if(minutes == 0)
-                        {
-                          minutes = '00';
-                        }
-
-                      //stime  = hours+':'+minutes;
 
                       tsId  += response.json()[0].id+'_';
-                      stime += hours+':'+minutes+'_';
-                      fullstime += response.json()[0].stime;
+                      stime += response.json()[0].stime+'_';
+                      fullstime += response.json()[0].fullstime;
                       des   += response.json()[0].description+'_';
                     }else{
                        tsId += '-'+'_';
@@ -129,7 +124,7 @@ public options:any = {
                        fullstime += '@';
                        des += '-'+'_';
                     }
-                    //console.log(stime)
+                    
                     this.data[i].tsId  = tsId;
                     this.data[i].stime = stime;
                     this.data[i].fullstime = fullstime;
@@ -139,25 +134,21 @@ public options:any = {
                   } 
                   
                 }
-              let tDate = 0, hours = 0, minutes = 0;
+              
               for(let i=0; i< this.data.length; i++ ) {
-                let totalTime = 0, totalMin = 0;
+                let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
                   this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].project_id+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
                           .subscribe(response => { 
                           if(response.json().length)
                           { 
                             
                             for(let j=0; j< response.json().length; j++ ) {
-                            tDate   = new Date(response.json()[j].stime);
-                            hours   = tDate.getHours(); 
-                            minutes = tDate.getMinutes(); 
+                            //tDate   = new Date(response.json()[j].stime);
+                            hours   = response.json()[j].stime.split(':')[0]; 
+                            minutes = response.json()[j].stime.split(':')[1]; 
 
-                            if(minutes == 0)
-                            {
-                              minutes = '00';
-                            }
-                              totalTime     += Number(hours);
-                              totalMin      += Number(minutes);
+                            totalTime     += Number(hours);
+                            totalMin      += Number(minutes);
                             }
                           }else{
                             this.data[i].totalStime = "0:00";
@@ -190,9 +181,14 @@ public options:any = {
                     this.data[i].rate        = response.json().rate;  
                     this.data[i].type        = response.json().project_type;  
                     this.data[i].budget      = response.json().budget;  
+
+                    this.http.get(API_URL+'/Members/'+this.data[i].member_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
+                  .subscribe(response => { 
+                      this.data[i].membername = response.json().fname+' '+response.json().lname;
+                  });
                     
                   });  
-                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = 0;
+                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = '';
                   for(let j=0; j< this.datesData.length; j++ ) {
                     let userID    = localStorage.getItem('currentUserId');
                     let projectID = this.data[i].project_id;
@@ -200,23 +196,12 @@ public options:any = {
                 
                   this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+projectID+'"},{"cdate":"'+cDate+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
                     .subscribe(response => {    
-                    this.data[i].stime = '';
+                    //this.data[i].stime = '';
                     if(response.json().length)
                     {
-                      tDate   = new Date(response.json()[0].stime);
-                        hours   = tDate.getHours(); 
-                        minutes = tDate.getMinutes(); 
-
-                        if(minutes == 0)
-                        {
-                          minutes = '00';
-                        }
-
-                      //stime  = hours+':'+minutes;
-
                       tsId  += response.json()[0].id+'_';
-                      stime += hours+':'+minutes+'_';
-                      fullstime += response.json()[0].stime;
+                      stime += response.json()[0].stime+'_';
+                      fullstime += response.json()[0].fullstime;
                       des   += response.json()[0].description+'_';
                     }else{
                        tsId += '-'+'_';
@@ -224,7 +209,7 @@ public options:any = {
                        fullstime += '@';
                        des += '-'+'_';
                     }
-                    //console.log(stime)
+                    
                     this.data[i].tsId  = tsId;
                     this.data[i].stime = stime;
                     this.data[i].fullstime = fullstime;
@@ -236,14 +221,18 @@ public options:any = {
                 }
               
               for(let i=0; i< this.data.length; i++ ) {
-                let totalTime = 0, totalMin = 0;
+                let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
                   this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].project_id+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
                           .subscribe(response => { 
                           if(response.json().length)
                           { 
                             for(let j=0; j< response.json().length; j++ ) {
-                              totalTime     += Number(response.json()[j].stime.split(':')[0]);
-                              totalMin      += Number(response.json()[j].stime.split(':')[1]);
+                            //tDate   = new Date(response.json()[j].stime);
+                            hours   = response.json()[j].stime.split(':')[0]; 
+                            minutes = response.json()[j].stime.split(':')[1]; 
+
+                            totalTime     += Number(hours);
+                            totalMin      += Number(minutes);
                             }
                           }else{
                             this.data[i].totalStime = "0:00";
@@ -251,6 +240,7 @@ public options:any = {
                           this.data[i].totalStime = totalTime+':'+totalMin;
                   });
               }
+              console.log(this.data)
               this.checkData = 1;
             }else{
               this.checkData = 2;
@@ -280,11 +270,11 @@ public options:any = {
       {
         
           let hrate = Number((rate * percentage) / 100);
-          let amH = 0, amM = 0, tHours = 0;
+          let amH = 0, amM = 0, tHours = 0, amount = 0;
           amH += parseInt(totalStime.split(':')[0]);
           amM += parseInt(totalStime.split(':')[1]);
-          tHours = parseInt(amH + amM);
-          let amount = (tHours * hrate);
+          tHours = (amH + amM);
+          amount = (tHours * hrate);
           return hrate;
         
       }else{
@@ -393,6 +383,7 @@ getAmount(totalStime, type, budget, rate, percentage)
         let amount = (budget * percentage) / 100;
         return amount;
       }else{
+        let amount = 0;
         if(totalStime=='0:0')
         {
           
@@ -421,7 +412,7 @@ getAmount(totalStime, type, budget, rate, percentage)
           //fixedMin   = this.getFraction(totalStime.split(':')[1] / 60);
           //fixedMins = fixedMins.split('/');
           fixedRate = (famt / fixedMins);
-          let amount = (budget * percentage) / 100;
+          amount = (budget * percentage) / 100;
         }
         
         return amount;
@@ -435,6 +426,8 @@ getAmount(totalStime, type, budget, rate, percentage)
 onPickSheet(pickDate)
 {
   //let strDate = pickDate.getDate() + "/" + (pickDate.getMonth()+1) + "/" + pickDate.getFullYear();
+
+  console.log(pickDate)
 
     this.checkData = 0;
     this.sheetStatus = '';
@@ -480,9 +473,14 @@ onPickSheet(pickDate)
                     this.data[i].rate        = response.json().rate;  
                     this.data[i].type        = response.json().project_type;  
                     this.data[i].budget      = response.json().budget;  
+
+                    this.http.get(API_URL+'/Members/'+this.data[i].member_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
+                  .subscribe(response => { 
+                      this.data[i].membername = response.json().fname+' '+response.json().lname;
+                  });
                     
                   });  
-                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = 0;
+                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = '';
                   for(let j=0; j< this.datesData.length; j++ ) {
                     let userID    = localStorage.getItem('currentUserId');
                     let projectID = this.data[i].project_id;
@@ -493,21 +491,10 @@ onPickSheet(pickDate)
                     this.data[i].stime = '';
                     if(response.json().length)
                     {
-                       tDate   = new Date(response.json()[0].stime);
-                        hours   = tDate.getHours(); 
-                        minutes = tDate.getMinutes(); 
-
-                        if(minutes == 0)
-                        {
-                          minutes = '00';
-                        }
-
-                      //stime  = hours+':'+minutes;
-
-                      tsId  += response.json()[0].id+'_';
-                      stime += hours+':'+minutes+'_';
-                      fullstime += response.json()[0].stime;
-                      des   += response.json()[0].description+'_';
+                        tsId  += response.json()[0].id+'_';
+                        stime += response.json()[0].stime+'_';
+                        fullstime += response.json()[0].fullstime;
+                        des   += response.json()[0].description+'_';
                     }else{
                        tsId += '-'+'_';
                        stime += '-'+'_';
@@ -526,14 +513,18 @@ onPickSheet(pickDate)
                 }
               
               for(let i=0; i< this.data.length; i++ ) {
-                let totalTime = 0, totalMin = 0;
+                let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
                   this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].project_id+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
                           .subscribe(response => { 
                           if(response.json().length)
                           { 
                             for(let j=0; j< response.json().length; j++ ) {
-                              totalTime     += Number(response.json()[j].stime.split(':')[0]);
-                              totalMin      += Number(response.json()[j].stime.split(':')[1]);
+                            //tDate   = new Date(response.json()[j].stime);
+                            hours   = response.json()[j].stime.split(':')[0]; 
+                            minutes = response.json()[j].stime.split(':')[1]; 
+
+                            totalTime     += Number(hours);
+                            totalMin      += Number(minutes);
                             }
                           }else{
                             this.data[i].totalStime = "0:00";
@@ -565,9 +556,14 @@ onPickSheet(pickDate)
                     this.data[i].rate        = response.json().rate;  
                     this.data[i].type        = response.json().project_type;  
                     this.data[i].budget      = response.json().budget;  
+
+                    this.http.get(API_URL+'/Members/'+this.data[i].member_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
+                  .subscribe(response => { 
+                      this.data[i].membername = response.json().fname+' '+response.json().lname;
+                  });
                     
                   });  
-                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = 0;
+                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = '';
                   for(let j=0; j< this.datesData.length; j++ ) {
                     let userID    = localStorage.getItem('currentUserId');
                     let projectID = this.data[i].project_id;
@@ -578,21 +574,10 @@ onPickSheet(pickDate)
                     this.data[i].stime = '';
                     if(response.json().length)
                     {
-                      tDate   = new Date(response.json()[0].stime);
-                        hours   = tDate.getHours(); 
-                        minutes = tDate.getMinutes(); 
-
-                        if(minutes == 0)
-                        {
-                          minutes = '00';
-                        }
-
-                      //stime  = hours+':'+minutes;
-
-                      tsId  += response.json()[0].id+'_';
-                      stime += hours+':'+minutes+'_';
-                      fullstime += response.json()[0].stime;
-                      des   += response.json()[0].description+'_';
+                        tsId  += response.json()[0].id+'_';
+                        stime += response.json()[0].stime+'_';
+                        fullstime += response.json()[0].fullstime;
+                        des   += response.json()[0].description+'_';
                     }else{
                        tsId += '-'+'_';
                        stime += '-'+'_';
@@ -611,14 +596,18 @@ onPickSheet(pickDate)
                 }
               
               for(let i=0; i< this.data.length; i++ ) {
-                let totalTime = 0, totalMin = 0;
+                let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
                   this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].project_id+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
                           .subscribe(response => { 
                           if(response.json().length)
                           { 
                             for(let j=0; j< response.json().length; j++ ) {
-                              totalTime     += Number(response.json()[j].stime.split(':')[0]);
-                              totalMin      += Number(response.json()[j].stime.split(':')[1]);
+                              //tDate   = new Date(response.json()[j].stime);
+                              hours   = response.json()[j].stime.split(':')[0]; 
+                              minutes = response.json()[j].stime.split(':')[1]; 
+
+                              totalTime     += Number(hours);
+                              totalMin      += Number(minutes);
                             }
                           }else{
                             this.data[i].totalStime = "0:00";
@@ -646,11 +635,22 @@ onPickSheet(pickDate)
 
             if(this.sheetStatus=='add')
             {
-              this.sheetData.stime       = this.model.stime;
+              //this.sheetData.stime       = this.model.stime;
               this.sheetData.description = this.model.description;
               this.sheetData.cdate       = localStorage.getItem("cDate");
               this.sheetData.project_id  = localStorage.getItem("proId");
               this.sheetData.member_id   = localStorage.getItem('memId');
+
+              let hours   = this.model.stime.getHours(); 
+              let minutes = this.model.stime.getMinutes(); 
+
+              if(minutes == 0)
+              {
+                minutes = '00';
+              }
+
+              this.sheetData.stime       = hours+':'+minutes;
+              this.sheetData.fullstime   = this.model.stime;
 
 
             	this.http.post(API_URL+'/timesheets?access_token='+localStorage.getItem('currentUserToken'), this.sheetData, options).subscribe(response => {
@@ -667,13 +667,25 @@ onPickSheet(pickDate)
 
 		           });
             }else{
-            	this.sheetData.stime       = this.model.stime;
+            	//this.sheetData.stime       = this.model.stime;
 	            this.sheetData.description = this.model.description;
 	            let cdate                  = localStorage.getItem("cDate");
               let projectId              = localStorage.getItem("proId");
 	            let tsId                   = localStorage.getItem("tsId");
 	            let memberId               = localStorage.getItem('memId');
               //tsId                     = tsId.split('undefined')[0];
+
+
+              let hours   = this.model.stime.getHours(); 
+              let minutes = this.model.stime.getMinutes(); 
+
+              if(minutes == 0)
+              {
+                minutes = '00';
+              }
+
+              this.sheetData.stime       = hours+':'+minutes;
+              this.sheetData.fullstime   = this.model.stime;
 
               if(tsId.indexOf(undefined) != -1){
                   tsId = tsId.split('undefined')[1];
