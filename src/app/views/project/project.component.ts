@@ -81,7 +81,13 @@ public filterQuery = '';
 			            .subscribe(response => {   
 			            if(response.json().member_id!=userID)
 			            {
-			            	this.data[i] = response.json(); 
+			                if(this.data.length)
+			                {
+			                	this.data[i+this.data.length] = response.json();
+			                }else{
+			                	this.data[i] = response.json();
+			                }
+			            	 
 			            }   
 			              
 			            });  

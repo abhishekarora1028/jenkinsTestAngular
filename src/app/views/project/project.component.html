@@ -35,6 +35,15 @@
             <th>
               <mfDefaultSorter by=""><h4>Client Name</h4></mfDefaultSorter>
             </th>
+            <th>
+              <mfDefaultSorter by=""><h4>Client Email</h4></mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by=""><h4>Project Type</h4></mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by=""><h4>Status</h4></mfDefaultSorter>
+            </th>
             <th>&nbsp;</th>
           </tr>
         </thead>
@@ -44,12 +53,18 @@
               <div class="card P-0 border-0 width mb-0">
                 <div class="card-body row d-flex p-0">
                   <div class="col-12 d-flex flex-wrap align-items-center justify-content-start p-0">
-                    <h4 class="mb-0 width"><span class="btn btn-outline-secondary rounded mr-2">B</span> {{item.project_name}}</h4>
+                    <h4 class="mb-0 width"><span class="btn btn-outline-secondary rounded mr-2"><a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item.id}}">{{item.project_name.charAt(0)}}</a></span> {{item.project_name}}</h4>
                   </div>
                 </div>
               </div>
             </td>
             <td>{{item.client_name}}</td>
+            <td>{{item.email}}</td>
+            <td style="text-transform: capitalize;">{{item.project_type}}</td>
+            <td>
+                  <span class="badge badge-success rounded">Active</span><br />
+                  <!-- <span class="badge badge-danger rounded">Inactive</span> -->
+                </td>
             <td>
               <div class="d-flex align-items-center justify-content-end">
                 <span>

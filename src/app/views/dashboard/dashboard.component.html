@@ -1,6 +1,6 @@
 <div class="animated fadeIn dashboard-component" >
   <div class="row">
-    <div class="col-sm-4 col-lg-4 pr-0">
+    <!-- <div class="col-sm-4 col-lg-4 pr-0">
       <div class="card">
         <div class="card-body row d-flex pt-2 pb-2">
           <div class="col-3 d-flex align-items-center justify-content-center">
@@ -12,8 +12,8 @@
           </div>
         </div>
       </div>
-    </div><!--/.col-->
-    <div class="col-sm-4 col-lg-4 pr-0">
+    </div> --><!--/.col-->
+    <div class="col-sm-4 col-lg-6 pr-0">
       <div class="card">
         <div class="card-body row d-flex pt-2 pb-2">
           <div class="col-3 d-flex align-items-center justify-content-center">
@@ -21,12 +21,12 @@
           </div>
           <div class="col-9 p-0 d-flex flex-wrap align-items-center justify-content-start">
             <h4 class="mb-0 width">{{countProject}} Projects</h4>
-            <p class="mb-0">38 open</p>
+            <p class="mb-0">{{countProject}} open</p>
           </div>
         </div>
       </div>
     </div><!--/.col-->
-    <div class="col-sm-8 col-lg-4 pr-0">
+    <div class="col-sm-4 col-lg-6 pr-0">
       <div class="card">
         <div class="card-body row d-flex pt-2 pb-2">
           <div class="col-3 d-flex align-items-center justify-content-center">
@@ -34,7 +34,7 @@
           </div>
           <div class="col-9 p-0 d-flex flex-wrap align-items-center justify-content-start">
             <h4 class="mb-0 width">{{countContractor}} Contractors</h4>
-            <p class="mb-0">2 new</p>
+            <p class="mb-0">{{countContractor}} new</p>
           </div>
         </div>
       </div>
@@ -47,11 +47,11 @@
           <div class="row d-flex border-bottom pt-2 pb-2">
             <div class="col-5 d-flex align-items-center justify-content-start">
               <h5 class="card-title mb-0">Active Projects</h5>
+              <button class="btn btn-sm btn-info rounded text-white ml-2" type="button">{{countProject}}</button>
               <!-- <div class="small text-muted">November 2017</div> -->
             </div>
-            <div class="col-7">
-              <button class="btn btn-sm btn-info rounded text-white" type="button">8</button>
-            </div>
+            <!-- <div class="col-7">
+            </div> -->
           </div><!--/.row-->
             <div *ngIf="checkData == 1" class="chart-wrapper" style="height:300px;">
             <div *ngIf="prodel == 1" class="alert alert-success">
@@ -62,7 +62,7 @@
               <div class="card P-0 border-0 width mb-0">
                 <div class="card-body row d-flex p-0">
                   <div class="col-12 d-flex flex-wrap align-items-center justify-content-start">
-                    <h4 class="mb-0 width"><span class="btn btn-outline-secondary rounded mr-2">B</span> {{item.project_name}}</h4>
+                    <h4 class="mb-0 width"><span class="btn btn-outline-secondary rounded mr-2"><a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item.id}}">{{item.project_name.charAt(0)}}</a></span> {{item.project_name}}</h4>
                   </div>
                 </div>
               </div>
@@ -84,7 +84,7 @@
           </div>
           <div class="chart-wrapper" *ngIf="checkData == 0">
           <div class="row p-3 pb-3">
-              <div class="col-12 p-0">No Data Found!</div>
+              <div class="col-12 p-0">No Project Found!</div>
             </div>
           </div>
         </div>
@@ -96,11 +96,11 @@
           <div class="row d-flex border-bottom pt-2 pb-2">
             <div class="col-10 d-flex align-items-center justify-content-start">
               <h5 class="card-title mb-0">Active Contractors</h5>
+              <button class="btn btn-sm btn-info rounded text-white ml-2" type="button">{{countContractor}}</button>
               <!-- <div class="small text-muted">November 2017</div> -->
             </div>
-            <div class="col-2 p-0 d-flex align-items-center justify-content-start">
-              <button class="btn btn-sm btn-info rounded text-white" type="button">2</button>
-            </div>
+            <!-- <div class="col-2 p-0 d-flex align-items-center justify-content-start">
+            </div> -->
           </div><!--/.row-->
            <div *ngIf="checkCont == 1" class="chart-wrapper" style="height:300px;">
             <div *ngIf="condel == 1" class="alert alert-success">
@@ -134,7 +134,7 @@
           </div>
           <div class="chart-wrapper" *ngIf="checkCont == 0">
             <div class="row p-3 pb-3">
-              <div class="col-12 p-0">No Data Found!</div>
+              <div class="col-12 p-0">No Contractor Found!</div>
             </div>
           </div>
         </div>
@@ -161,7 +161,7 @@
               <div class="card P-0 border-0 width mb-0">
                 <div class="card-body row d-flex p-0">
                   <div class="col-12 pl-0 d-flex flex-wrap align-items-center justify-content-start">
-                    <h4 class="mb-0 width"><span class="btn btn-outline-secondary rounded mr-2">B</span> {{item3.project_name}}</h4>
+                    <h4 class="mb-0 width"><span class="btn btn-outline-secondary rounded mr-2"><a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item3.id}}">{{item3.project_name.charAt(0)}}</a></span> {{item3.project_name}}</h4>
                   </div>
                 </div>
               </div>
@@ -185,7 +185,7 @@
           </div>
           <div class="chart-wrapper" *ngIf="checkAssignPro == '0'">
             <div class="row p-3 pb-3">
-              <div class="col-12 p-0">No Data Found!</div>
+              <div class="col-12 p-0">No Un-Assigned Poject Found!</div>
             </div>
           </div>
         </div>

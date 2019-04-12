@@ -107,7 +107,13 @@ assignpro: any = [];
               console.log(this.assignpro)
               this.checkAssignPro = 1;
             }else{
-              this.assignpro[i].unass = '0';
+            if(this.assignpro[i].assign == 0)
+            {
+              this.assignpro[i].unass = '1';
+            }else{
+            this.assignpro[i].unass = '0';
+            }
+              
               this.checkAssignPro = 0;
               //this.assignpro.splice([i], 1)
             }
@@ -130,11 +136,18 @@ assignpro: any = [];
           this.countProject = response.json().length;
         });*/
 
-   this.http.get(API_URL+'/projects/count', options)
+  
+
+    this.http.get(API_URL+'/projects?filter={"where":{"and":[{"member_id":"'+userID+'"}]},"order":"id DESC"}', options)
           .subscribe(response => {
-          this.countProject = response.json();
-          this.countProject = this.countProject.count;
-        });     
+          if(response.json().length)
+          {
+            this.countProject = response.json().length;
+          }else{
+            this.countProject = 0;
+          }
+          
+        });          
 
     this.http.get(API_URL+'/Members/count?where=%7B%22role_id%22%3A%20%222%22%7D', options)
           .subscribe(response => {

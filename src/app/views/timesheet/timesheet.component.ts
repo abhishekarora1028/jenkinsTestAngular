@@ -97,7 +97,7 @@ public options:any = {
                     this.data[i].budget      = response.json().budget;  
                     
                   });  
-                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0;
+                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = 0;
                   for(let j=0; j< this.datesData.length; j++ ) {
                     let userID    = localStorage.getItem('currentUserId');
                     let projectID = this.data[i].project_id;
@@ -165,7 +165,7 @@ public options:any = {
                           this.data[i].totalStime = totalTime+':'+totalMin;
                   });
               }
-              console.log(this.data)
+              
               this.checkData = 1;
             }else{
               this.checkData = 2;
@@ -192,7 +192,7 @@ public options:any = {
                     this.data[i].budget      = response.json().budget;  
                     
                   });  
-                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0;
+                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = 0;
                   for(let j=0; j< this.datesData.length; j++ ) {
                     let userID    = localStorage.getItem('currentUserId');
                     let projectID = this.data[i].project_id;
@@ -482,7 +482,7 @@ onPickSheet(pickDate)
                     this.data[i].budget      = response.json().budget;  
                     
                   });  
-                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0;
+                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = 0;
                   for(let j=0; j< this.datesData.length; j++ ) {
                     let userID    = localStorage.getItem('currentUserId');
                     let projectID = this.data[i].project_id;
@@ -567,7 +567,7 @@ onPickSheet(pickDate)
                     this.data[i].budget      = response.json().budget;  
                     
                   });  
-                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0;
+                  let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = 0;
                   for(let j=0; j< this.datesData.length; j++ ) {
                     let userID    = localStorage.getItem('currentUserId');
                     let projectID = this.data[i].project_id;
@@ -643,8 +643,6 @@ onPickSheet(pickDate)
             options.headers = new Headers();
             options.headers.append('Content-Type', 'application/json');
             options.headers.append('Accept', 'application/json');
-
-            console.log(this.model)
 
             if(this.sheetStatus=='add')
             {
