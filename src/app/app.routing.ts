@@ -92,6 +92,14 @@ export const routes: Routes = [
         },
         loadChildren: './views/timesheet/timesheet.module#TimesheetModule'
       },
+       {
+        path: 'clients',
+        component: FullLayoutComponent, 
+        data: {
+          nav:"clients"
+        },
+        loadChildren: './views/client/client.module#ClientModule'
+      },
       {
         path: 'base',
         component: FullLayoutComponent,

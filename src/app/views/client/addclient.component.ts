@@ -16,11 +16,11 @@ import { ToasterModule, ToasterService, ToasterConfig }  from 'angular2-toaster/
 
 
 @Component({
-  templateUrl: 'addcontractor.component.html',
+  templateUrl: 'addclient.component.html',
   styleUrls: ['../../../scss/vendors/toastr/toastr.scss'],
 })
 
-export class AddcontractorComponent {
+export class AddclientComponent {
 private toasterService: ToasterService;
 public toasterconfig : ToasterConfig =
       new ToasterConfig({
@@ -52,7 +52,7 @@ public toasterconfig : ToasterConfig =
 	        options.headers.append('Content-Type', 'application/json');
 	        options.headers.append('Accept', 'application/json');
 
-	    	this.http.get(API_URL+'/members/'+ this.editparam.id, options)
+	    	this.http.get(API_URL+'/clients/'+ this.editparam.id, options)
 	        .subscribe(response => {	
 	        	this.model = response.json();
 	        	this.editparam.action = "edit";
@@ -67,7 +67,6 @@ public toasterconfig : ToasterConfig =
         fname:'',
     		lname:'',
         email:'',
-    		password:'',
         phone:'',
         gender:'',
         about:'',
@@ -87,24 +86,6 @@ keyPress(event: any) {
     }
 }
 
-  onChange(event: any) {
-  this.uniqueEmail = 0;
-    let options = new RequestOptions();
-            options.headers = new Headers();
-            options.headers.append('Content-Type', 'application/json');
-            options.headers.append('Accept', 'application/json');
-            
-     this.http.get(API_URL+'/Members?filter=%7B%22where%22%3A%7B%22email%22%3A%20%22'+event+'%22%7D%7D', options).subscribe(data => {
-        if(data.json().length)
-        {
-          this.uniqueEmail = 0;
-          this.uniqueEmail = 1;
-        }else{
-          this.uniqueEmail = 0;
-          this.uniqueEmail = 2;
-        }
-      });
-  }
 
    onSubmit() {
    this.toasterService.clear();
@@ -115,12 +96,12 @@ keyPress(event: any) {
 	          options.headers.append('Content-Type', 'application/json');
 	          options.headers.append('Accept', 'application/json');
 
-			this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', this.model,  options)
+			this.http.post(API_URL+'/clients/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', this.model,  options)
 	        .subscribe(data => {
 	      if(data)
 	      {
 	        //this.proEditStatus = 1;
-          this.toasterService.pop('success', 'Updated ', "Contractor has updated successfully!");
+          this.toasterService.pop('success', 'Updated ', "Client has updated successfully!");
 	      }else{
 	        //this.proEditStatus = 2;
           this.toasterService.pop('error', 'error ', "Error");
@@ -131,14 +112,17 @@ keyPress(event: any) {
 	          options.headers = new Headers();
 	          options.headers.append('Content-Type', 'application/json');
 	          options.headers.append('Accept', 'application/json');
-            this.model.role_id = '2';
-            this.model.role_name = 'contractor';
+
+     let todayDate = new Date();
+     let strDate =  (todayDate.getMonth()+1) + "/" + todayDate.getDate() + "/" + todayDate.getFullYear();
+     
+     this.model.cdate = strDate;       
 	          
-	   this.http.post(API_URL+'/members', this.model, options).subscribe(data => {
+	   this.http.post(API_URL+'/clients', this.model, options).subscribe(data => {
 	      if(data)
 	      {
 	        //this.proStatus = 1;
-          this.toasterService.pop('success', 'Added ', "Contractor has added successfully!");
+          this.toasterService.pop('success', 'Added ', "Client has added successfully!");
 	      }else{
 	        //this.proStatus = 2;
           this.toasterService.pop('error', 'error ', "Error");

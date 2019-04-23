@@ -5,7 +5,7 @@
         <div class="card-body p-0">
           <div class="row mt-3 mb-3 project-list border-bottom">
             <div class="col-lg-8 col-md-8 col-sm-12 col-12">
-              <h4 class="card-title">Projects List <a class="btn btn-info rounded ml-1 text-white" routerLink="/projects/addproject">+ Add New Project</a>
+              <h4 class="card-title">Projects List <a class="btn btn-info rounded ml-1 text-white" routerLink="/projects/addproject" *ngIf="currentUserRoleId == 1">+ Add New Project</a>
 
               </h4>
               <!-- <div class="small text-muted">November 2017</div> -->
@@ -18,19 +18,25 @@
             </div>
           </div><!--/.row-->
           <div *ngIf="checkData == 1" class="chart-wrapper" style="margin-top:40px;">
-          <div class="row d-flex">
+          <!-- <div class="row d-flex">
             <div class="col-12">
               <div *ngIf="prodel == 1" class="alert alert-success">
                 <strong>Project</strong> has deleted successfully!
             </div>
             </div>
-          </div>  
+          </div>  --> 
           <div class="table-responsive project-component">
           <table class="table"[mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
         <thead>
           <tr>
             <th>
               <mfDefaultSorter by="project_name"><h4>Project Name</h4></mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by=""><h4>Project Code</h4></mfDefaultSorter>
+            </th>
+            <th>
+              <mfDefaultSorter by=""><h4>Project Unique No</h4></mfDefaultSorter>
             </th>
             <th>
               <mfDefaultSorter by=""><h4>Client Name</h4></mfDefaultSorter>
@@ -58,22 +64,37 @@
                 </div>
               </div>
             </td>
+            <td>{{item.project_code}}</td>
+            <td>{{item.client_code}}-{{item.project_code}}-{{item.custom_project_id}}</td>
             <td>{{item.client_name}}</td>
             <td>{{item.email}}</td>
             <td style="text-transform: capitalize;">{{item.project_type}}</td>
             <td>
-                  <span class="badge badge-success rounded">Active</span><br />
-                  <!-- <span class="badge badge-danger rounded">Inactive</span> -->
+                  <span class="badge badge-success rounded" *ngIf="item.status == 'active'">Active</span>
+                  <span class="badge badge-success rounded" *ngIf="item.status == 'draft'">Draft</span>
+                  <span class="badge badge-success rounded" *ngIf="item.status == 'inprogress'">Inprogress</span>
+                  <span class="badge badge-success rounded" *ngIf="item.status == 'completed'">Completed</span>
+                   <span class="badge badge-danger rounded" *ngIf="item.status == 'inactive'">Inactive</span>
+                   <span class="badge badge-danger rounded" *ngIf="item.status == 'canceled'">Canceled</span>
+                   <span class="badge badge-danger rounded" *ngIf="item.status == 'deleted'">Deleted</span>
                 </td>
             <td>
               <div class="d-flex align-items-center justify-content-end">
                 <span>
                   <a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                </span> 
-                <span *ngIf="currentUserID == item.member_id || currentUserRole == 1">
+                </span>
+                <span *ngIf="currentUserRoleId == 2 && item.assignMemId == 0">
+                  <button class="btn btn-small btn-outline-0 bg-transparent " (click) ="assignproject(item.id, currentUserID)">
+                    Assign to me
+                  </button>
+                </span>
+                <span *ngIf="currentUserRoleId == 2 && item.assignMemId == currentUserID">
+                   Already Assign
+                </span>
+                <span *ngIf="currentUserID == item.member_id || currentUserRoleId == 1">
                   <a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </span>  
-                <span *ngIf="currentUserID == item.member_id || currentUserRole == 1">
+                <span *ngIf="currentUserRoleId == 1 && item.status != 'deleted'">
                   <button class="btn btn-small btn-outline-0 bg-transparent " (click) ="delproject(item.id,i)">
                     <i class="fa fa-times" aria-hidden="true"></i>
                   </button>
@@ -102,3 +123,5 @@
     </div>
   </div><!--/.card2-->
 </div>
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container> 
+

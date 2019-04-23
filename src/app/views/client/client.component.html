@@ -6,22 +6,22 @@
         <!-- header -->
         <div class="row mt-3 mb-3 project-list border-bottom">
             <div class="col-lg-8 col-md-8 col-sm-12 col-12">
-              <h4 class="card-title">Contractors List <a class="btn btn-info rounded ml-1 text-white mob-spacing" routerlink="/contractors/addcontractor" href="#/contractors/addcontractor">+ Add New Contractor</a>
+              <h4 class="card-title">Clients List <a class="btn btn-info rounded ml-1 text-white" routerlink="/clients/addclient" href="#/clients/addclient">+ Add New Client</a>
               </h4>
               <!-- <div class="small text-muted">November 2017</div> -->
             </div><!--/.col-->
             <div class="col-lg-4 col-md-4 col-sm-12 col-12">
               <div class="input-group mb-3">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                <input type="text" class="form-control" [(ngModel)]="filterQuery" placeholder="Search contractors"/>
+                <input type="text" class="form-control" [(ngModel)]="filterQuery" placeholder="Search clients"/>
               </div>
             </div>
           </div>
           <!-- header -->
           <div *ngIf="checkData == 1" class="chart-wrapper" style="margin-top:40px;">
           <!-- <div *ngIf="prodel == 1" class="alert alert-success">
-            <strong>Contractor</strong> has deleted successfully!
-          </div> --> 
+            <strong>Client</strong> has deleted successfully!
+          </div>  -->
            <div class="table-responsive project-component">
            <table class="table"[mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
             <thead>
@@ -34,6 +34,9 @@
                 </th>
                 <th>
                   <mfDefaultSorter by=""><h4>Email</h4></mfDefaultSorter>
+                </th>
+                <th>
+                  <mfDefaultSorter by=""><h4>Client Code</h4></mfDefaultSorter>
                 </th>
                 <th>
                   <mfDefaultSorter by=""><h4>Phone Number</h4></mfDefaultSorter>
@@ -50,28 +53,26 @@
                 <td>{{item.fname}}</td>
                 <td>{{item.lname}}</td>
                 <td class="text-left">{{item.email}}</td>
+                <td class="text-left">{{item.client_code}}</td>
                 <td class="text-left">{{item.phone}}</td>
                 <td class="text-left" style="text-transform: capitalize;">{{item.gender}}</td>
                 <td>
                   <span class="badge badge-success rounded" *ngIf="item.status == 'active'">Active</span>
-                  <span class="badge badge-danger rounded" *ngIf="item.status == 'inactive'">Inactive</span>
-                  <span class="badge badge-danger rounded" *ngIf="item.status == 'deleted'">Deleted</span>
+                   <span class="badge badge-danger rounded" *ngIf="item.status == 'inactive'">Inactive</span>
+                   <span class="badge badge-danger rounded" *ngIf="item.status == 'deleted'">Deleted</span>
                 </td>
                 <td>
-                  <div class="action-icons">
-                    <span>
-                      <a class="btn btn-show-contact100" routerLink="/contractors/viewcontractor/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                    </span>
-                    <span>
-                      <a class="btn btn-show-contact100" routerLink="/contractors/editcontractor/{{item.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                    </span>  
-                    <span *ngIf="item.status != 'deleted'">
-                      <button class="btn btn-small btn-outline-0 bg-transparent" (click) ="delcontractor(item.id, index)">
-                        <i class="fa fa-times" aria-hidden="true"></i>
-                      </button>
-                    </span>
-                  </div>
-
+                  <span>
+                    <a class="btn btn-show-contact100" routerLink="/clients/viewclient/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  </span>
+                  <span>
+                    <a class="btn btn-show-contact100" routerLink="/clients/editclient/{{item.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  </span>  
+                  <span *ngIf="item.status == 'active' || item.status == 'inactive'">
+                    <button class="btn btn-small btn-outline-0 bg-transparent" (click) ="delclient(item.id, index)">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
+                  </span>
                 </td>
               </tr>
             </tbody>
@@ -106,12 +107,8 @@
             </div>
             </div> -->
           </div>
-
-          <div class="chart-wrapper pt-2 pb-2" *ngIf="checkData == 0">
-            <div class="row p-3 pb-3">
-              <div class="col-12 p-0">No Data Found!</div>
-            </div>
-
+          <div *ngIf="checkData == 0">
+          No client Found!
           </div>
         </div>
       </div>

@@ -17,7 +17,8 @@ var ObjectID = require('mongodb').ObjectID
       const {Assignproject} = app.models;
 
       if (ctx.instance) {
-      	ctx.instance.member_id = new ObjectID(ctx.instance.member_id)
+      	ctx.instance.member_id = new ObjectID(ctx.instance.member_id),
+      	ctx.instance.client_id = new ObjectID(ctx.instance.client_id)
       }
 
       next();

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-//import { FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
@@ -9,16 +9,12 @@ import { CommonModule } from '@angular/common';
 import { DataTableModule } from 'angular-6-datatable';
 import { HttpModule } from '@angular/http';
 import { DataFilterPipe } from './datafilterpipe';
-import { FormsModule } from '@angular/forms';
-
-import { BsDatepickerModule } from 'ngx-bootstrap';
 import { StriphtmlPipe } from './striphtml.pipe';
 
-
-import { ProjectsComponent } from './project.component';
-import { AddprojectComponent } from './addproject.component';
-import { ViewprojectComponent } from './viewproject.component';
-import { ProjectsRoutingModule } from './project-routing.module';
+import { ClientsComponent } from './client.component';
+import { AddclientComponent } from './addclient.component';
+import { ViewclientComponent } from './viewclient.component';
+import { ClientsRoutingModule } from './client-routing.module';
 
 // Toastr
 import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
@@ -28,13 +24,12 @@ import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster'
   	CommonModule,
   	DataTableModule,
     FormsModule,
-    ProjectsRoutingModule,
+    ClientsRoutingModule,
     ChartsModule,
-    BsDropdownModule,
     ToasterModule,
-    BsDatepickerModule.forRoot(),
+    BsDropdownModule,
     ButtonsModule.forRoot()
   ],
-  declarations: [ ProjectsComponent, AddprojectComponent, ViewprojectComponent, DataFilterPipe, StriphtmlPipe ]
+  declarations: [ ClientsComponent, AddclientComponent, ViewclientComponent, DataFilterPipe, StriphtmlPipe ]
 })
-export class ProjectModule { }
+export class ClientModule { }
