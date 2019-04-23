@@ -1,4 +1,121 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: SourceSansPro;
+  src: url(assets/fonts/SourceSansPro-Regular.otf);
+}
+@font-face {
+  font-family: SourceSansPro-Light;
+  src: url(assets/fonts/SourceSansPro-Light.otf);
+}
+body {
+    font-family: SourceSansPro-Light;
+    background-color: #f0f0f0;
+    font-size: 14px;
+}
+.c-heading {
+    font-size: 16px;
+    color: #333333;
+    letter-spacing: 0.5px;
+}
+.c-sub-heading {
+    font-size: 14px;
+    color: #333333;
+    letter-spacing: 0.5px;
+}
+.c-button {
+    padding: 6px 46px;
+    margin-top: 18px;
+}
+.c-checkbox {
+    border-color: #9e9e9e;
+}
+.table th, .table td {
+    border-color: #e0e0e0 !important;
+}
+.timesheet table tbody tr:last-child td {
+    border-bottom: none;
+}
+.timesheet table thead th {
+    border-top: none;
+}
+.pagination-align ul.pagination.float-sm-right {
+  display: none;
+}
+.project-name:hover, .project-name:focus, .project-name:active {
+    background-color: #63c2de;
+    transition: .05s ease;
+    border-color: #63c2de;
+    box-shadow: none;
+}
+/*custom checkbox*/
+.styled-checkbox {
+  position: absolute;
+  opacity: 0;
+}
+.styled-checkbox + label {
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 0;
+}
+.styled-checkbox + label:before {
+    content: '';
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: text-top;
+    width: 17px;
+    height: 17px;
+    background: white;
+    border: 1px solid #9e9e9e;
+    border-radius: 5px;
+}
+.styled-checkbox:checked + label:before {
+  background: #4dbd74;
+  border-radius: 5px;
+  border: 1px solid #4dbd74;
+}
+.styled-checkbox:disabled + label {
+  color: #63c2de;
+  cursor: auto;
+}
+.styled-checkbox:disabled + label:before {
+  box-shadow: none;
+  background: #ddd;
+}
+.styled-checkbox:checked + label:after {
+  content: '';
+  position: absolute;
+  left: 3.4px;
+  top: 9px;
+  background: white;
+  width: 2px;
+  height: 2px;
+  box-shadow: 2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+/*custom checkbox*/
+.reset-password {
+    color: #333333;
+}
+.reset-password:hover {
+    color: #20a8d8;
+}
+.card-left {
+    width: 50px;
+    max-width: 100%;
+    float: left; 
+}
+.card-right {
+    width: calc(100% - 50px);
+    max-width: 100%;
+    float: left; 
+}
+.dashboard-component h5 {
+    font-size: 16px;
+    color: #333333;
+    font-family: SourceSansPro;
+}
 .border {
 	border: 1px solid #dee2e6!important
 }
@@ -111,7 +228,33 @@
 }
 h4 {
     text-transform: capitalize;
-    font-size: 15px;
+    font-size: 16px;
+    font-family: SourceSansPro;
+}
+.project-count {
+    width: 22px;
+    height: 22px;
+    padding:0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.project-name {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    border-color: #bdbdbd;
+}
+.project-name a {
+    color: #212121;
+}
+.project-name a:hover {
+    color: #fff;
+    background-color: #63c2de;
 }
 .project-list h4 {
     font-weight: normal;
@@ -124,6 +267,7 @@ h4 {
 }
 .project-component .table tr td {
     border: 0;
+    vertical-align: middle;
 }
 .project-component .table tr th {
     border-top: 0;
@@ -163,6 +307,12 @@ h4 {
     width: 25px;
     height: 25px;
 }
+.assign-contractor a span span {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
 .assign-contractor-fields span.btn {
     padding: 0;
     width: 35px;
@@ -193,6 +343,100 @@ h4 {
     font-size: 14px;
     background: #5cb85c;
 }
+.dashboard-component .chart-wrapper {
+	min-height: 300px;
+}
+.add-project-heading .input-group-addon {
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    background-color: #eee;
+    border: 1px solid #ccc;
+}
+.add-project-heading  .input-group-addon, .add-project-heading  .input-group-btn {
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.add-project-heading  .input-group .form-control, .add-project-heading  .input-group-addon, .add-project-heading .input-group-btn {
+    display: table-cell;
+}
+.add-project-heading  .input-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+}
+.add-project-heading  .input-group .form-control {
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+}
+.full-height {
+    height: calc(100% - 1.5rem);
+}
+.equal {
+    width: 120px;
+    margin: 0 auto;
+}
+.max-height {
+    max-height: 275px;
+    overflow-y: auto;
+}
+.max-height tr td {
+    border-color: #e0e0e0;
+}
+.max-height tr:first-child td {
+    border-top: none;
+}
+.m-8 {
+    margin-top: 8%;
+}
+button:focus {
+    outline: none;
+}
+.action-icons {
+    width: 180px;
+    margin:0 auto;
+}
+.view-contractor span {
+    word-wrap: break-word;
+}
+.add-project-heading .input-group-addon, .form-calendar .input-group-addon {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.form-calendar .input-group-addon {
+    border-left: 1px solid #ccc !important;
+}
+.remove-user {
+    font-weight: normal;
+    font-size: 14px;
+}
+.fa-add-user {
+    font-weight: normal;
+    font-size: 12px;
+}
+nav.sidebar-nav {
+    font-family: SourceSansPro;
+}
+@media screen and (max-width: 1260px) {
+    .assign-contractor-fields input, .assign-contractor-fields select {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 91.66666667%;
+        flex: 0 0 55%;
+        max-width: 100%;
+    }
+}
 @media screen and (max-width: 767px) {
 	.container.add-project-heading {
 	    max-width: 100%;
@@ -201,10 +445,22 @@ h4 {
 		width: 33.3%;
 		max-width: 100%;
 	}
-	.proj-desc textarea {
-	    width: calc(100% - 33.3%) !important;
-	    max-width: 100%;
-	}
+    ul.nav.navbar-nav li:first-child {
+        display: none;
+    }
+    .proj-desc textarea {
+        width: 100% !important;
+        max-width: 100%;
+    }
+    .add-contrator .add-icon {
+        bottom: 8px;
+    }
+    .assign-contractor-fields input, .assign-contractor-fields select {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 90%;
+        flex: 0 0 90%;
+        max-width: 100%;
+    }
 }
 @media screen and (max-width: 600px) {
 	.main .container-fluid {
@@ -213,4 +469,18 @@ h4 {
 	.project-component h4 span {
 	    margin-bottom: 8px;
 	}
+    .assign-contractor-fields input, .assign-contractor-fields select {
+        -webkit-box-flex: 0;
+        -ms-flex: 0 0 83%;
+        flex: 0 0 83%;
+        max-width: 100%;
+    }
+}
+@media screen and (max-width: 575px) {
+    .mob-spacing {
+        padding:4px 5px;
+    }
+    .contractor-list {
+        padding-left: 15px;
+    }
 }

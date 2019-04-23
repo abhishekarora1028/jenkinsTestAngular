@@ -1,82 +1,93 @@
+<style>
+  body {
+    background-color: #f0f0f0;
+  }
+</style>
 <div class="animated fadeIn dashboard-component" >
   <div class="row">
-    <!-- <div class="col-sm-4 col-lg-4 px-0">
+    <!-- <div class="col-sm-4 col-lg-4 px-lg-0 px-xl-0 px-sm-0">
       <div class="card">
         <div class="card-body row d-flex pt-2 pb-2">
-          <div class="col-3 d-flex align-items-center justify-content-center">
+          <div class="card-left d-flex align-items-center justify-content-center">
             <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
           </div>
-          <div class="col-9 p-0 d-flex flex-wrap align-items-center justify-content-start">
-            <h4 class="mb-0 width" >125 Emails</h4>
+          <div class="card-right d-flex flex-wrap align-items-center justify-content-start">
+            <h4 class="width" >125 Emails</h4>
             <p class="mb-0">6 new arrivals</p>
           </div>
         </div>
       </div>
     </div> --><!--/.col-->
-    <div class="col-sm-4 col-lg-6 px-0">
+    <div class="col-sm-6 col-lg-6 px-lg-0 px-xl-0 px-sm-0">
       <div class="card">
         <div class="card-body row d-flex pt-2 pb-2">
-          <div class="col-3 d-flex align-items-center justify-content-center">
+          <div class="card-left d-flex align-items-center justify-content-center">
             <i class="fa fa-folder-open-o" aria-hidden="true"></i>
           </div>
-          <div class="col-9 p-0 d-flex flex-wrap align-items-center justify-content-start">
-            <h4 class="mb-0 width">{{countProject}} Projects</h4>
-            <p class="mb-0">{{countProject}} open</p>
+          <div class="card-right p-0 d-flex flex-wrap align-items-center justify-content-start">
+            <h4 class="width">Total Projects: {{countProject}}</h4>
+            <span class="d-block mr-4">Active: {{countProject}}</span>
+            <span class="d-block mr-4">Inactive: {{countProject}}</span>
+            <span class="d-block">Deleted: {{countProject}}</span>
+            <!-- <p class="mb-0">open {{countProject}}</p> -->
           </div>
         </div>
       </div>
     </div><!--/.col-->
-    <div class="col-sm-4 col-lg-6 pr-0">
+    <div class="col-sm-6 col-lg-6 pr-lg-0 pr-xl-0 pr-sm-0">
       <div class="card">
         <div class="card-body row d-flex pt-2 pb-2">
-          <div class="col-3 d-flex align-items-center justify-content-center">
+          <div class="card-left d-flex align-items-center justify-content-center">
             <i class="fa fa-users" aria-hidden="true"></i>
           </div>
-          <div class="col-9 p-0 d-flex flex-wrap align-items-center justify-content-start">
-            <h4 class="mb-0 width">{{countContractor}} Contractors</h4>
-            <p class="mb-0">{{countContractor}} new</p>
+          <div class="card-right d-flex flex-wrap align-items-center justify-content-start">
+            <h4 class="width"><!-- {{countContractor}}  -->Total Contractors</h4>
+            <!-- <p class="mb-0">{{countContractor}} new</p> -->
+            <span class="d-block mr-4">Active: {{countContractor}}</span>
+            <span class="d-block mr-4">Inactive: {{countContractor}}</span>
+            <span class="d-block">Deleted: {{countContractor}}</span>
           </div>
         </div>
       </div>
     </div>
   </div><!--/.row-->
   <div class="row">
-    <div class="col-sm-8 px-0">
-      <div class="card">
+    <div class="col-sm-8 px-lg-0 px-xl-0 px-sm-0">
+      <div class="card full-height">
         <div class="card-body p-0">
-          <div class="row d-flex border-bottom pt-2 pb-2">
-            <div class="col-5 d-flex align-items-center justify-content-start">
+          <div class="row d-flex border-bottom pt-3 pb-3">
+            <div class="col-12 d-flex align-items-center justify-content-start">
               <h5 class="card-title mb-0">Active Projects</h5>
-              <button class="btn btn-sm btn-info rounded text-white ml-2" type="button">{{countProject}}</button>
+              <button class="btn btn-sm btn-info rounded text-white ml-2 project-count" type="button">{{countProject}}</button>
               <!-- <div class="small text-muted">November 2017</div> -->
             </div>
             <!-- <div class="col-7">
             </div> -->
           </div><!--/.row-->
-            <div *ngIf="checkData == 1" class="chart-wrapper" style="height:300px;">
+            <div *ngIf="checkData == 1" class="chart-wrapper pt-2 pb-2">
             <div *ngIf="prodel == 1" class="alert alert-success">
               <strong>Project</strong> has deleted successfully!
             </div>
           <div class="row d-flex pt-2 pb-2" *ngFor="let item of model">
-             <div class="col-lg-8 col-md-8 col-sm-6 col-12 d-flex align-items-center justify-content-start">
+             <div class="col-lg-8 col-md-8 col-sm-6 col-7 pl-0 d-flex align-items-center justify-content-start">
               <div class="card P-0 border-0 width mb-0">
                 <div class="card-body row d-flex p-0">
                   <div class="col-12 d-flex flex-wrap align-items-center justify-content-start">
-                    <h4 class="mb-0 width"><span class="btn btn-outline-secondary rounded mr-2"><a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item.id}}">{{item.project_name.charAt(0)}}</a></span> {{item.project_name}}</h4>
+                    <h4 class="mb-0 width d-flex align-items-center"><span class="btn btn-outline-secondary rounded mr-2 project-name"><a class="btn btn-show-contact100 project-detail" routerLink="/projects/viewproject/{{item.id}}">{{item.project_name.charAt(0)}}</a></span> {{item.project_name}}</h4>
                   </div>
                 </div>
               </div>
               </div>
-              <div class="col-lg-4 col-md-4 col-sm-6 col-12 d-flex align-items-center justify-content-end">
+              <div class="col-lg-4 col-md-4 col-sm-6 col-5 d-flex align-items-center justify-content-end">
                 <div class="display-inline">
-                  <a class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/viewproject/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a data-toggle="tooltip" title="Edit" class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/viewproject/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
                   <a class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/editproject/{{item.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                   <a class="btn btn-small btn-outline-0 p-1 bg-transparent " (click) ="delproject(item.id)"><i class="fa fa-times" aria-hidden="true"></i></a>
                 </div> 
               </div>
             </div>
           </div>
-          <div class="chart-wrapper" *ngIf="checkData == 0">
+          <div class="chart-wrapper pt-2 pb-2" *ngIf="checkData == 0">
           <div class="row p-3 pb-3">
               <div class="col-12 p-0">No Project Found!</div>
             </div>
@@ -84,19 +95,19 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-4 pr-0">
-      <div class="card">
+    <div class="col-sm-4 pr-lg-0 pr-xl-0 pr-sm-0">
+      <div class="card full-height">
         <div class="card-body p-0">
-          <div class="row d-flex border-bottom pt-2 pb-2">
-            <div class="col-10 d-flex align-items-center justify-content-start">
+          <div class="row d-flex border-bottom pt-3 pb-3">
+            <div class="col-12 d-flex align-items-center justify-content-start">
               <h5 class="card-title mb-0">Active Contractors</h5>
-              <button class="btn btn-sm btn-info rounded text-white ml-2" type="button">{{countContractor}}</button>
+              <button class="btn btn-sm btn-info rounded text-white ml-2 project-count" type="button">{{countContractor}}</button>
               <!-- <div class="small text-muted">November 2017</div> -->
             </div>
             <!-- <div class="col-2 p-0 d-flex align-items-center justify-content-start">
             </div> -->
           </div><!--/.row-->
-           <div *ngIf="checkCont == 1" class="chart-wrapper" style="height:300px;">
+           <div *ngIf="checkCont == 1" class="chart-wrapper pt-2 pb-2">
             <div *ngIf="condel == 1" class="alert alert-success">
               <strong>Contractor</strong> has deleted successfully!
             </div>
@@ -120,7 +131,7 @@
               </div>
             </div>
           </div>
-          <div class="chart-wrapper" *ngIf="checkCont == 0">
+          <div class="chart-wrapper pt-2 pb-2" *ngIf="checkCont == 0">
             <div class="row p-3 pb-3">
               <div class="col-12 p-0">No Contractor Found!</div>
             </div>
@@ -131,10 +142,10 @@
   </div>
   <!--/.card-->
   <div class="row">
-    <div class="col-12 px-0">
+    <div class="col-12 px-lg-0 px-xl-0 px-sm-0">
       <div class="card">
         <div class="card-body p-0">
-          <div class="row d-flex border-bottom pt-2 pb-2">
+          <div class="row d-flex border-bottom pt-3 pb-3">
             <div class="col-12">
               <h5 class="card-title mb-0">Un-Assigned Projects</h5>
               <!-- <div class="small text-muted">November 2017</div> -->
@@ -145,16 +156,16 @@
               <strong>Project</strong> has deleted successfully!
             </div>
             <div class="row d-flex pt-2 pb-2" *ngFor="let item3 of unassdata">
-             <div class="col-lg-8 col-md-8 col-sm-6 col-12 d-flex align-items-center justify-content-start" *ngIf="item3.unass == '1'">
+             <div class="col-lg-8 col-md-8 col-sm-6 col-7 d-flex align-items-center justify-content-start" *ngIf="item3.unass == '1'">
               <div class="card P-0 border-0 width mb-0">
                 <div class="card-body row d-flex p-0">
                   <div class="col-12 pl-0 d-flex flex-wrap align-items-center justify-content-start">
-                    <h4 class="mb-0 width"><span class="btn btn-outline-secondary rounded mr-2"><a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item3.id}}">{{item3.project_name.charAt(0)}}</a></span> {{item3.project_name}}</h4>
+                    <h4 class="mb-0 width d-flex align-items-center"><span class="btn btn-outline-secondary rounded mr-2 project-name"><a class="btn btn-show-contact100 project-detail" routerLink="/projects/viewproject/{{item3.id}}">{{item3.project_name.charAt(0)}}</a></span> {{item3.project_name}}</h4>
                   </div>
                 </div>
               </div>
               </div>
-              <div class="col-lg-4 col-md-4 col-sm-6 col-12 d-flex align-items-center justify-content-end" *ngIf="item3.unass == '1'">
+              <div class="col-lg-4 col-md-4 col-sm-6 col-5 d-flex align-items-center justify-content-end" *ngIf="item3.unass == '1'">
                 <div>
  		  <a class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/viewproject/{{item3.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
                   <a *ngIf="userId == item3.member_id || userRoleId==1" class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/editproject/{{item3.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -165,7 +176,7 @@
           </div>
           <div class="chart-wrapper" *ngIf="checkAssignPro == '0'">
             <div class="row p-3 pb-3">
-              <div class="col-12 p-0">No Un-Assigned Poject Found!</div>
+              <div class="col-12 p-0">No Un-Assigned Project Found!</div>
             </div>
           </div>
         </div>
@@ -173,3 +184,8 @@
     </div>
   </div><!--/.card2-->
 </div>
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
