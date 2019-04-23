@@ -39,6 +39,7 @@ export class ForgotComponent {
 
 
 	onSubmit() {	 
+	this.toasterService.clear();
 	 	let options = new RequestOptions();
         options.headers = new Headers();
         options.headers.append('Content-Type', 'application/json');

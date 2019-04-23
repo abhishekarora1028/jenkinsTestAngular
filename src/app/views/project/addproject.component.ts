@@ -217,6 +217,7 @@ removeUser(i, dcon, assignid){
 }  
 
    onSubmit() {
+   this.checkUser = 0;
    this.toasterService.clear();
    if(this.editparam.id)
    {
@@ -260,6 +261,7 @@ removeUser(i, dcon, assignid){
           if(this.data.length)
           {
 
+              this.checkUser = 0;
                for(let i=0; i< this.data.length; i++ ) {
                   let projectId             = this.editparam.id; 
                   let memberId              = this.data[i].member_id;
@@ -290,11 +292,12 @@ removeUser(i, dcon, assignid){
 
                   this.http.post(API_URL+'/assignprojects/update?where=%7B%22id%22%3A%20%22'+response.json()[i].id+'%22%7D', this.assData2,  options)
                       .subscribe(data => { 
-                      this.checkUser = 0;
+                      
                   });
                   
                 }else{
-                  this.checkUser = 1;
+                  
+                  this.checkUser += 2;
                   this.toasterService.pop('error', 'error ', "Contractor has already exist!");
                 }
                 
@@ -304,12 +307,10 @@ removeUser(i, dcon, assignid){
                   this.assData.member_id     = this.users[i].member_id; 
                   this.assData.percentage    = this.users[i].percentage; 
                   this.assData.assign        = "1"; 
+                  this.checkUser = 0;
 
                   this.http.post(API_URL+'/assignprojects?access_token='+localStorage.getItem('currentUserToken'), this.assData, options).subscribe(data => {
-                    if(data.json().length)
-                    {
-                      this.checkUser = 0;
-                    }
+                    
                     
                 });
                 
@@ -322,7 +323,7 @@ removeUser(i, dcon, assignid){
               }
           }
 	        //this.proEditStatus = 1;
-          console.log(this.checkUser)
+          
           if(this.checkUser == 0)
           {
             this.toasterService.pop('success', 'Updated ', "Project has updated successfully!");
@@ -379,7 +380,8 @@ removeUser(i, dcon, assignid){
 	   this.http.post(API_URL+'/projects?access_token='+localStorage.getItem('currentUserToken'), this.proData, options).subscribe(data => {
 	      if(data)
 	      {
-          this.sData   = data.json();
+          this.sData     = data.json();
+          this.checkUser = 0;
           if(this.users.length)
           {
              let result = [];
