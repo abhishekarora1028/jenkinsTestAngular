@@ -31,6 +31,12 @@ unassdata: any;
 userId: any;
 checkData: any = 0;
 checkCont: any = 0;
+activeProjectCount: any = 0;
+inactiveProjectCount: any = 0;
+deleteProjectCount: any = 0;
+activeContractorCount: any = 0;
+inactiveContractorCount: any = 0;
+deleteContractorCount: any = 0;
 checkAssignPro: any = 0;
 condel: any = 0;
 prodel: any = 0;
@@ -48,6 +54,72 @@ assignpro: any = {};
           options.headers = new Headers();
           options.headers.append('Content-Type', 'application/json');
           options.headers.append('Accept', 'application/json');
+
+  this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]}}', options)
+          .subscribe(response => {
+    if(response.json().length)
+    {
+      this.activeProjectCount = response.json().length;
+    }else{
+      this.activeProjectCount = 0;
+    }
+            
+  });   
+
+  this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"inactive"}]}}', options)
+          .subscribe(response => {
+    if(response.json().length)
+    {
+      this.inactiveProjectCount = response.json().length;
+    }else{
+      this.inactiveProjectCount = 0;
+    }
+            
+  });      
+
+  this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"deleted"}]}}', options)
+          .subscribe(response => {
+    if(response.json().length)
+    {
+      this.deleteProjectCount = response.json().length;
+    }else{
+      this.deleteProjectCount = 0;
+    }
+            
+  });  
+
+  this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"active"},{"role_id":"2"}]}}', options)
+          .subscribe(response => {
+    if(response.json().length)
+    {
+      this.activeContractorCount = response.json().length;
+    }else{
+      this.activeContractorCount = 0;
+    }
+            
+  }); 
+
+this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"role_id":"2"}]}}', options)
+          .subscribe(response => {
+    if(response.json().length)
+    {
+      this.inactiveContractorCount = response.json().length;
+    }else{
+      this.inactiveContractorCount = 0;
+    }
+            
+  }); 
+
+  this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"deleted"},{"role_id":"2"}]}}', options)
+          .subscribe(response => {
+    if(response.json().length)
+    {
+      this.deleteContractorCount = response.json().length;
+    }else{
+      this.deleteContractorCount = 0;
+    }
+            
+  });
 
   if(localStorage.getItem('currentUserRoleId') == "1")
   {

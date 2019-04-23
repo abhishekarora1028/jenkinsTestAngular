@@ -25,7 +25,7 @@ export class FullLayoutComponent {
 	  		this.navigation.push({
 			    	name: 'Clients',
 			    	url: '/clients',
-			    	icon: '',
+			    	icon: 'fa fa-users',
 		  		});
 
 		  		this.navigation.push({
