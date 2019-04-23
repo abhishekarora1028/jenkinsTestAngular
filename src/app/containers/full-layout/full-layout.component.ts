@@ -31,31 +31,31 @@ export class FullLayoutComponent {
 		  		this.navigation.push({
 		    	name: 'Projects',
 		    	url: '/projects',
-		    	icon: '',
+		    	icon: 'fa fa-folder-open-o',
 		  	});
 
 		  	this.navigation.push({
 		    	name: 'Contractors',
 		    	url: '/contractors',
-		    	icon: '',
+		    	icon: 'fa fa-users',
 		  	});
 
 		  	this.navigation.push({
 			    	name: 'Timesheets',
 			    	url: '/timesheets',
-			    	icon: '',
+			    	icon: 'fa fa-history',
 		  		});
 	  	}else{
 		  		this.navigation.push({
 			    	name: 'Projects',
 			    	url: '/projects',
-			    	icon: '',
+			    	icon: 'fa fa-folder-open-o',
 		  		});
 
 		  		this.navigation.push({
 			    	name: 'Timesheets',
 			    	url: '/timesheets',
-			    	icon: '',
+			    	icon: 'fa fa-folder-open-o',
 		  		});
 	  	}
 
