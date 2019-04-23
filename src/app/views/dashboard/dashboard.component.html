@@ -26,9 +26,9 @@
           </div>
           <div class="card-right p-0 d-flex flex-wrap align-items-center justify-content-start">
             <h4 class="width">Total Projects: {{countProject}}</h4>
-            <span class="d-block mr-4">Active: {{countProject}}</span>
-            <span class="d-block mr-4">Inactive: {{countProject}}</span>
-            <span class="d-block">Deleted: {{countProject}}</span>
+            <span class="d-block mr-4">Active: {{activeProjectCount}}</span>
+            <span class="d-block mr-4">Inactive: {{inactiveProjectCount}}</span>
+            <span class="d-block">Deleted: {{deleteProjectCount}}</span>
             <!-- <p class="mb-0">open {{countProject}}</p> -->
           </div>
         </div>
@@ -41,11 +41,11 @@
             <i class="fa fa-users" aria-hidden="true"></i>
           </div>
           <div class="card-right d-flex flex-wrap align-items-center justify-content-start">
-            <h4 class="width"><!-- {{countContractor}}  -->Total Contractors</h4>
+            <h4 class="width"><!-- {{countContractor}}  -->Total Contractors: {{countContractor}} </h4>
             <!-- <p class="mb-0">{{countContractor}} new</p> -->
-            <span class="d-block mr-4">Active: {{countContractor}}</span>
-            <span class="d-block mr-4">Inactive: {{countContractor}}</span>
-            <span class="d-block">Deleted: {{countContractor}}</span>
+            <span class="d-block mr-4">Active: {{activeContractorCount}}</span>
+            <span class="d-block mr-4">Inactive: {{inactiveContractorCount}}</span>
+            <span class="d-block">Deleted: {{deleteContractorCount}}</span>
           </div>
         </div>
       </div>
