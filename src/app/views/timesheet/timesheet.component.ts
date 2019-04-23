@@ -87,7 +87,6 @@ public options:any = {
             if(response.json().length)
             {
               this.data = response.json();
-              
               for(let i=0; i< this.data.length; i++ ) {
               let stime = '', des = '', tsId = '';
                   this.http.get(API_URL+'/projects/'+this.data[i].project_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
@@ -97,10 +96,12 @@ public options:any = {
                     this.data[i].rate        = response.json().rate;  
                     this.data[i].type        = response.json().project_type;  
                     this.data[i].budget      = response.json().budget;  
+                    this.data[i].status      = response.json().status;  
 
                     this.http.get(API_URL+'/Members/'+this.data[i].member_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                   .subscribe(response => { 
-                      this.data[i].membername = response.json().fname+' '+response.json().lname;
+                      this.data[i].membername   = response.json().fname+' '+response.json().lname;
+                      this.data[i].memberstatus = response.json().status;
                   });
                     
                   });  
@@ -163,7 +164,7 @@ public options:any = {
             }else{
               this.checkData = 2;
             }
-            
+            console.log(this.data)
           }); 
 
           }else{
@@ -186,7 +187,8 @@ public options:any = {
 
                     this.http.get(API_URL+'/Members/'+this.data[i].member_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                   .subscribe(response => { 
-                      this.data[i].membername = response.json().fname+' '+response.json().lname;
+                      this.data[i].membername   = response.json().fname+' '+response.json().lname;
+                      this.data[i].memberstatus = response.json().status;
                   });
                     
                   });  
@@ -479,7 +481,8 @@ onPickSheet(pickDate)
 
                     this.http.get(API_URL+'/Members/'+this.data[i].member_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                   .subscribe(response => { 
-                      this.data[i].membername = response.json().fname+' '+response.json().lname;
+                      this.data[i].membername   = response.json().fname+' '+response.json().lname;
+                      this.data[i].memberstatus = response.json().status;
                   });
                     
                   });  
@@ -563,7 +566,8 @@ onPickSheet(pickDate)
 
                     this.http.get(API_URL+'/Members/'+this.data[i].member_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                   .subscribe(response => { 
-                      this.data[i].membername = response.json().fname+' '+response.json().lname;
+                      this.data[i].membername   = response.json().fname+' '+response.json().lname;
+                      this.data[i].memberstatus = response.json().status;
                   });
                     
                   });  

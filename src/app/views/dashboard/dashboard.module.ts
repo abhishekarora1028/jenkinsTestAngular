@@ -8,6 +8,9 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
+// Toastr
+import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
+
 @NgModule({
   imports: [
   	CommonModule,
@@ -15,6 +18,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
     DashboardRoutingModule,
     ChartsModule,
     BsDropdownModule,
+    ToasterModule,
     ButtonsModule.forRoot()
   ],
   declarations: [ DashboardComponent ]

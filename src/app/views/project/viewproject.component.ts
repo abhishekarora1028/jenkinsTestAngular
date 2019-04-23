@@ -48,8 +48,14 @@ export class ViewprojectComponent {
 
 	    	this.http.get(API_URL+'/projects/'+ this.editparam.id, options)
 	        .subscribe(response => {
-	        	//console.log(response.json());	
-	        	this.model = response.json();
+            this.model = response.json();
+            this.http.get(API_URL+'/clients/'+ this.model.client_id, options)
+                  .subscribe(response => {
+                    this.model.client_name = response.json().fname+' '+response.json().lname;
+                    this.model.email       = response.json().email;
+                    this.model.client_code = response.json().client_code;
+                    
+            });
             if(this.model.member_id == localStorage.getItem("currentUserId"))
             {
               this.disCon = 1;
@@ -57,6 +63,8 @@ export class ViewprojectComponent {
               this.disCon = 0;
             }
 	        	this.editparam.action = "edit"; 
+
+            //console.log(this.model); 
 		    });
 
         let projectID = this.editparam.id;

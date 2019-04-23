@@ -1,4 +1,4 @@
-import { Component, VERSION } from '@angular/core';
+import { Component, VERSION, ViewEncapsulation } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -8,11 +8,22 @@ import { RouterModule, Routes, Router, NavigationEnd, NavigationStart } from '@a
 import * as $ from 'jquery';
 import { API_URL } from '../../globals';
 
+// Toastr
+import { ToasterModule, ToasterService, ToasterConfig }  from 'angular2-toaster/angular2-toaster';
+
 @Component({
-  templateUrl: 'dashboard.component.html'
+  templateUrl: 'dashboard.component.html',
+  styleUrls: ['../../../scss/vendors/toastr/toastr.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 
 export class DashboardComponent {
+private toasterService: ToasterService;
+public toasterconfig : ToasterConfig =
+      new ToasterConfig({
+        tapToDismiss: true,
+        timeout: 5000
+      });
 countProject: any;
 countContractor: any;
 userRoleId: any;
@@ -26,7 +37,7 @@ prodel: any = 0;
 model: any = [];
 data: any = [];
 assignpro: any = {};
-  constructor(@Inject(Http) private http: Http, @Inject(Router)private router:Router) {
+  constructor(@Inject(Http) private http: Http, @Inject(Router)private router:Router, toasterService: ToasterService) {
   if(!localStorage.getItem("currentUserId"))
     {
       this.router.navigate(['login']);
@@ -71,7 +82,6 @@ assignpro: any = {};
           if(response.json().length)
           {
             this.data = response.json();
-            this.checkCont = 0;
             this.checkCont = 1;
           }else{
             this.checkCont = 0;
@@ -91,7 +101,7 @@ assignpro: any = {};
           
         });*/
 
-        this.http.get(API_URL+'/projects?filter={"order":"id DESC", "limit":"10"}', options)
+         this.http.get(API_URL+'/projects?filter={"order":"id DESC", "limit":"10"}', options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -99,21 +109,17 @@ assignpro: any = {};
 
             for(let i=0; i< this.unassdata.length; i++ ) {
             let projectId = this.unassdata[i].id;
-            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"0"}]},"order":"id DESC"}', options)
-            .subscribe(response => {      
-            if(response.json().length)
+            
+            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"1"}]},"order":"id DESC"}', options)
+            .subscribe(response2 => {     
+            if(response2.json().length)
             {
-
-              this.unassdata[i].unass = 1; 
-              this.checkAssignPro = 1;
-            }else{
-              if(this.unassdata[i].assign == 0)
-              {
-                this.unassdata[i].unass = 1;
-              }else{
-                this.unassdata[i].unass = 0;
-              }
               
+              this.unassdata[i].unass = 0; 
+              this.checkAssignPro = parseInt(this.checkAssignPro + 0);
+            }else{
+              this.unassdata[i].unass = 1;
+              this.checkAssignPro = parseInt(this.checkAssignPro + 1);
             }
             
             });   
@@ -134,7 +140,7 @@ assignpro: any = {};
 
   
 
-    this.http.get(API_URL+'/projects?filter={"where":{"and":[{"member_id":"'+userID+'"}]},"order":"id DESC"}', options)
+    this.http.get(API_URL+'/projects/', options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -151,7 +157,7 @@ assignpro: any = {};
           this.countContractor = this.countContractor.count;
         });  
         
-    this.http.get(API_URL+'/projects?filter={"where":{"and":[{"member_id":"'+userID+'"}]},"order":"id DESC"}', options)
+    this.http.get(API_URL+'/projects?filter={"order":"id DESC", "limit":"10"}', options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -168,7 +174,6 @@ assignpro: any = {};
           if(response.json().length)
           {
             this.data = response.json();
-            this.checkCont = 0;
             this.checkCont = 1;
           }else{
             this.checkCont = 0;
@@ -177,7 +182,7 @@ assignpro: any = {};
         });    
 
 
-        this.http.get(API_URL+'/projects?filter={"where":{"and":[{"member_id":"'+userID+'"}]},"order":"id DESC"}', options)
+        this.http.get(API_URL+'/projects?filter={"order":"id DESC", "limit":"10"}', options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -185,21 +190,17 @@ assignpro: any = {};
 
             for(let i=0; i< this.unassdata.length; i++ ) {
             let projectId = this.unassdata[i].id;
-            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"0"}]},"order":"id DESC"}', options)
-            .subscribe(response => {      
-            if(response.json().length)
+            
+            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"1"}]},"order":"id DESC"}', options)
+            .subscribe(response2 => {     
+            if(response2.json().length)
             {
-
-              this.unassdata[i].unass = 1; 
-              this.checkAssignPro = 1;
-            }else{
-              if(this.unassdata[i].assign == 0)
-              {
-                this.unassdata[i].unass = 1;
-              }else{
-                this.unassdata[i].unass = 0;
-              }
               
+              this.unassdata[i].unass = 0; 
+              this.checkAssignPro = parseInt(this.checkAssignPro + 0);
+            }else{
+              this.unassdata[i].unass = 1;
+              this.checkAssignPro = parseInt(this.checkAssignPro + 1);
             }
             
             });   
@@ -216,35 +217,12 @@ assignpro: any = {};
   }        
 
         
-
-    /*$('.preloader').show();
-
-     if(localStorage.getItem('currentUserRole') != null) { 
-      
-     } else {
-          
-     } 
-
-    $('.preloader').hide();*/
-  }
-
-delcontractor(proid){
-  if(proid)
-  {
-    let options = new RequestOptions();
-          options.headers = new Headers();
-          options.headers.append('Content-Type', 'application/json');
-          options.headers.append('Accept', 'application/json');
-
-        this.http.delete(API_URL+'/members/'+proid, options)
-          .subscribe(response => {
-            this.condel = 1;
-        }); 
-  }
-
+  this.toasterService = toasterService; 
+    
   }
 
 delproject(proid){
+this.toasterService.clear();
   if(proid)
   {
     let options = new RequestOptions();
@@ -252,13 +230,84 @@ delproject(proid){
           options.headers.append('Content-Type', 'application/json');
           options.headers.append('Accept', 'application/json');
 
-        this.http.delete(API_URL+'/projects/'+proid, options)
+
+        this.http.post(API_URL+'/projects/update?where=%7B%22id%22%3A%20%22'+proid+'%22%7D', {"status":"deleted"},  options)
+          .subscribe(response => {
+
+            this.http.get(API_URL+'/projects?filter={"order":"id DESC"}', options)
+            .subscribe(response => {
+            if(response.json().length)
+            {
+              this.model = response.json();
+              for(let i=0; i< this.model.length; i++ ) {
+              this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.model[i].client_id+'"}]}}', options)
+                  .subscribe(response => {
+                  if(response.json().length)
+                  {
+                    
+                    this.model[i].client_name = response.json()[0].fname+' '+response.json()[0].lname;
+                    this.model[i].email = response.json()[0].email;
+                    this.model[i].client_code = response.json()[0].client_code;
+                  }
+                    
+                });
+                }
+              this.checkData = 1;
+            }else{
+              this.checkData = 0;
+            }
+            
+          }); 
+            this.prodel = 1;
+          });
+
+  
+      //this.data.splice(index, 1);  
+      setTimeout(function(){$('.text-error').fadeOut();}, 2000); 
+
+      this.toasterService.pop('success', 'Deleted ', "Project has deleted successfully!");
+  }
+
+  }
+
+delcontractor(proid){
+this.toasterService.clear();
+  if(proid)
+  {
+    let options = new RequestOptions();
+          options.headers = new Headers();
+          options.headers.append('Content-Type', 'application/json');
+          options.headers.append('Accept', 'application/json');
+
+        /*this.http.delete(API_URL+'/members/'+proid, options)
           .subscribe(response => {
             this.prodel = 1;
         }); 
-  //this.router.navigate(['projects']);     
+
+        this.data.splice(index, 1); */
+
+        this.http.post(API_URL+'/Members/update?where=%7B%22id%22%3A%20%22'+proid+'%22%7D', {"status":"deleted"},  options)
+          .subscribe(response => {
+
+            this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC"}', options)
+            .subscribe(response => {
+            if(response.json().length)
+            {
+              this.data = response.json();
+              this.checkCont = 1;
+            }else{
+              this.checkCont = 0;
+            }
+              
+          });
+
+          this.condel = 1;
+        
+        });
+        setTimeout(function(){$('.text-error').fadeOut();}, 2000); 
+        this.toasterService.pop('success', 'Deleted ', "Contractor has deleted successfully!");
   }
 
-  }  
+  }
 
 }

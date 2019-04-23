@@ -16,6 +16,9 @@ import { AddcontractorComponent } from './addcontractor.component';
 import { ViewcontractorComponent } from './viewcontractor.component';
 import { ContractorsRoutingModule } from './contractor-routing.module';
 
+// Toastr
+import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
+
 @NgModule({
   imports: [
   	CommonModule,
@@ -24,6 +27,7 @@ import { ContractorsRoutingModule } from './contractor-routing.module';
     ContractorsRoutingModule,
     ChartsModule,
     BsDropdownModule,
+    ToasterModule,
     ButtonsModule.forRoot()
   ],
   declarations: [ ContractorsComponent, AddcontractorComponent, ViewcontractorComponent, DataFilterPipe, StriphtmlPipe ]

@@ -21,6 +21,13 @@ export class FullLayoutComponent {
 
 	  	if(localStorage.getItem('currentUserRoleId') == '1')
 	  	{
+
+	  		this.navigation.push({
+			    	name: 'Clients',
+			    	url: '/clients',
+			    	icon: '',
+		  		});
+
 		  		this.navigation.push({
 		    	name: 'Projects',
 		    	url: '/projects',

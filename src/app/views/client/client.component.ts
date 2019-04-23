@@ -11,12 +11,13 @@ import { API_URL } from '../../globals';
 import { ToasterModule, ToasterService, ToasterConfig }  from 'angular2-toaster/angular2-toaster';
 
 @Component({
-  templateUrl: 'contractor.component.html',
-    styleUrls: ['../../../scss/vendors/toastr/toastr.scss'],
+  templateUrl: 'client.component.html',
+  styleUrls: ['../../../scss/vendors/toastr/toastr.scss'],
   encapsulation: ViewEncapsulation.None
 })
 
-export class ContractorsComponent {
+@Injectable()
+export class ClientsComponent {
 private toasterService: ToasterService;
 public toasterconfig : ToasterConfig =
       new ToasterConfig({
@@ -25,6 +26,7 @@ public toasterconfig : ToasterConfig =
       });
 editparam: any;
 prodel: any;
+public proData: any = {};
 checkData: any = 0;
 public data: any;
 public filterQuery = '';
@@ -40,7 +42,7 @@ public filterQuery = '';
 	        options.headers.append('Content-Type', 'application/json');
 	        options.headers.append('Accept', 'application/json');
 
-	    	this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC"}', options)
+	    	this.http.get(API_URL+'/clients?filter={"order":"id DESC"}', options)
 	        .subscribe(response => {
 	        if(response.json().length)
 	        {
@@ -53,30 +55,32 @@ public filterQuery = '';
 	        	
 		    });	
 
-	this.toasterService = toasterService;		    
+	this.toasterService = toasterService;	    
    
   }
 
-  delcontractor(proid, index){
+  delclient(clientId, index){
   this.toasterService.clear();
-  if(proid)
+  if(clientId)
   {
   	let options = new RequestOptions();
 	        options.headers = new Headers();
 	        options.headers.append('Content-Type', 'application/json');
 	        options.headers.append('Accept', 'application/json');
 
-	    	/*this.http.delete(API_URL+'/members/'+proid, options)
+	    	/*this.http.delete(API_URL+'/clients/'+proid, options)
 	        .subscribe(response => {
 	        	this.prodel = 1;
 		    });	
 
-		    this.data.splice(index, 1); */
+		    this.data.splice(index, 1); 
+		    setTimeout(function(){$('.text-error').fadeOut();}, 2000); */
 
-		    this.http.post(API_URL+'/Members/update?where=%7B%22id%22%3A%20%22'+proid+'%22%7D', {"status":"deleted"},  options)
-	        .subscribe(response => {
+		    this.proData.status = 'deleted';
 
-	        	this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC"}', options)
+		    this.http.post(API_URL+'/clients/update?where=%7B%22id%22%3A%20%22'+clientId+'%22%7D', this.proData,  options)
+	        .subscribe(data => {
+	        	this.http.get(API_URL+'/clients?filter={"order":"id DESC"}', options)
 		        .subscribe(response => {
 		        if(response.json().length)
 		        {
@@ -87,11 +91,13 @@ public filterQuery = '';
 		        	this.checkData = 0;
 		        }
 		        	
-			    });
-	      
-	    	});
-		    setTimeout(function(){$('.text-error').fadeOut();}, 2000); 
-			this.toasterService.pop('success', 'Deleted ', "Contractor has deleted successfully!");    
+			    });	
+
+			    this.prodel = 1;
+	        });
+
+	this.toasterService.pop('success', 'Deleted ', "Client has deleted successfully!");
+
   }
 
   }

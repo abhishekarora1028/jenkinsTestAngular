@@ -54,7 +54,7 @@ border-radius:50%;
         <td>{{item.projectname}}</td>
         <td *ngFor="let itemdate of datesData;let i = index " style="padding-left: 30px;">
         <span *ngIf="item.stime">{{item.stime.split('_')[i]}}</span> 
-         <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[i].split('_')[3],item.project_id,item.stime.split('_')[i],item.des.split('_')[i],item.tsId.split('_')[i], item.member_id, item.fullstime.split('@')[i]);dealerModal.show();" *ngIf="item.assign == 1"></span>
+         <span class="glyphicon glyphicon-edit" data-toggle="modal" (click)="getDate(datesData[i].split('_')[3],item.project_id,item.stime.split('_')[i],item.des.split('_')[i],item.tsId.split('_')[i], item.member_id, item.fullstime.split('@')[i]);dealerModal.show();" *ngIf="item.assign == 1 && (item.status == 'active' || item.status == 'draft' || item.status == 'inprogress' || item.status == 'completed') && item.memberstatus=='active'"></span>
         </td>
         <!-- <td><span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#myModal"></span></td> -->
         <td>{{item.totalStime}}</td>

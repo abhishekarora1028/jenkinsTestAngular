@@ -49,6 +49,7 @@ export class LoginComponent {
 
 
 	  onSubmit() {	
+    this.toasterService.clear();
 	     if((this.data.loginname).match(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/)){
           this.data.email = this.data.loginname;
        } else {
@@ -87,7 +88,7 @@ export class LoginComponent {
 			       
           }, error => {
               //this.error = 1;
-              console.log(JSON.stringify(error.json()));
+              //console.log(JSON.stringify(error.json()));
               if(error.json().isTrusted){
                 this.toasterService.pop('error', 'Login Error ', "API not working.");
               } else {
