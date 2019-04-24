@@ -36,6 +36,7 @@ public toasterconfig : ToasterConfig =
   custom_project_id:any = 0;
   checkUser:any = 2;
   countPro:any = 0;
+  checkData:any = 0;
   conData:any;
   clientData:any;
   private data: any;
