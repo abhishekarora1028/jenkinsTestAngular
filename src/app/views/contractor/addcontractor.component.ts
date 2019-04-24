@@ -79,7 +79,7 @@ public toasterconfig : ToasterConfig =
   }
 
 keyPress(event: any) {
-    const pattern = /[0-9\+\-\ ]/;
+    const pattern = /[0-9\ ]/;
 
     let inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
@@ -106,6 +106,29 @@ keyPress(event: any) {
       });
   }
 
+  disContractor()
+  {
+    
+    let options = new RequestOptions();
+          options.headers = new Headers();
+          options.headers.append('Content-Type', 'application/json');
+          options.headers.append('Accept', 'application/json');
+
+        this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC"}', options)
+          .subscribe(response => {
+          this.router.navigate(['contractors']);
+          if(response.json().length)
+          {
+            this.data = response.json();
+            this.checkData = 0;
+            this.checkData = 1;
+          }else{
+            this.checkData = 0;
+          }
+            
+        });
+  }
+
    onSubmit() {
    this.toasterService.clear();
    if(this.editparam.id)
@@ -126,6 +149,7 @@ keyPress(event: any) {
           this.toasterService.pop('error', 'error ', "Error");
 	      }
 	    });
+      this.disContractor();
    }else{
 	  let options = new RequestOptions();
 	          options.headers = new Headers();
@@ -144,7 +168,7 @@ keyPress(event: any) {
           this.toasterService.pop('error', 'error ', "Error");
 	      }
 	    });
- 
+    this.disContractor();
 	}
   } 
 

@@ -84,6 +84,7 @@ public toasterconfig : ToasterConfig =
 
   if(this.route.snapshot.paramMap.get("id"))
   {
+    
   this.editparam = {
     		id: this.route.snapshot.paramMap.get("id"),
     		action: 'edit'
@@ -108,6 +109,7 @@ public toasterconfig : ToasterConfig =
               
             });
           }
+
         });
         
   }else{
@@ -126,8 +128,9 @@ public toasterconfig : ToasterConfig =
         project_type:'',
     		status:'',
     		project_time:'',
-    		hourly_rate:'',
-    		fixed_rate:'',
+    		rate:'',
+        sdate:'',
+    		edate:'',
     		description:'',
     	}	
   }
@@ -177,7 +180,7 @@ getDefPay(contId, index)
 }
 
 keyPress(event: any) {
-    const pattern = /[0-9\+\-\ ]/;
+    const pattern = /[0-9\ ]/;
 
     let inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
@@ -216,7 +219,45 @@ removeUser(i, dcon, assignid){
   }
 }  
 
-   onSubmit() {
+disProject()
+{
+     
+      let options = new RequestOptions();
+          options.headers = new Headers();
+          options.headers.append('Content-Type', 'application/json');
+          options.headers.append('Accept', 'application/json');
+
+          this.http.get(API_URL+'/projects?filter={"order":"id DESC"}', options)
+            .subscribe(response => {
+            this.router.navigate(['projects']); 
+            if(response.json().length)
+            {
+              this.data = response.json();
+              console.log(this.data)
+              for(let i=0; i< this.data.length; i++ ) {
+              this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}', options)
+                  .subscribe(response => {
+                  if(response.json().length)
+                  {
+                    
+                    this.data[i].client_name = response.json()[0].client_name;
+                    this.data[i].email = response.json()[0].email;
+                    this.data[i].client_code = response.json()[0].client_code;
+                  }
+                    
+                });
+                }
+              this.checkData = 1;
+            }else{
+              this.checkData = 0;
+            }
+            
+          });
+
+         
+}
+
+onSubmit() {
    this.checkUser = 0;
    this.toasterService.clear();
    if(this.editparam.id)
@@ -333,6 +374,7 @@ removeUser(i, dcon, assignid){
           this.toasterService.pop('error', 'error ', "Error");
 	      }
 	    });
+      this.disProject();
    }else{
 	  let options = new RequestOptions();
 	          options.headers = new Headers();
@@ -417,7 +459,7 @@ removeUser(i, dcon, assignid){
           this.toasterService.pop('error', 'error ', "Error");
 	      }
 	    });
- 
+    this.disProject();
 	}
   } 
 

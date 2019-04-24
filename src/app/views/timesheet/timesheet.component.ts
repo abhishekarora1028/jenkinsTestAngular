@@ -12,14 +12,23 @@ import { API_URL } from '../../globals';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 //import { ViewChild } from '@angular/core';
 
+// Toastr
+import { ToasterModule, ToasterService, ToasterConfig }  from 'angular2-toaster/angular2-toaster';
+
 @Component({
   templateUrl: 'timesheet.component.html',
-  styleUrls: ['../../../scss/vendors/bs-datepicker/bs-datepicker.scss'],
+  styleUrls: ['../../../scss/vendors/bs-datepicker/bs-datepicker.scss', '../../../scss/vendors/toastr/toastr.scss'],
   encapsulation: ViewEncapsulation.None
 })
 
 export class TimesheetsComponent {
 @ViewChild('f') formValues;
+private toasterService: ToasterService;
+public toasterconfig : ToasterConfig =
+      new ToasterConfig({
+        tapToDismiss: true,
+        timeout: 5000
+      });
 editparam: any;
 public seldata: any = {};
 public conData: any;
@@ -32,9 +41,12 @@ checkData: any = 0;
 cuStime: any = 0;
 addData: any = 0;
 memberId: any = 0;
+addTimeForm: any = 0;
+formDis: any = 0;
 currentUserID: any = 0;
 currentRoleId: any = 0;
 contractorId: any = 0;
+timeReq: any = 0;
 cuDes  : any;
 sheetStatus  : any = '';
 public data: any = [];
@@ -51,11 +63,13 @@ public options:any = {
   hstep: [1, 2, 3],
   mstep: [1, 5, 10, 15, 25, 30]
 };
-  constructor(@Inject(Http) private http: Http, @Inject(Router)private router:Router) {
+  constructor(@Inject(Http) private http: Http, @Inject(Router)private router:Router, toasterService: ToasterService) {
   if(!localStorage.getItem("currentUserId"))
     {
       this.router.navigate(['login']);
     }
+
+
   this.memberId    = localStorage.getItem('currentUserId');
   this.checkData = 0;
   this.sheetStatus = '';
@@ -192,6 +206,7 @@ for(let i=0; i<= 30; i++ ) {
               }else{
                 this.contractorId = 0;
                 this.checkData = 2;
+                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
               }
 
             });
@@ -284,12 +299,13 @@ for(let i=0; i<= 30; i++ ) {
               }else{
                 this.contractorId = 0;
                 this.checkData = 2;
+                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
               }
 
             });
           }
 
-   
+   this.toasterService = toasterService;
   }
 
 
@@ -300,6 +316,7 @@ for(let i=0; i<= 30; i++ ) {
 
 onSelectCont(contId)
 {
+  this.toasterService.clear();
   if(contId)
   {
     let options = new RequestOptions();
@@ -392,6 +409,7 @@ onSelectCont(contId)
               }else{
                 this.data = [];
                 this.checkData = 2;
+                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
               }
 
             });
@@ -415,17 +433,33 @@ onSelectCont(contId)
     
   }
 
-  getDate(cDate, proId, stime, des, tsId, memId, fullstime)
+  getDate(cDate, proId, stime, des, tsId, memId, fullstime, index)
   {
 
+    if(this.addTimeForm == 0)
+    {
+      this.addTimeForm = 1;
+      this.formDis = proId+'_'+index;
+    }else{
+      if(index == this.formDis.split('_')[1])
+      {
+        this.addTimeForm = 0;
+        this.formDis = proId+'_'+index;
+      }else{
+        this.addTimeForm = 1;
+        this.formDis = proId+'_'+index;
+      }
+      
+    }
+    
     this.sheetStatus = '';
-    this.checkData = 0;
+    this.checkData = 1;
     this.addData = 0;
     localStorage.setItem("cDate", cDate);
     localStorage.setItem("proId", proId);
     localStorage.setItem("tsId", tsId);
     localStorage.setItem("memId", memId);
-    this.cuStime = stime;
+    //this.cuStime = stime;
     this.cuDes   = des;
     if(stime =='-' || des == '-')
     { 
@@ -618,6 +652,7 @@ onPickSheet(pickDate)
               }else{
                 this.data = [];
                 this.checkData = 2;
+                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
               }
 
             });
@@ -708,6 +743,7 @@ onPickSheet(pickDate)
               }else{
                 this.data = [];
                 this.checkData = 2;
+                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
               }
 
             });
@@ -731,38 +767,45 @@ onPickSheet(pickDate)
               this.sheetData.project_id  = localStorage.getItem("proId");
               this.sheetData.member_id   = localStorage.getItem('memId');
 
-              let hours   = this.model.stime.getHours(); 
-              let minutes = this.model.stime.getMinutes(); 
 
-              if(minutes == 0)
+              if(typeof this.model.stime=='object')
               {
-                minutes = '00';
-              }
+                  let hours   = this.model.stime.getHours(); 
+                  let minutes = this.model.stime.getMinutes(); 
 
-              this.sheetData.stime       = hours+':'+minutes;
-              this.sheetData.fullstime   = this.model.stime;
-
-
-              this.http.post(API_URL+'/timesheets?access_token='+localStorage.getItem('currentUserToken'), this.sheetData, options).subscribe(response => {
-              let keys = Object.keys(response.json());
-              let len = keys.length;
-                  if(len > 0)
+                  if(minutes == 0)
                   {
-                    //this.data = response.json();
-                    this.addData = 1;
-                    //setTimeout(function(){location.reload();}, 1000);
-                    if(this.seldata==undefined)
-                    {
-                      this.onPickSheet(new Date());
-                    }else{
-                      this.onPickSheet(this.seldata);
-                    }
-                    setTimeout(function(){$(".close").trigger("click");}, 1000);
-                  }else{
-                    this.addData = 0;
+                    minutes = '00';
                   }
 
-               });
+                  this.sheetData.stime       = hours+':'+minutes;
+                  this.sheetData.fullstime   = this.model.stime;
+
+
+                  this.http.post(API_URL+'/timesheets?access_token='+localStorage.getItem('currentUserToken'), this.sheetData, options).subscribe(response => {
+                  let keys = Object.keys(response.json());
+                  let len = keys.length;
+                      if(len > 0)
+                      {
+                        //this.data = response.json();
+                        this.addData = 1;
+                        //setTimeout(function(){location.reload();}, 1000);
+                        if(this.seldata==undefined)
+                        {
+                          this.onPickSheet(new Date());
+                        }else{
+                          this.onPickSheet(this.seldata);
+                        }
+                        setTimeout(function(){$(".close").trigger("click");}, 1000);
+                      }else{
+                        this.addData = 0;
+                      }
+
+                   });
+                }else{
+                  this.timeReq = 1;
+                }
+
             }else{
               //this.sheetData.stime       = this.model.stime;
               this.editsheetData.description = this.model.description;
@@ -772,37 +815,43 @@ onPickSheet(pickDate)
               let memberId               = localStorage.getItem('memId');
               //tsId                     = tsId.split('undefined')[0];
 
-
-              let hours   = this.model.stime.getHours(); 
-              let minutes = this.model.stime.getMinutes(); 
-
-              if(minutes == 0)
+              if(typeof this.model.stime=='object')
               {
-                minutes = '00';
-              }
+                let hours   = this.model.stime.getHours(); 
+                let minutes = this.model.stime.getMinutes(); 
 
-              this.editsheetData.stime       = hours+':'+minutes;
-              this.editsheetData.fullstime   = this.model.stime;
+                if(minutes == 0)
+                {
+                  minutes = '00';
+                }
 
-              if(tsId.indexOf(undefined) != -1){
-                  tsId = tsId.split('undefined')[1];
-              }
+                this.editsheetData.stime       = hours+':'+minutes;
+                this.editsheetData.fullstime   = this.model.stime;
 
-              this.http.post(API_URL+'/timesheets/update?where=%7B%22id%22%3A%22'+tsId+'%22%7D', this.editsheetData,  options)
-                  .subscribe(data => {
+                if(tsId.indexOf(undefined) != -1){
+                    tsId = tsId.split('undefined')[1];
+                }
 
-                  }); 
-              this.addData = 2;
-              console.log(this.seldata)
-              if(this.seldata==undefined)
-              {
-                this.onPickSheet(new Date());
+                this.http.post(API_URL+'/timesheets/update?where=%7B%22id%22%3A%22'+tsId+'%22%7D', this.editsheetData,  options)
+                    .subscribe(data => {
+
+                    }); 
+                this.addData = 2;
+                
+                if(this.seldata==undefined)
+                {
+                  this.onPickSheet(new Date());
+                }else{
+                  this.onPickSheet(this.seldata);
+                }
+                
+                setTimeout(function(){$(".close").trigger("click");}, 1000);
+                //setTimeout(function(){location.reload();}, 1000);
               }else{
-                this.onPickSheet(this.seldata);
+                this.timeReq = 1;
               }
+
               
-              setTimeout(function(){$(".close").trigger("click");}, 1000);
-              //setTimeout(function(){location.reload();}, 1000);
               
             }
 

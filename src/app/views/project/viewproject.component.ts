@@ -51,7 +51,7 @@ export class ViewprojectComponent {
             this.model = response.json();
             this.http.get(API_URL+'/clients/'+ this.model.client_id, options)
                   .subscribe(response => {
-                    this.model.client_name = response.json().fname+' '+response.json().lname;
+                    this.model.client_name = response.json().client_name;
                     this.model.email       = response.json().email;
                     this.model.client_code = response.json().client_code;
                     
@@ -106,9 +106,9 @@ export class ViewprojectComponent {
     		percentage:'',
     		budget:'',
     		project_type:'',
-    		project_time:'',
-    		hourly_rate:'',
-    		fixed_rate:'',
+        sdate:'',
+    		edate:'',
+    		rate:'',
     		description:'',
     	}	
   }

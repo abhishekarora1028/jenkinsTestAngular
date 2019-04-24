@@ -44,15 +44,7 @@
                   <span class="col-lg-9 col-md-9 col-sm-8 col-6 pl-0">{{model.edate}}</span> 
               </div>    
               <div class="form-group d-flex flex-wrap">
-                  <label for="project_time" class="col-lg-3 col-md-3 col-sm-4 col-6 pl-0"><strong><h4>Project Time: </h4></strong></label>
-                  <span class="col-lg-9 col-md-9 col-sm-8 col-6 pl-0">{{model.project_time}}</span> 
-              </div>
-              <div class="form-group d-flex flex-wrap" *ngIf="rate == 2 || model.project_type =='hourly'">
-                  <label for="rate" class="col-lg-3 col-md-3 col-sm-4 col-6 pl-0"><strong><h4>Hourly Rate: </h4></strong></label>
-                  <span class="col-lg-9 col-md-9 col-sm-8 col-6 pl-0">${{model.rate}} </span>
-              </div>
-              <div class="form-group d-flex flex-wrap" *ngIf="rate == 1 || model.project_type =='fixed'">
-                  <label for="rate" class="col-lg-3 col-md-3 col-sm-4 col-6 pl-0"><strong><h4>Fixed Rate: </h4></strong></label>
+                  <label for="rate" class="col-lg-3 col-md-3 col-sm-4 col-6 pl-0"><strong><h4>Target Rate: </h4></strong></label>
                   <span class="col-lg-9 col-md-9 col-sm-8 col-6 pl-0">${{model.rate}} </span>
               </div>
               <div class="form-group d-flex flex-wrap">

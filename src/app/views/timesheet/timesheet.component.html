@@ -20,33 +20,29 @@ border-radius:50%;
   display: none !important;
 }
 </style>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
 <div class="row d-flex border-bottom">
   <div class="col-12 pt-3 pb-3 pl-md-0">
   <h4 class="mb-0">Timesheet</h4>
   </div>
 </div> 
  <form name="form" (ngSubmit)="sf.form.valid" #sf="ngForm" novalidate> 
-   <div class="row d-flex">
-      <div class="mt-3 col-md-4 col-sm-6 col-12  form-calendar pl-md-0">
-        <div class="input-group date" id="datetimepicker1">
-            <input type="text" class="form-control" name="sheettime" id="sheettime" [(ngModel)]="model.sheettime" #sheettime="ngModel" readonly #sdp="bsDaterangepicker" bsDaterangepicker (ngModelChange)="onPickSheet($event)" [ngClass]="{ 'is-invalid': sf.submitted && sheettime.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required placeholder="Select Date" />
-            <span class="input-group-addon bg-transparent">
-                <span class="fa fa-calendar"></span>
-            </span>
-        </div>
-      </div>
-    </div>
-     <div class="row mt-4 mb-2 contractor-list" *ngIf="currentRoleId == 1">
-        <div class="d-flex align-items-center">
-          <div class="d-inline mr-3"><h4 class="mb-0">Contrator</h4></div>
-          <div class="d-inline col-10">
-            <select class="form-control" (change)="onSelectCont($event.target.value)" [(ngModel)]="contractorId" #member_id="ngModel" name="member_id" style="height: 35px;">
+     <div class="row mt-4 mb-2 contractor-list align-items-center" *ngIf="currentRoleId == 1">
+      <div class="d-inline mr-2 mb-md-0 mb-sm-0 mb-3"><h4 class="mb-0">Contrator</h4></div>
+      <div class="d-inline col-lg-4 col-md-4 col-sm-5 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
+        <select class="form-control" (change)="onSelectCont($event.target.value)" [(ngModel)]="contractorId" #member_id="ngModel" name="member_id" style="height: 35px;">
               <option value="" [selected]="">--select contractor--</option>
               <option *ngFor="let con of conData" [value]="con.id">{{con.fname+' '+con.lname}}</option>
             </select>
-            </div>
+      </div>
+      <div class="d-inline col-lg-4 col-md-4 col-sm-5 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0">
+        <div class="input-group date form-calendar" id="datetimepicker1">
+              <input type="text" class="form-control w-100" name="sheettime" id="sheettime" [(ngModel)]="model.sheettime" #sheettime="ngModel" readonly #sdp="bsDaterangepicker" bsDaterangepicker (ngModelChange)="onPickSheet($event)" [ngClass]="{ 'is-invalid': sf.submitted && sheettime.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required placeholder="Select Date" />
+              <span class="input-group-addon bg-transparent">
+                  <span class="fa fa-calendar"></span>
+              </span>
           </div>
+        </div>
       </div>
 </form>
   <!-- Timesheet Vertical Layout -->
@@ -58,20 +54,33 @@ border-radius:50%;
           <th *ngFor="let prod of data"><div class="equal">{{prod.projectname}}</div></th>
         </tr>
       </thead>
-      <tr>
-        <td colspan="5" class="p-0">
-          <div class="max-height">
-            <table class="width">
-              <tr *ngFor="let itemdate of datesData;let i = index ">
-                <td><div class="equal">{{itemdate.split('_')[0]}}<div class="date">{{itemdate.split('_')[1]}} {{itemdate.split('_')[2]}}</div></div></td>
-                <td *ngFor="let item of data;let j = index">
-                  <div class="equal">
-                    <span class="p-2" *ngIf="item.stime">{{item.stime.split('_')[i]}}</span>
-                    <span class="glyphicon glyphicon-edit p-2" data-toggle="modal" (click)="getDate(datesData[i].split('_')[3],item.project_id,item.stime.split('_')[i],item.des.split('_')[i],item.tsId.split('_')[i], item.member_id, item.fullstime.split('@')[i]);dealerModal.show();" *ngIf="item.assign == 1 && (item.status == 'active' || item.status == 'draft' || item.status == 'inprogress' || item.status == 'completed') && item.memberstatus=='active'"></span>
-                  </div>
-                </td>
-              </tr>
-            </table>
+      <tr *ngFor="let itemdate of datesData;let i = index ">
+        <td><div class="equal">{{itemdate.split('_')[0]}}<div class="date">{{itemdate.split('_')[1]}} {{itemdate.split('_')[2]}}</div></div></td>
+        <td *ngFor="let item of data;let j = index ">
+          <div class="equal">
+            <span class="p-2" *ngIf="item.stime">{{item.stime.split('_')[i]}}</span>
+            <span class="fa fa-edit p-2" (click)="getDate(datesData[i].split('_')[3],item.project_id,item.stime.split('_')[i],item.des.split('_')[i],item.tsId.split('_')[i], item.member_id, item.fullstime.split('@')[i], i);" *ngIf="item.assign == 1 && (item.status == 'active' || item.status == 'draft' || item.status == 'inprogress' || item.status == 'completed') && item.memberstatus=='active'"></span>
+            <span *ngIf="addTimeForm == 1 && formDis.split('_')[0] == item.project_id && formDis.split('_')[1] == i"> 
+            <form name="form" (ngSubmit)="f.form.valid && onSubmit();" #f="ngForm">
+                <div class="form-group mb-2">
+                        <label for="stime">Time</label>
+                        <timepicker class="timepicker" [(ngModel)]="model.stime" #stime="ngModel" name="stime" [hourStep]="hstep"
+                          [minuteStep]="mstep" [showMeridian]="ismeridian"
+                          [readonlyInput]="!isEnabled" [ngClass]="{ 'is-invalid': f.submitted && stime.invalid }" required>
+                          </timepicker>
+                          <div *ngIf="timeReq == '1'" class="invalid-feedback">
+                            <div *ngIf="timeReq == '1'">Time is required</div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control p-1 " name="description" value="{{cuDes}}" placeholder="Description" [(ngModel)]="model.description" #description="ngModel"/>
+
+                        <div class="input-group-append">
+                          <span class="input-group-text p-1 bg-primary"> <button class="btn btn-transparent p-0" type="submit">Save</button></span>
+                        </div>
+                    </div>
+                    </form>
+                  </span>
           </div>
         </td>
       </tr>
@@ -96,11 +105,6 @@ border-radius:50%;
     </table>
   </div>
   <!-- Timesheet Vertical Layout -->
-  <div *ngIf="checkData == 2">
-          No Timesheet Found!
-  </div>
-  
- 
 
 <!-- Modal -->
 
@@ -156,3 +160,6 @@ border-radius:50%;
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>

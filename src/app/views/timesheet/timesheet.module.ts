@@ -15,6 +15,9 @@ import { TimesheetsRoutingModule } from './timesheet-routing.module';
 import { BsDatepickerModule } from 'ngx-bootstrap';
 import { TimepickerModule } from 'ngx-bootstrap';
 
+// Toastr
+import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
+
 @NgModule({
   imports: [
   	CommonModule,
@@ -25,6 +28,7 @@ import { TimepickerModule } from 'ngx-bootstrap';
     TimepickerModule.forRoot(),
     BsDatepickerModule.forRoot(),
     ModalModule.forRoot(),
+    ToasterModule,
     ButtonsModule.forRoot()
   ],
   declarations: [ TimesheetsComponent ]
