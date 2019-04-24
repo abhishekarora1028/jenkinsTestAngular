@@ -23,8 +23,8 @@
                     </div> -->
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
-                            <label for="fname" class="col-4 p-0 d-flex align-items-center justify-content-start">First Name</label>
-                            <input type="text" class="form-control col-8 pr-0" name="fname" [(ngModel)]="model.fname" #fname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && fname.invalid }" required />
+                            <label for="fname" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">First Name</label>
+                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="fname" [(ngModel)]="model.fname" #fname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && fname.invalid }" required />
                             <div *ngIf="f.submitted && fname.invalid" class="invalid-feedback">
                                 <div *ngIf="fname.errors.required">First Name is required</div>
                             </div>
@@ -32,8 +32,8 @@
                     </div>
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
-                            <label for="lname" class="col-4 p-0 d-flex align-items-center justify-content-start">Last Name</label>
-                            <input type="text" class="form-control col-8 pr-0" name="lname" [(ngModel)]="model.lname" #lname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lname.invalid }" required />
+                            <label for="lname" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Last Name</label>
+                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="lname" [(ngModel)]="model.lname" #lname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lname.invalid }" required />
                             <div *ngIf="f.submitted && lname.invalid" class="invalid-feedback">
                                 <div *ngIf="lname.errors.required">Last Name is required</div>
                             </div>
@@ -41,8 +41,8 @@
                     </div>
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
-                            <label for="email" class="col-4 p-0 d-flex align-items-center justify-content-start">Email</label>
-                            <input type="text" class="form-control col-8 pr-0" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+                            <label for="email" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Email</label>
+                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
                             <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
                                 <div *ngIf="email.errors.required">Email is required</div>
                                 <div *ngIf="email.errors.email">Email must be a valid email address</div>
@@ -55,8 +55,8 @@
                     </div>
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
-                            <label for="phone" class="col-4 p-0 d-flex align-items-center justify-content-start">Phone Number</label>
-                            <input type="text" class="form-control col-8 pr-0" (keypress)="keyPress($event)" name="phone" [(ngModel)]="model.phone" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid }" required minlength=10 maxlength=10 />
+                            <label for="phone" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Phone Number</label>
+                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" (keypress)="keyPress($event)" name="phone" [(ngModel)]="model.phone" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid }" required minlength=10 maxlength=10 />
                             <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback">
                                 <div *ngIf="phone.errors.required">Phone Number is required</div>
                             </div>
@@ -66,8 +66,8 @@
                     </div>
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
-                            <label for="client_code" class="col-4 p-0 d-flex align-items-center justify-content-start">Client Code</label>
-                            <input type="text" class="form-control col-8 pr-0" name="client_code" [(ngModel)]="model.client_code" #client_code="ngModel" [ngClass]="{ 'is-invalid': f.submitted && client_code.invalid }" required />
+                            <label for="client_code" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Client Code</label>
+                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="client_code" [(ngModel)]="model.client_code" #client_code="ngModel" [ngClass]="{ 'is-invalid': f.submitted && client_code.invalid }" required />
                             <div *ngIf="f.submitted && client_code.invalid" class="invalid-feedback">
                                 <div *ngIf="client_code.errors.required">Client Code is required</div>
                             </div>
@@ -75,8 +75,8 @@
                     </div>
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
-                            <label for="gender" class="col-4 p-0 d-flex align-items-center justify-content-start">Gender</label>
-                            <select class="form-control col-8 pr-0" name="gender" [(ngModel)]="model.gender" #gender="ngModel" [ngClass]="{ 'is-invalid': f.submitted && gender.invalid }" required><option value="" [selected]="">--Gender--</option><option value="male">Male</option><option value="female">Female</option></select>
+                            <label for="gender" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Gender</label>
+                            <select class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="gender" [(ngModel)]="model.gender" #gender="ngModel" [ngClass]="{ 'is-invalid': f.submitted && gender.invalid }" required><option value="" [selected]="">--Gender--</option><option value="male">Male</option><option value="female">Female</option></select>
                             <div *ngIf="f.submitted && gender.invalid" class="invalid-feedback">
                                 <div *ngIf="gender.errors.required">Gender is required</div>
                             </div>
@@ -84,17 +84,17 @@
                     </div>
                      <div class="col-sm-6 col-12">
                         <div class="form-group">
-                            <label for="status" class="col-4 p-0 d-flex align-items-center justify-content-start">Status</label>
-                            <select class="form-control col-8 pr-0" name="status" [(ngModel)]="model.status" #status="ngModel" [ngClass]="{ 'is-invalid': f.submitted && status.invalid }" required><option value="" [selected]="">--Status--</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="deleted">Deleted</option></select>
+                            <label for="status" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Status</label>
+                            <select class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="status" [(ngModel)]="model.status" #status="ngModel" [ngClass]="{ 'is-invalid': f.submitted && status.invalid }" required><option value="" [selected]="">--Status--</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="deleted">Deleted</option></select>
                             <div *ngIf="f.submitted && status.invalid" class="invalid-feedback">
                                 <div *ngIf="status.errors.required">Status is required</div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-12">
-                        <div class="form-group">
-                            <label for="about" class="col-4 p-0 d-flex align-items-center justify-content-start">About Yourself</label>
-                            <textarea class="form-control col-8 pr-0" name="about" [(ngModel)]="model.about" #about="ngModel"></textarea>
+                    <div class="col-sm-12 col-12">
+                        <div class="form-group proj-desc">
+                            <label for="about" class="d-flex align-items-center justify-content-start">About Yourself</label>
+                            <textarea class="form-control" name="about" [(ngModel)]="model.about" #about="ngModel"></textarea>
                         </div>
                     </div>
                     <div class="col-12 mt-3">

@@ -27,7 +27,7 @@
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
                             <label class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Client Name</label>
-                            <select class="form-control col-7 pr-0" [(ngModel)]="model.client_id" name="client_id" #client_id="ngModel" [ngClass]="{ 'is-invalid': f.submitted && client_id.invalid }" required><option value="" [selected]="">--Select Client--</option><option *ngFor="let con of clientData" [value]="con.id">{{con.fname+' '+con.lname}}</option></select>
+                            <select class="form-control col-8 pr-0" [(ngModel)]="model.client_id" name="client_id" #client_id="ngModel" [ngClass]="{ 'is-invalid': f.submitted && client_id.invalid }" required><option value="" [selected]="">--Select Client--</option><option *ngFor="let con of clientData" [value]="con.id">{{con.fname+' '+con.lname}}</option></select>
                             <div *ngIf="f.submitted && client_id.invalid" class="invalid-feedback">
                                 <div *ngIf="client_id.errors.required">Client Name is required</div>
 

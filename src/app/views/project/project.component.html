@@ -41,16 +41,16 @@
             <th>
               <mfDefaultSorter by=""><h4>Client Name</h4></mfDefaultSorter>
             </th>
-            <th>
+            <!-- <th>
               <mfDefaultSorter by=""><h4>Client Email</h4></mfDefaultSorter>
-            </th>
+            </th> -->
             <th>
               <mfDefaultSorter by=""><h4>Project Type</h4></mfDefaultSorter>
             </th>
             <th>
               <mfDefaultSorter by=""><h4>Status</h4></mfDefaultSorter>
             </th>
-            <th>&nbsp;</th>
+            <th><h4>Action</h4></th>
           </tr>
         </thead>
         <tbody>
@@ -67,7 +67,7 @@
             <td>{{item.project_code}}</td>
             <td>{{item.client_code}}-{{item.project_code}}-{{item.custom_project_id}}</td>
             <td>{{item.client_name}}</td>
-            <td>{{item.email}}</td>
+            <!-- <td>{{item.email}}</td> -->
             <td style="text-transform: capitalize;">{{item.project_type}}</td>
             <td>
                   <span class="badge badge-success rounded" *ngIf="item.status == 'active'">Active</span>
@@ -79,7 +79,7 @@
                    <span class="badge badge-danger rounded" *ngIf="item.status == 'deleted'">Deleted</span>
                 </td>
             <td>
-              <div class="d-flex align-items-center justify-content-end">
+              <div class="d-flex align-items-center action-icons">
                 <span>
                   <a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
                 </span>
