@@ -64,11 +64,9 @@ public toasterconfig : ToasterConfig =
     	}
 
     this.model = {    		
-        fname:'',
-    		lname:'',
+        client_name:'',
         email:'',
         phone:'',
-        gender:'',
         about:'',
     	}	
   }
@@ -84,6 +82,41 @@ keyPress(event: any) {
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
     }
+}
+
+onChange(event: any) {
+  this.uniqueEmail = 0;
+    let options = new RequestOptions();
+            options.headers = new Headers();
+            options.headers.append('Content-Type', 'application/json');
+            options.headers.append('Accept', 'application/json');
+            
+     this.http.get(API_URL+'/Members?filter=%7B%22where%22%3A%7B%22email%22%3A%20%22'+event+'%22%7D%7D', options).subscribe(data => {
+        if(data.json().length)
+        {
+          this.uniqueEmail = 0;
+          this.uniqueEmail = 1;
+        }else{
+          this.uniqueEmail = 0;
+          this.uniqueEmail = 2;
+        }
+      });
+  }
+
+disClient()
+{
+  
+  let options = new RequestOptions();
+          options.headers = new Headers();
+          options.headers.append('Content-Type', 'application/json');
+          options.headers.append('Accept', 'application/json');
+
+        this.http.get(API_URL+'/clients/'+ this.editparam.id, options)
+          .subscribe(response => {  
+            this.model = response.json();
+            this.editparam.action = "edit";
+            this.router.navigate(['clients']); 
+        });    
 }
 
 
@@ -107,6 +140,7 @@ keyPress(event: any) {
           this.toasterService.pop('error', 'error ', "Error");
 	      }
 	    });
+       this.disClient();
    }else{
 	  let options = new RequestOptions();
 	          options.headers = new Headers();
@@ -128,7 +162,7 @@ keyPress(event: any) {
           this.toasterService.pop('error', 'error ', "Error");
 	      }
 	    });
- 
+    this.disClient();
 	}
   } 
 

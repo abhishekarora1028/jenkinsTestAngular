@@ -33,9 +33,6 @@
               <mfDefaultSorter by="project_name"><h4>Project Name</h4></mfDefaultSorter>
             </th>
             <th>
-              <mfDefaultSorter by=""><h4>Project Code</h4></mfDefaultSorter>
-            </th>
-            <th>
               <mfDefaultSorter by=""><h4>Project Unique No</h4></mfDefaultSorter>
             </th>
             <th>
@@ -59,12 +56,11 @@
               <div class="card P-0 border-0 width mb-0">
                 <div class="card-body row d-flex p-0">
                   <div class="col-12 d-flex flex-wrap align-items-center justify-content-start p-0">
-                    <h4 class="mb-0 width d-flex align-items-center"><span class="btn btn-outline-secondary rounded mr-2 project-name"><a class="btn btn-show-contact100 project-detail" routerLink="/projects/viewproject/{{item.id}}">{{item.project_name.charAt(0)}}</a></span> {{item.project_name}}</h4>
+                    <h4 class="mb-0 width d-flex align-items-center">{{item.project_name}}</h4>
                   </div>
                 </div>
               </div>
             </td>
-            <td>{{item.project_code}}</td>
             <td>{{item.client_code}}-{{item.project_code}}-{{item.custom_project_id}}</td>
             <td>{{item.client_name}}</td>
             <!-- <td>{{item.email}}</td> -->

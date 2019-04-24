@@ -355,6 +355,7 @@ h4 {
     text-align: center;
     background-color: #eee;
     border: 1px solid #ccc;
+    height: 35px !important;
 }
 .add-project-heading  .input-group-addon, .add-project-heading  .input-group-btn {
     width: 1%;
@@ -432,6 +433,52 @@ nav.sidebar-nav {
 ul.pagination.pull-right {
     display: none;
 }
+.font-20 {
+    font-size: 20px;
+}
+select.form-control option {
+    color: #000;
+}
+.timesheet .timepicker {
+    position: relative;
+}
+.timesheet .timepicker table th, .timesheet .timepicker table td {
+    padding: 0;
+    border: none;
+}
+.timesheet .timepicker table td:nth-last-child(2) {
+    display: none;
+}
+.timesheet .timepicker table tbody .text-center {
+    text-align: left !important;
+}
+.timesheet .timepicker table tbody .bs-timepicker-field {
+    padding: 2px 5px;
+    width: 55px;
+}
+.timesheet .timepicker table tbody .bs-chevron {
+    width: 8px;
+    height: 8px;
+    border-width: 2px 0px 0 2px;
+}
+.timesheet .timepicker table tbody tr:first-child {
+    position: absolute;
+    width: 100%;
+    left: 13px;
+    top: -4px;
+    display: inline-table;
+}
+.timesheet .timepicker table tbody tr:last-child {
+    position: absolute;
+    width: 100%;
+    left: 13px;
+    bottom: -4px;
+    display: inline-table;
+}
+.btn:disabled{
+    opacity: 0.5;
+    cursor: default;
+}
 @media screen and (max-width: 1260px) {
     .assign-contractor-fields input, .assign-contractor-fields select {
         -webkit-box-flex: 0;
@@ -440,12 +487,33 @@ ul.pagination.pull-right {
         max-width: 100%;
     }
 }
+@media screen and (max-width: 991px) {
+    .container {
+        max-width: 100%;
+    }
+    .proj-desc label {
+        width: 20%;
+        max-width: 100%;
+    }
+    .proj-desc textarea {
+        width: calc(100% - 20%) !important;
+        max-width: 100%;
+    }
+    .add-new-client .proj-desc label, .add_contractor .proj-desc label {
+        width: 16.2%;
+        max-width: 100%;
+    }
+    .add-new-client .proj-desc textarea, .add_contractor .proj-desc textarea{
+        width: calc(100% - 16.2%) !important;
+        max-width: 100%;
+    }
+}
 @media screen and (max-width: 767px) {
 	.container.add-project-heading {
 	    max-width: 100%;
 	}
-	.proj-desc label {
-		width: 33.3%;
+	.proj-desc label, .add-new-client .proj-desc textarea, .add-new-client .proj-desc label, .add_contractor .proj-desc textarea, .add_contractor .proj-desc label {
+		width: 100% !important;
 		max-width: 100%;
 	}
     ul.nav.navbar-nav li:first-child {

@@ -26,28 +26,27 @@
                         </div> -->
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
-                            <label class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Client Name</label>
-                            <select class="form-control col-8 pr-0" [(ngModel)]="model.client_id" name="client_id" #client_id="ngModel" [ngClass]="{ 'is-invalid': f.submitted && client_id.invalid }" required><option value="" [selected]="">--Select Client--</option><option *ngFor="let con of clientData" [value]="con.id">{{con.fname+' '+con.lname}}</option></select>
-                            <div *ngIf="f.submitted && client_id.invalid" class="invalid-feedback">
+                            <label class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Client Name <span class="text-danger font-20">*</span></label>
+                            <select class="form-control col-lg-8 col-md-7 col-sm-12 col-12" [(ngModel)]="model.client_id" name="client_id" #client_id="ngModel" [ngClass]="{ 'is-invalid': f.submitted && client_id.invalid }" required><option value="" [selected]="">--Select Client--</option><option *ngFor="let con of clientData" [value]="con.id">{{con.client_name}}</option></select>
+                            <div *ngIf="f.submitted && client_id.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
                                 <div *ngIf="client_id.errors.required">Client Name is required</div>
-
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
-                            <label for="project_name" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Name (*)</label>
-                            <input type="text" class="form-control col-8 pr-0" name="project_name" [(ngModel)]="model.project_name" #project_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_name.invalid }" required />
-                            <div *ngIf="f.submitted && project_name.invalid" class="invalid-feedback">
+                            <label for="project_name" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Name <span class="text-danger font-20">*</span></label>
+                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12" name="project_name" [(ngModel)]="model.project_name" #project_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_name.invalid }" required />
+                            <div *ngIf="f.submitted && project_name.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
                                 <div *ngIf="project_name.errors.required">Project Name is required</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
-                            <label for="project_code" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Code</label>
-                            <input type="text" class="form-control col-8 pr-0" name="project_code" [(ngModel)]="model.project_code" #project_code="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_code.invalid }" required />
-                            <div *ngIf="f.submitted && project_code.invalid" class="invalid-feedback">
+                            <label for="project_code" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Code <span class="text-danger font-20">*</span></label>
+                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12" name="project_code" [(ngModel)]="model.project_code" #project_code="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_code.invalid }" required />
+                            <div *ngIf="f.submitted && project_code.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
                                 <div *ngIf="project_code.errors.required">Project Code is required</div>
 
                             </div>
@@ -55,72 +54,72 @@
                     </div>
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
-                            <label for="budget" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Budget</label>
-                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12 pr-0" (keypress)="keyPress($event)" name="budget" [(ngModel)]="model.budget" #budget="ngModel" [ngClass]="{ 'is-invalid': f.submitted && budget.invalid }" required />
-                            <div *ngIf="f.submitted && budget.invalid" class="invalid-feedback">
+                            <label for="budget" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Budget <span class="text-danger font-20">*</span></label>
+                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12 pr-0" (keypress)="keyPress($event)" name="budget" [(ngModel)]="model.budget" #budget="ngModel" [ngClass]="{ 'is-invalid': f.submitted && budget.invalid }" required />
+                            <div *ngIf="f.submitted && budget.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
                                 <div *ngIf="budget.errors.required">Project Budget is required</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
-                            <label for="project_type" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Type</label>
-                            <select (change)="onSelect($event.target.value)" class="form-control col-lg-8 col-md-8 col-sm-12 col-12 pr-0" name="project_type" [(ngModel)]="model.project_type" #project_type="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_type.invalid }" required><option value="" [selected]="">--Project Type--</option><option value="fixed">Fixed</option><option value="hourly">Hourly</option></select>
-                            <div *ngIf="f.submitted && project_type.invalid" class="invalid-feedback">
+                            <label for="project_type" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Type <span class="text-danger font-20">*</span></label>
+                            <select (change)="onSelect($event.target.value)" class="form-control col-lg-8 col-md-7 col-sm-12 col-12 pr-0" name="project_type" [(ngModel)]="model.project_type" #project_type="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_type.invalid }" required><option value="" [selected]="">--Project Type--</option><option value="fixed">Fixed</option><option value="hourly">Hourly</option></select>
+                            <div *ngIf="f.submitted && project_type.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
                                 <div *ngIf="project_type.errors.required">Project Type is required</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
-                            <label for="status" class="col-4 p-0 d-flex align-items-center justify-content-start">Status</label>
-                            <select class="form-control col-8 pr-0" name="status" [(ngModel)]="model.status" #status="ngModel" [ngClass]="{ 'is-invalid': f.submitted && status.invalid }" required><option value="" [selected]="">--Status--</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="draft">Draft</option><option value="inprogress">Inprogress</option><option value="completed">Completed</option><option value="canceled">Canceled</option><option value="deleted">Deleted</option></select>
-                            <div *ngIf="f.submitted && status.invalid" class="invalid-feedback">
+                            <label for="status" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Status <span class="text-danger font-20">*</span></label>
+                            <select class="form-control col-lg-8 col-md-7 col-sm-12 col-12" name="status" [(ngModel)]="model.status" #status="ngModel" [ngClass]="{ 'is-invalid': f.submitted && status.invalid }" required><option value="" [selected]="">--Status--</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="draft">Draft</option><option value="inprogress">Inprogress</option><option value="completed">Completed</option><option value="canceled">Canceled</option><option value="deleted">Deleted</option></select>
+                            <div *ngIf="f.submitted && status.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
                                 <div *ngIf="status.errors.required">Status is required</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
-                            <label for="sdate" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Start Date</label>
-                            <div class="input-group date col-lg-8 col-md-8 col-sm-12 col-12 p-0" id="datetimepicker1">
+                            <label for="sdate" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Start Date <span class="text-danger font-20">*</span></label>
+                            <div class="input-group date col-lg-8 col-md-7 col-sm-12 col-12 p-0" id="datetimepicker1">
                               <input type="text" class="form-control" name="sdate" [(ngModel)]="model.sdate" #sdate="ngModel" readonly #sdp="bsDatepicker" bsDatepicker [ngClass]="{ 'is-invalid': f.submitted && sdate.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required />
                               <span class="input-group-addon bg-transparent">
                                   <span class="fa fa-calendar"></span>
                               </span>
-                            </div>
-                            <div *ngIf="f.submitted && sdate.invalid" class="invalid-feedback">
-                                <div *ngIf="sdate.errors.required">Project Start Date is required</div>
+                                  <div *ngIf="f.submitted && sdate.invalid" class="invalid-feedback col-lg-8 col-md-7 col-sm-12 col-12 p-0">
+                                    <div *ngIf="sdate.errors.required">Project Start Date is required</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
-                            <label for="edate" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project End Date</label>
-                            <div class="input-group date col-lg-8 col-md-8 col-sm-12 col-12 p-0" id="datetimepicker1">
+                            <label for="edate" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project End Date <span class="text-danger font-20">*</span></label>
+                            <div class="input-group date col-lg-8 col-md-7 col-sm-12 col-12 p-0" id="datetimepicker1">
                               <input type="text" class="form-control" name="edate" [(ngModel)]="model.edate" #edate="ngModel" readonly #sdp="bsDatepicker" bsDatepicker [ngClass]="{ 'is-invalid': f.submitted && edate.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required />
                               <span class="input-group-addon bg-transparent">
                                   <span class="fa fa-calendar"></span>
                               </span>
-                            </div>
-                            <div *ngIf="f.submitted && edate.invalid" class="invalid-feedback">
-                                <div *ngIf="edate.errors.required">Project End Date is required</div>
+                                  <div *ngIf="f.submitted && edate.invalid" class="invalid-feedback col-lg-8 col-md-7 col-sm-12 col-12 p-0">
+                                    <div *ngIf="edate.errors.required">Project End Date is required</div>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
-                            <label for="hourly_rate" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Target Rate</label>
-                            <input type="text" class="form-control col-8 pr-0" (keypress)="keyPress($event)" name="rate" maxlength=3 [(ngModel)]="model.rate" #rate="ngModel"/>
+                            <label for="hourly_rate" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Target Rate <span class="text-danger font-20">*</span></label>
+                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12" (keypress)="keyPress($event)" name="rate" maxlength=3 [(ngModel)]="model.rate" #rate="ngModel" [ngClass]="{ 'is-invalid': f.submitted && rate.invalid }" required />
+                            <div *ngIf="f.submitted && budget.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
+                                <div *ngIf="rate.errors.required">Target Rate is required</div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-12 col-12">
                          <div class="form-group proj-desc">
                             <label for="description" class="d-flex align-items-center justify-content-start">Project Description</label>
-                            <textarea class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.invalid }" required></textarea>
-                            <div *ngIf="f.submitted && description.invalid" class="invalid-feedback">
-                                <div *ngIf="description.errors.required">Project Description is required</div>
-                            </div>
+                            <textarea class="form-control" name="description" [(ngModel)]="model.description" #description="ngModel"></textarea>
                         </div>
                     </div>
                 </div>
@@ -145,14 +144,14 @@
                             <div class="row d-flex width add-contrator">
                                 <div class="col-md-6 col-sm-12 col-12 pl-0 d-flex flex-wrap align-items-center mb-2">
                                     <label class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 justify-content-start">Contractors</label>
-                                    <select class="form-control col-7 pr-0" style="color: #000;" required [(ngModel)]="users[j].member_id" (change)="getDefPay($event.target.value, j)" name="member_id[{{j}}]" required><option value="" [selected]="">--select contractor--</option><option *ngFor="let con of conData" [value]="con.id">{{con.fname+' '+con.lname}}</option></select>
+                                    <select class="form-control col-lg-8 col-md-7 col-sm-12 col-12" style="color: #000;" required [(ngModel)]="users[j].member_id" (change)="getDefPay($event.target.value, j)" name="member_id[{{j}}]" required><option value="" [selected]="">--select contractor--</option><option *ngFor="let con of conData" [value]="con.id">{{con.fname+' '+con.lname}}</option></select>
                                     <div *ngIf="f.submitted && users[j].member_id.invalid" class="invalid-feedback">
                                         <div *ngIf="users[j].member_id.errors.required">Status is required</div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-12 col-12 d-flex pl-0 align-items-center mb-2">
                                     <label class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 justify-content-start">% Pay</label>
-                                   <input type="text" class="form-control col-7 pr-0" [(ngModel)]="users[j].percentage" name="percentage[{{j}}]" value="{{users[j].percentage}}" (keypress)="keyPress($event)" maxlength=3 required />
+                                   <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12" [(ngModel)]="users[j].percentage" name="percentage[{{j}}]" value="{{users[j].percentage}}" (keypress)="keyPress($event)" maxlength=3 required />
                                    <div *ngIf="f.submitted && users[j].percentage.invalid" class="invalid-feedback">
                                         <div *ngIf="users[j].percentage.errors.required">Status is required</div>
                                     </div>
@@ -164,8 +163,8 @@
                         </div>
                       <div class="col-12 mt-3">
                         <div class="form-group">
-                            <button class="btn btn-large btn-outline-seconday rounded bg-transparent common-button" type="submit" *ngIf="editparam.action == 'add'" [disabled] = "!f.form.valid" >Save</button>               
-                             <button class="btn btn-large btn-outline-seconday rounded common-button bg-transparent" type="submit" *ngIf="editparam.action == 'edit'" [disabled] = "!f.form.valid">Update</button>
+                            <button class="btn btn-large btn-outline-seconday rounded bg-transparent common-button" type="submit" *ngIf="editparam.action == 'add'">Save</button>               
+                             <button class="btn btn-large btn-outline-seconday rounded common-button bg-transparent" type="submit" *ngIf="editparam.action == 'edit'">Update</button>
                         </div>
                     </div>
                 </form>

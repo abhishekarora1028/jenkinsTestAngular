@@ -27,10 +27,7 @@
             <thead>
               <tr>
                 <th>
-                  <mfDefaultSorter by="fname"><h4>First Name</h4></mfDefaultSorter>
-                </th>
-                <th>
-                  <mfDefaultSorter by=""><h4>Last Name</h4></mfDefaultSorter>
+                  <mfDefaultSorter by="fname"><h4>Client Name</h4></mfDefaultSorter>
                 </th>
                 <th>
                   <mfDefaultSorter by=""><h4>Email</h4></mfDefaultSorter>
@@ -41,21 +38,16 @@
                 <th>
                   <mfDefaultSorter by=""><h4>Phone Number</h4></mfDefaultSorter>
                 </th>
-                <th>
-                  <mfDefaultSorter by=""><h4>Gender</h4></mfDefaultSorter>
-                </th>
                 <th><h4>Status</h4></th>
                 <th><h4>Action</h4></th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of mf.data;let i = index">
-                <td>{{item.fname}}</td>
-                <td>{{item.lname}}</td>
+                <td>{{item.client_name}}</td>
                 <td class="text-left">{{item.email}}</td>
                 <td class="text-left">{{item.client_code}}</td>
                 <td class="text-left">{{item.phone}}</td>
-                <td class="text-left" style="text-transform: capitalize;">{{item.gender}}</td>
                 <td>
                   <span class="badge badge-success rounded" *ngIf="item.status == 'active'">Active</span>
                    <span class="badge badge-danger rounded" *ngIf="item.status == 'inactive'">Inactive</span>

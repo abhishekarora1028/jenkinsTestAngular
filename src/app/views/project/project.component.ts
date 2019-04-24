@@ -65,7 +65,7 @@ public filterQuery = '';
 				          if(response.json().length)
 				          {
 				            
-				          	this.data[i].client_name = response.json()[0].fname+' '+response.json()[0].lname;
+				          	this.data[i].client_name = response.json()[0].client_name;
 				          	this.data[i].email = response.json()[0].email;
 				          	this.data[i].client_code = response.json()[0].client_code;
 				          }
@@ -76,7 +76,7 @@ public filterQuery = '';
 		        }else{
 		        	this.checkData = 0;
 		        }
-		        console.log(this.data)
+		        
 			    });	
 
 	}else{
@@ -100,7 +100,7 @@ public filterQuery = '';
 				          if(response.json().length)
 				          {
 				            
-				          	this.data[i].client_name = response.json()[0].fname+' '+response.json()[0].lname;
+				          	this.data[i].client_name = response.json()[0].client_name;
 				          	this.data[i].email = response.json()[0].email;
 				          	this.data[i].client_code = response.json()[0].client_code;
 				          }
@@ -176,7 +176,7 @@ public filterQuery = '';
 				          if(response.json().length)
 				          {
 				            
-				          	this.data[i].client_name = response.json()[0].fname+' '+response.json()[0].lname;
+				          	this.data[i].client_name = response.json()[0].client_name;
 				          	this.data[i].email = response.json()[0].email;
 				          	this.data[i].client_code = response.json()[0].client_code;
 				          }
@@ -229,7 +229,7 @@ public filterQuery = '';
 				          if(response.json().length)
 				          {
 				            
-				          	this.data[i].client_name = response.json()[0].fname+' '+response.json()[0].lname;
+				          	this.data[i].client_name = response.json()[0].client_name;
 				          	this.data[i].email       = response.json()[0].email;
 				          	this.data[i].client_code = response.json()[0].client_code;
 				          }
@@ -279,7 +279,7 @@ public filterQuery = '';
 				          if(response.json().length)
 				          {
 				            
-				          	this.data[i].client_name = response.json()[0].fname+' '+response.json()[0].lname;
+				          	this.data[i].client_name = response.json()[0].client_name;
 				          	this.data[i].email       = response.json()[0].email;
 				          	this.data[i].client_code = response.json()[0].client_code;
 				          }

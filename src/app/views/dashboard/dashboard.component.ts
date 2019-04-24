@@ -32,6 +32,7 @@ userId: any;
 checkData: any = 0;
 checkCont: any = 0;
 activeProjectCount: any = 0;
+countActiveProject: any = 0;
 inactiveProjectCount: any = 0;
 deleteProjectCount: any = 0;
 activeContractorCount: any = 0;
@@ -136,11 +137,12 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
           this.countContractor = this.countContractor.count;
         });
 
-        this.http.get(API_URL+'/projects?filter={"order":"id DESC", "limit":"10"}', options)
+        this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
           .subscribe(response => {
           if(response.json().length)
           {
             this.model = response.json();
+            this.countActiveProject = response.json().length;
             this.checkData = 1;
           }else{
             this.checkData = 0;
@@ -149,7 +151,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
         }); 
 
         
-        this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC", "limit":"10"}', options)
+        this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"},{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -173,7 +175,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
           
         });*/
 
-         this.http.get(API_URL+'/projects?filter={"order":"id DESC", "limit":"10"}', options)
+         this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC","limit":"10"}', options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -229,7 +231,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
           this.countContractor = this.countContractor.count;
         });  
         
-    this.http.get(API_URL+'/projects?filter={"order":"id DESC", "limit":"10"}', options)
+    this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -241,7 +243,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
           
         });  
         
-    this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC", "limit":"10"}', options)
+    this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"},{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -254,7 +256,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
         });    
 
 
-        this.http.get(API_URL+'/projects?filter={"order":"id DESC", "limit":"10"}', options)
+        this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -306,11 +308,12 @@ this.toasterService.clear();
         this.http.post(API_URL+'/projects/update?where=%7B%22id%22%3A%20%22'+proid+'%22%7D', {"status":"deleted"},  options)
           .subscribe(response => {
 
-            this.http.get(API_URL+'/projects?filter={"order":"id DESC"}', options)
+            this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
             .subscribe(response => {
             if(response.json().length)
             {
               this.model = response.json();
+              this.activeProjectCount = response.json().length;
               for(let i=0; i< this.model.length; i++ ) {
               this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.model[i].client_id+'"}]}}', options)
                   .subscribe(response => {
@@ -323,14 +326,25 @@ this.toasterService.clear();
                   }
                     
                 });
-                }
+                } 
               this.checkData = 1;
             }else{
               this.checkData = 0;
+              this.activeProjectCount = 0;
             }
             
           }); 
             this.prodel = 1;
+              this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"deleted"}]}}', options)
+          .subscribe(response => {
+              if(response.json().length)
+              {
+                this.deleteProjectCount = response.json().length;
+              }else{
+                this.deleteProjectCount = 0;
+              }
+                      
+            });
           });
 
   
@@ -361,16 +375,28 @@ this.toasterService.clear();
         this.http.post(API_URL+'/Members/update?where=%7B%22id%22%3A%20%22'+proid+'%22%7D', {"status":"deleted"},  options)
           .subscribe(response => {
 
-            this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC"}', options)
+            this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"},{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
             .subscribe(response => {
             if(response.json().length)
             {
               this.data = response.json();
+              this.activeContractorCount = response.json().length;
               this.checkCont = 1;
             }else{
               this.checkCont = 0;
             }
               
+          });
+
+           this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"deleted"},{"role_id":"2"}]}}', options)
+          .subscribe(response => {
+            if(response.json().length)
+            {
+              this.deleteContractorCount = response.json().length;
+            }else{
+              this.deleteContractorCount = 0;
+            }
+                    
           });
 
           this.condel = 1;

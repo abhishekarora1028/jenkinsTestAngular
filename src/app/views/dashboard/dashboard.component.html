@@ -58,7 +58,7 @@
           <div class="row d-flex border-bottom pt-3 pb-3">
             <div class="col-12 d-flex align-items-center justify-content-start">
               <h5 class="card-title mb-0">Active Projects</h5>
-              <button class="btn btn-sm btn-info rounded text-white ml-2 project-count" type="button">{{countProject}}</button>
+              <button class="btn btn-sm btn-info rounded text-white ml-2 project-count" type="button">{{activeProjectCount}}</button>
               <!-- <div class="small text-muted">November 2017</div> -->
             </div>
             <!-- <div class="col-7">
@@ -66,16 +66,16 @@
           </div><!--/.row-->
 
             <div *ngIf="checkData == 1" class="chart-wrapper pt-2 pb-2">
-            <div *ngIf="prodel == 1" class="alert alert-success">
+            <!-- <div *ngIf="prodel == 1" class="alert alert-success">
 
               <strong>Project</strong> has deleted successfully!
-            </div>
+            </div> -->
           <div class="row d-flex pt-2 pb-2" *ngFor="let item of model">
              <div class="col-lg-8 col-md-8 col-sm-6 col-7 pl-0 d-flex align-items-center justify-content-start">
               <div class="card P-0 border-0 width mb-0">
                 <div class="card-body row d-flex p-0">
                   <div class="col-12 d-flex flex-wrap align-items-center justify-content-start">
-                    <h4 class="mb-0 width d-flex align-items-center"><span class="btn btn-outline-secondary rounded mr-2 project-name"><a class="btn btn-show-contact100 project-detail" routerLink="/projects/viewproject/{{item.id}}">{{item.project_name.charAt(0)}}</a></span> {{item.project_name}}</h4>
+                    <h4 class="mb-0 width d-flex align-items-center">{{item.project_name}}</h4>
                   </div>
                 </div>
               </div>
@@ -103,7 +103,7 @@
           <div class="row d-flex border-bottom pt-3 pb-3">
             <div class="col-12 d-flex align-items-center justify-content-start">
               <h5 class="card-title mb-0">Active Contractors</h5>
-              <button class="btn btn-sm btn-info rounded text-white ml-2 project-count" type="button">{{countContractor}}</button>
+              <button class="btn btn-sm btn-info rounded text-white ml-2 project-count" type="button">{{activeContractorCount}}</button>
               <!-- <div class="small text-muted">November 2017</div> -->
             </div>
             <!-- <div class="col-2 p-0 d-flex align-items-center justify-content-start">
@@ -111,10 +111,10 @@
           </div><!--/.row-->
 
            <div *ngIf="checkCont == 1" class="chart-wrapper pt-2 pb-2">
-            <div *ngIf="condel == 1" class="alert alert-success">
+            <!-- <div *ngIf="condel == 1" class="alert alert-success">
 
               <strong>Contractor</strong> has deleted successfully!
-            </div>
+            </div> -->
             <div class="row d-flex flex-wrap mb-3 pt-2" *ngFor="let item2 of data">
               <div class="col-12 d-flex align-items-center justify-content-end">
                 <div class="card p-0 border-0 width mb-0">
@@ -161,7 +161,7 @@
               <div class="card P-0 border-0 width mb-0">
                 <div class="card-body row d-flex p-0">
                   <div class="col-12 pl-0 d-flex flex-wrap align-items-center justify-content-start">
-                    <h4 class="mb-0 width d-flex align-items-center"><span class="btn btn-outline-secondary rounded mr-2 project-name"><a class="btn btn-show-contact100 project-detail" routerLink="/projects/viewproject/{{item3.id}}">{{item3.project_name.charAt(0)}}</a></span> {{item3.project_name}}</h4>
+                    <h4 class="mb-0 width d-flex align-items-center">{{item3.project_name}}</h4>
                   </div>
                 </div>
               </div>
