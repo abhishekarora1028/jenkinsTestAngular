@@ -32,6 +32,7 @@ public toasterconfig : ToasterConfig =
   proEditStatus:any = 0;
   rate:any = 0;
   uniqueEmail:any = 0;
+  checkData:any = 0;
   private data: any;
   model: any = {};
   constructor(@Inject(Http) private http: Http, @Inject(Router)private router:Router,private route: ActivatedRoute, toasterService: ToasterService) {
