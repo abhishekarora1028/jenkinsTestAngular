@@ -62,17 +62,19 @@
                    <span class="badge badge-danger rounded" *ngIf="item.status == 'deleted'">Deleted</span>
                 </td>
                 <td>
-                  <span>
-                    <a class="btn btn-show-contact100" routerLink="/clients/viewclient/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                  </span>
-                  <span>
-                    <a class="btn btn-show-contact100" routerLink="/clients/editclient/{{item.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                  </span>  
-                  <span *ngIf="item.status == 'active' || item.status == 'inactive'">
-                    <button class="btn btn-small btn-outline-0 bg-transparent" (click) ="delclient(item.id, index)">
-                      <i class="fa fa-times" aria-hidden="true"></i>
-                    </button>
-                  </span>
+                  <div class="action-icons">
+                    <span>
+                      <a class="btn btn-show-contact100" routerLink="/clients/viewclient/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                    </span>
+                    <span>
+                      <a class="btn btn-show-contact100" routerLink="/clients/editclient/{{item.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    </span>  
+                    <span *ngIf="item.status == 'active' || item.status == 'inactive'">
+                      <button class="btn btn-small btn-outline-0 bg-transparent" (click) ="delclient(item.id, index)">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </button>
+                    </span>
+                  </div>
                 </td>
               </tr>
             </tbody>

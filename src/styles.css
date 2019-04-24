@@ -401,7 +401,7 @@ button:focus {
 }
 .action-icons {
     width: 180px;
-    margin:0 auto;
+    /*margin:0 auto;*/
 }
 .view-contractor span {
     word-wrap: break-word;
@@ -428,6 +428,9 @@ button:focus {
 }
 nav.sidebar-nav {
     font-family: SourceSansPro;
+}
+ul.pagination.pull-right {
+    display: none;
 }
 @media screen and (max-width: 1260px) {
     .assign-contractor-fields input, .assign-contractor-fields select {

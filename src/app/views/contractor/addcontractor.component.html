@@ -42,7 +42,7 @@
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
                             <label for="email" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Email</label>
-                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="email" (change)="onChange($event.target.value)" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" (change)="onChange($event.target.value)" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
 
                             <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
                                 <div *ngIf="email.errors.required">Email is required</div>
@@ -95,16 +95,16 @@
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
                             <label for="default_pay" class="col-4 p-0 d-flex align-items-center justify-content-start">Default % Pay</label>
-                            <input type="text" class="form-control col-8 pr-0" name="default_pay" [(ngModel)]="model.default_pay" #default_pay="ngModel" [ngClass]="{ 'is-invalid': f.submitted && default_pay.invalid }" required />
+                            <input type="text" class="form-control col-8 pr-0" name="default_pay" (keypress)="keyPress($event)" [(ngModel)]="model.default_pay" #default_pay="ngModel" [ngClass]="{ 'is-invalid': f.submitted && default_pay.invalid }" required />
                             <div *ngIf="f.submitted && default_pay.invalid" class="invalid-feedback">
                                 <div *ngIf="default_pay.errors.required">Default % pay is required</div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-12">
-                        <div class="form-group">
-                            <label for="about" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">About Yourself</label>
-                            <textarea class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="about" [(ngModel)]="model.about" #about="ngModel"></textarea>
+                    <div class="col-sm-12 col-12">
+                        <div class="form-group proj-desc">
+                            <label for="about" class="d-flex align-items-center justify-content-start">About Yourself</label>
+                            <textarea class="form-control" name="about" [(ngModel)]="model.about" #about="ngModel"></textarea>
                         </div>
                     </div>
                     <div class="col-12 mt-3">
