@@ -57,9 +57,10 @@
                     <div class="col-sm-6 col-12" *ngIf="editparam.action == 'add'">
                         <div class="form-group">
                             <label for="password" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Password <span class="text-danger font-20">*</span></label>
-                            <input type="password" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="password" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" required />
+                            <input type="password" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="password" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }" (keypress)="keyPress($event)" minlength=6 required />
                             <div *ngIf="f.submitted && password.invalid" class="invalid-feedback offset-lg-4 offset-md-4 offset-sm-0 offset-0 col-lg-8 col-md-8 col-sm-12 col-12 p-0">
                                 <div *ngIf="password.errors.required">Password is required</div>
+                                <div *ngIf="password.errors?.minlength">Password must be at least 6 character</div>
                             </div>
                         </div>
                     </div>

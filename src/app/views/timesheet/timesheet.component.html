@@ -27,9 +27,9 @@ border-radius:50%;
   </div>
 </div> 
  <form name="form" (ngSubmit)="sf.form.valid" #sf="ngForm" novalidate> 
-     <div class="row mt-4 mb-2 contractor-list align-items-center" *ngIf="currentRoleId == 1">
-      <div class="d-inline mr-2 mb-md-0 mb-sm-0 mb-3"><h4 class="mb-0">Contrator</h4></div>
-      <div class="d-inline col-lg-4 col-md-4 col-sm-5 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
+     <div class="row mt-4 mb-2 contractor-list align-items-center">
+      <div *ngIf="currentRoleId == 1" class="d-inline mr-2 mb-md-0 mb-sm-0 mb-3"><h4 class="mb-0">Contrator</h4></div>
+      <div *ngIf="currentRoleId == 1" class="d-inline col-lg-4 col-md-4 col-sm-5 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
         <select class="form-control" (change)="onSelectCont($event.target.value)" [(ngModel)]="contractorId" #member_id="ngModel" name="member_id" style="height: 35px;">
               <option value="" [selected]="">--select contractor--</option>
               <option *ngFor="let con of conData" [value]="con.id">{{con.fname+' '+con.lname}}</option>

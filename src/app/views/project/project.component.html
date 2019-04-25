@@ -47,7 +47,7 @@
             <th>
               <mfDefaultSorter by=""><h4>Status</h4></mfDefaultSorter>
             </th>
-            <th><h4>Action</h4></th>
+            <th><h4>Actions</h4></th>
           </tr>
         </thead>
         <tbody>
@@ -81,11 +81,11 @@
                 </span>
                 <span *ngIf="currentUserRoleId == 2 && item.assignMemId == 0">
                   <button class="btn btn-small btn-outline-0 bg-transparent " (click) ="assignproject(item.id, currentUserID)">
-                    Assign to me
+                    <i class="fa fa-user" aria-hidden="true"></i>
                   </button>
                 </span>
-                <span *ngIf="currentUserRoleId == 2 && item.assignMemId == currentUserID">
-                   Already Assign
+                <span *ngIf="currentUserRoleId == 2 && item.assignMemId == currentUserID" class="btn btn-small btn-outline-0 bg-transparent" style="opacity: 0.5; cursor: default;">
+                   <i class="fa fa-user" aria-hidden="true"></i>
                 </span>
                 <span *ngIf="currentUserID == item.member_id || currentUserRoleId == 1">
                   <a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
