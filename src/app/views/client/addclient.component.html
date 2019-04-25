@@ -51,7 +51,7 @@
                             <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback offset-lg-4 offset-md-4 offset-sm-0 offset-0 col-lg-8 col-md-8 col-sm-12 col-12 p-0">
                                 <div *ngIf="phone.errors.required">Phone Number is required</div>
                             </div>
-                            <div *ngIf="phone.errors?.minlength">Phone Number must be at least 10 numbers</div>
+                            <div style="color: red;padding-left: 170px;" *ngIf="phone.errors?.minlength">Phone Number must be at least 10 numbers</div>
                             <div *ngIf="phone.errors?.pattern">Phone Number must be numbers only</div>
                         </div>
                     </div>

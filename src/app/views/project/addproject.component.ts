@@ -37,6 +37,7 @@ public toasterconfig : ToasterConfig =
   checkUser:any = 2;
   countPro:any = 0;
   checkData:any = 0;
+  clientId:any = 0;
   conData:any;
   clientData:any;
   private data: any;
@@ -94,6 +95,18 @@ public toasterconfig : ToasterConfig =
 	    	this.http.get(API_URL+'/projects/'+ this.editparam.id, options)
 	        .subscribe(response => {
 	        	this.model = response.json();
+
+            this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.model.client_id+'"}]}}', options)
+          .subscribe(response => {
+              if(response.json()[0].status=='active')
+              {
+                this.clientId = this.model.client_id;
+              }else{
+                this.clientId = '';
+                this.model.client_id = '';
+              }
+          });
+            
 	        	this.editparam.action = "edit";
 		    });
 
@@ -234,7 +247,6 @@ disProject()
             if(response.json().length)
             {
               this.data = response.json();
-              console.log(this.data)
               for(let i=0; i< this.data.length; i++ ) {
               this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}', options)
                   .subscribe(response => {
@@ -271,7 +283,7 @@ onSubmit() {
      let sDate = this.model.sdate;
      let eDate = this.model.edate;
 
-     //let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();           
+     //let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();        
 
      //this.proData.member_id    = this.model.member_id;       
      this.proData.client_id      = this.model.client_id;

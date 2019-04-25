@@ -268,7 +268,7 @@ public filterQuery = '';
 	      	this.assignData.percentage = response.json()[0].default_pay;
 	      	this.assignData.assign     = "1";
 	      	this.http.post(API_URL+'/assignprojects?access_token='+localStorage.getItem('currentUserToken'), this.assignData, options).subscribe(response => {
-          		this.http.get(API_URL+'/projects/', options)
+          		this.http.get(API_URL+'/projects?filter={"order":"id DESC"}', options)
 		        .subscribe(response => {
 		        if(response.json().length)
 		        {
