@@ -34,6 +34,8 @@ public seldata: any = {};
 public conData: any;
 public proData: any;
 sheetData: any = {};
+sheettimeData:any = '';
+//timesheetStatusData:any = '';
 editsheetData: any = {};
 prodel: any;
 public datesData:any = [];
@@ -70,12 +72,14 @@ public options:any = {
     }
 
 
+
+  //this.timesheetStatusData = 'active';
   this.memberId    = localStorage.getItem('currentUserId');
   this.checkData = 0;
   this.sheetStatus = '';
   let todayDate = new Date();
   this.seldata  = todayDate;
-  //let tMonth  = todayDate.getMonth()+1;
+  let tMonth  = todayDate.getMonth()+1;
   let tDay      = todayDate.getDate();
   let months    = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
   let curMonth  = months[todayDate.getMonth()];
@@ -86,19 +90,25 @@ public options:any = {
   let binc = 0;
 
 
-for(let i=0; i<= 30; i++ ) {
+for(let i=0; i<= 30; i++) {
     let nextDay = new Date();
-    nextDay.setDate(nextDay.getDate() + i);
-    if(nextDay.getDate() == 1 && i!=0)
+    nextDay.setDate(nextDay.getDate() - i);
+    let lastDay = new Date(nextDay.getFullYear(), nextDay.getMonth() + 1, 0);
+    if(nextDay.getDate() == lastDay.getDate() && i!=0)
     {
       tinc  = tinc + 1;
       binc  = binc + 1;
     }
 
-    let strDate = (nextDay.getMonth()+tinc) + "/" + nextDay.getDate() + "/" + nextDay.getFullYear();
-      this.datesData[i]   = days[nextDay.getDay()]+'_'+months[todayDate.getMonth()+binc]+'_'+nextDay.getDate()+'_'+strDate;
+    let strDate = (nextDay.getMonth()-tinc) + "/" + nextDay.getDate() + "/" + nextDay.getFullYear();
+      this.datesData[i]   = days[nextDay.getDay()]+'_'+months[todayDate.getMonth()-binc]+'_'+nextDay.getDate()+'_'+strDate;
   
   }
+
+  let lastMonthDay = todayDate.getDate() + 1;
+  let lastMonthM   = tMonth - 1;
+
+  this.sheettimeData = lastMonthM+"/"+lastMonthDay+"/2019 - "+tMonth+"/"+todayDate.getDate()+"/2019";
 
     
     let userID = localStorage.getItem('currentUserId');
@@ -504,7 +514,7 @@ onPickSheet(pickDate)
       let binc = 0;
 
 
-    for(let i=0; i<= 30; i++ ) {
+    /*for(let i=0; i<= 30; i++ ) {
         let nextDay = new Date();
         nextDay.setDate(nextDay.getDate() + i);
         if(nextDay.getDate() == 1 && i!=0)
@@ -516,7 +526,23 @@ onPickSheet(pickDate)
         let strDate = (nextDay.getMonth()+tinc) + "/" + nextDay.getDate() + "/" + nextDay.getFullYear();
           this.datesData[i]   = days[nextDay.getDay()]+'_'+months[todayDate.getMonth()+binc]+'_'+nextDay.getDate()+'_'+strDate;
       
-      }
+      }*/
+
+for(let i=0; i<= 30; i++) {
+    let nextDay = new Date();
+    nextDay.setDate(nextDay.getDate() - i);
+    let lastDay = new Date(nextDay.getFullYear(), nextDay.getMonth() + 1, 0);
+    if(nextDay.getDate() == lastDay.getDate() && i!=0)
+    {
+      tinc  = tinc + 1;
+      binc  = binc + 1;
+    }
+
+    let strDate = (nextDay.getMonth()-tinc) + "/" + nextDay.getDate() + "/" + nextDay.getFullYear();
+      this.datesData[i]   = days[nextDay.getDay()]+'_'+months[todayDate.getMonth()-binc]+'_'+nextDay.getDate()+'_'+strDate;
+  
+  }
+
   }else{
     this.seldata  = pickDate[0];
     //let strDate = pickDate.getDate() + "/" + (pickDate.getMonth()+1) + "/" + pickDate.getFullYear();
@@ -751,9 +777,18 @@ onPickSheet(pickDate)
           }
 }
 
+checkTimesheet(form:any)
+{
+  if(form.stime=='')
+  {
+    this.toasterService.clear();
+    this.toasterService.pop('error', 'Error ', "Time is required");
+  }
+}
+
   onSubmit()
   {
-
+      this.toasterService.clear();
       let options = new RequestOptions();
             options.headers = new Headers();
             options.headers.append('Content-Type', 'application/json');
@@ -796,7 +831,9 @@ onPickSheet(pickDate)
                         }else{
                           this.onPickSheet(this.seldata);
                         }
-                        setTimeout(function(){$(".close").trigger("click");}, 1000);
+                        this.toasterService.pop('success', 'Success ', "Time has added successfully."); 
+                        this.addTimeForm = 0;
+                        //setTimeout(function(){$(".close").trigger("click");}, 1000);
                       }else{
                         this.addData = 0;
                       }
@@ -844,8 +881,9 @@ onPickSheet(pickDate)
                 }else{
                   this.onPickSheet(this.seldata);
                 }
-                
-                setTimeout(function(){$(".close").trigger("click");}, 1000);
+                this.toasterService.pop('success', 'Success ', "Time has updated successfully.");
+                this.addTimeForm = 0;
+                //setTimeout(function(){$(".close").trigger("click");}, 1000);
                 //setTimeout(function(){location.reload();}, 1000);
               }else{
                 this.timeReq = 1;

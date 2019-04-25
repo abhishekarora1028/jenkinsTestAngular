@@ -381,8 +381,9 @@ h4 {
     height: calc(100% - 1.5rem);
 }
 .equal {
-    width: 120px;
-    margin: 0 auto;
+   /* width: 120px;
+    margin: 0 auto;*/
+    text-transform: capitalize;
 }
 .max-height {
     max-height: 275px;
@@ -461,19 +462,17 @@ select.form-control option {
     height: 8px;
     border-width: 2px 0px 0 2px;
 }
-.timesheet .timepicker table tbody tr:first-child {
+.timesheet .timepicker table tbody tr:first-child , 
+.timesheet .timepicker table tbody tr:last-child {
     position: absolute;
-    width: 100%;
-    left: 13px;
+    width: 119px;
+    left: 24px;
     top: -4px;
     display: inline-table;
 }
 .timesheet .timepicker table tbody tr:last-child {
-    position: absolute;
-    width: 100%;
-    left: 13px;
     bottom: -4px;
-    display: inline-table;
+    top:initial;
 }
 .btn:disabled{
     opacity: 0.5;
