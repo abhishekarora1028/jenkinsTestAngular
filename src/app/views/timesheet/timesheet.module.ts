@@ -18,6 +18,8 @@ import { TimepickerModule } from 'ngx-bootstrap';
 // Toastr
 import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
 
+import {PopoverModule} from "ngx-smart-popover";
+
 @NgModule({
   imports: [
   	CommonModule,
@@ -29,6 +31,7 @@ import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster'
     BsDatepickerModule.forRoot(),
     ModalModule.forRoot(),
     ToasterModule,
+    PopoverModule,
     ButtonsModule.forRoot()
   ],
   declarations: [ TimesheetsComponent ]
