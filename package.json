@@ -61,6 +61,7 @@
     "ngx-permission": "^0.2.1",
     "ngx-permissions": "^3.2.1",
     "ngx-quill": "2.0.4",
+    "ngx-smart-popover": "^1.0.6",
     "ngx-tooltip": "0.0.9",
     "node-sass": "^4.6.1",
     "rxjs": "5.5.6",

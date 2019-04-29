@@ -27,15 +27,14 @@ border-radius:50%;
   </div>
 </div> 
  <form name="form" (ngSubmit)="sf.form.valid" #sf="ngForm" novalidate> 
-     <div class="row mt-4 mb-2 contractor-list align-items-center">
-      <div *ngIf="currentRoleId == 1" class="d-inline mr-2 mb-md-0 mb-sm-0 mb-3"><h4 class="mb-0">Contrator</h4></div>
-      <div *ngIf="currentRoleId == 1" class="d-inline col-lg-4 col-md-4 col-sm-5 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
+     <div class="row mt-4 mb-2 contractor-list align-items-center justify-content-end">
+      <div *ngIf="currentRoleId == 1" class="d-inline col-lg-3 col-md-3 col-sm-4 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
         <select class="form-control" (change)="onSelectCont($event.target.value)" [(ngModel)]="contractorId" #member_id="ngModel" name="member_id" style="height: 35px;">
               <option value="" [selected]="">--select contractor--</option>
               <option *ngFor="let con of conData" [value]="con.id">{{con.fname+' '+con.lname}}</option>
             </select>
       </div>
-      <div class="d-inline col-lg-4 col-md-4 col-sm-5 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0">
+      <div class="d-inline col-lg-3 col-md-3 col-sm-4 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0">
         <div class="input-group date form-calendar" id="datetimepicker1">
               <input type="text" class="form-control w-100" name="sheettime" id="sheettime" [(ngModel)]="sheettimeData" #sheettime="ngModel" readonly #sdp="bsDaterangepicker" bsDaterangepicker (ngModelChange)="onPickSheet($event)" [ngClass]="{ 'is-invalid': sf.submitted && sheettime.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required placeholder="Select Date" />
               <span class="input-group-addon bg-transparent">
@@ -43,41 +42,52 @@ border-radius:50%;
               </span>
           </div>
         </div>
+        <div class="d-inline col-lg-3 col-md-3 col-sm-4 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
+        <select class="form-control" [(ngModel)]="timesheetStatusData" #timesheetstatus="ngModel" (change)="onSelectFilter($event.target.value)" name="timesheetstatus" style="height: 35px;">
+              <option value="active">Active Timesheets</option>
+              <option value="alltimesheet">All Timesheets</option>
+            </select>
+      </div>
       </div>
 </form>
+
   <!-- Timesheet Vertical Layout -->
   <div class="table-responsive timesheet b-white pt-3" *ngIf="checkData == 1">
     <table class="table text-left">
       <thead>
         <tr>
           <th><div class="equal">Date</div></th>
-          <th *ngFor="let prod of data"><div class="equal">{{prod.projectname}}</div></th>
+          <th *ngFor="let prod of data"><div class="equal">{{prod.project_name}}</div></th>
         </tr>
       </thead>
       <tr *ngFor="let itemdate of datesData;let i = index ">
-        <td><div class="equal"><b>{{itemdate.split('_')[0]}}</b> - <span class="date"><b>{{itemdate.split('_')[1]}} {{itemdate.split('_')[2]}}</b></span></div></td>
+        <td><div class="equal"><b>{{itemdate.split('/')[1]}}/{{itemdate.split('/')[0]}}/{{itemdate.split('/')[2]}}</b></div></td>
         <td *ngFor="let item of data;let j = index ">
           <div class="equal">
             <span class="p-2" *ngIf="item.stime">{{item.stime.split('_')[i]}}</span>
-            <span class="fa fa-edit p-2" (click)="getDate(datesData[i].split('_')[3],item.project_id,item.stime.split('_')[i],item.des.split('_')[i],item.tsId.split('_')[i], item.member_id, item.fullstime.split('@')[i], i);" *ngIf="item.assign == 1 && (item.status == 'active' || item.status == 'draft' || item.status == 'inprogress' || item.status == 'completed') && item.memberstatus=='active'"></span>
-            <span *ngIf="addTimeForm == 1 && formDis.split('_')[0] == item.project_id && formDis.split('_')[1] == i"> 
-            <form name="form" (ngSubmit)="f.form.valid && onSubmit();" (ngSubmit)="checkTimesheet(f.value)" #f="ngForm">
-                <div class="form-group mb-2">
-                        <label for="stime">Time</label>
-                        <timepicker class="timepicker" [(ngModel)]="model.stime" #stime="ngModel" name="stime" [hourStep]="hstep"
+            <popover-content #mycont [animation]="true" 
+                [closeOnClickOutside]="true">
+              <form class="d-flex flex-wrap align-items-center mt-2 mb-2" name="form" (ngSubmit)="f.form.valid && onSubmit();" (ngSubmit)="checkTimesheet(f.value)" #f="ngForm">
+                <div class="form-group form-inline mb-2">
+                        <label class="d-inline mr-2" for="stime">Time</label>
+                        <timepicker class="timepicker d-inline" [(ngModel)]="model.stime" #stime="ngModel" name="stime" [hourStep]="hstep"
                           [minuteStep]="mstep" [showMeridian]="ismeridian"
                           [readonlyInput]="!isEnabled" [ngClass]="{ 'is-invalid': f.submitted && stime.invalid }" required>
                           </timepicker>
-                    </div>
-                    <div class="input-group">
-                        <!-- <input type="text" class="form-control p-1 " name="description" value="{{cuDes}}" placeholder="Description" [(ngModel)]="model.description" #description="ngModel"/> -->
-                        <textarea class="form-control" name="description" value="{{cuDes}}" placeholder="Description" [(ngModel)]="model.description" #description="ngModel"></textarea>
-                    </div>
-                    <div class="input-group-append mt-2">
-                      <span class="input-group-text p-1 bg-primary"> <button class="btn btn-transparent p-0" type="submit">Save</button></span>
-                    </div>
-                    </form>
-                  </span>
+                </div>
+                <div class="input-group">
+                    <!-- <input type="text" class="form-control p-1 " name="description" value="{{cuDes}}" placeholder="Description" [(ngModel)]="model.description" #description="ngModel"/> -->
+                    <textarea class="form-control" name="description" value="{{cuDes}}" placeholder="Description" [(ngModel)]="model.description" #description="ngModel"></textarea>
+                </div>
+                <div class="input-group-append mt-2 d-flex flex-wrap w-100 justify-content-center">
+                  <span class=""> <button class="btn btn-large btn-outline-seconday bg-transparent rounded popover-common-button" type="submit">Save</button></span>
+                </div>
+              </form>
+            </popover-content>
+            <span [popover]="mycont" [popoverCloseOnClickOutside]="true" [popoverOnHover]="false" [popoverCloseOnMouseOutside]="false" [popoverDisabled]="false" [popoverAnimation]="true" class="fa fa-edit p-2" (click)="getDate(datesData[i],item.id,item.stime.split('_')[i],item.des.split('_')[i],item.tsId.split('_')[i], item.contractorid, item.fullstime.split('@')[i], i);" *ngIf="item.assign == 1 && (item.status == 'active' || item.status == 'draft' || item.status == 'inprogress' || item.status == 'completed') && item.memberstatus=='active'"></span>
+            <!-- <span *ngIf="addTimeForm == 1 && formDis.split('_')[0] == item.project_id && formDis.split('_')[1] == i">
+
+                  </span> -->
           </div>
         </td>
       </tr>
@@ -90,13 +100,13 @@ border-radius:50%;
       <tr>
         <td><div class="equal"><b>Total Rate</b></div></td>
         <td *ngFor="let item of data">
-          <div class="equal"><span class="p-2">{{getRate(item.totalStime, item.type, item.budget, item.rate, item.percentage)}}$/h</span></div>
+          <div class="equal"><span class="p-2">{{getRate(item.totalStime, item.budget, item.rate, item.percentage)}}$/h</span></div>
         </td>
       </tr>
       <tr>
         <td><div class="equal"><b>Total Amount</b></div></td>
         <td *ngFor="let item of data">
-          <div class="equal"><span class="p-2">${{getAmount(item.totalStime, item.type, item.budget, item.rate, item.percentage)}}</span></div>
+          <div class="equal"><span class="p-2">${{getAmount(item.totalStime, item.budget, item.rate, item.percentage)}}</span></div>
         </td>
       </tr>
     </table>
