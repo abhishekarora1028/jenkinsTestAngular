@@ -301,19 +301,19 @@ h4 {
     font-weight: bold;
     color: #424242 !important;
 }
-.assign-contractor a span {
+.assign-contractor a .icon-align {
     font-size: 16px;
     padding: 0;
     width: 25px;
     height: 25px;
 }
-.assign-contractor a span span {
+/*.assign-contractor a span span {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-}
-.assign-contractor-fields span.btn {
+}*/
+.assign-contractor-fields .btn {
     padding: 0;
     width: 35px;
     height: 35px;
@@ -481,12 +481,27 @@ select.form-control option {
 .project-component table .action-icons .fa-user {
     font-size: 20px;
 }
+.navbar-nav a.dropdown-item:hover {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #63c2de;
+}
+.navbar-nav a.dropdown-item:hover i.fa {
+   color: #fff;
+}
+.dropdown-menu .dropdown-header {
+    font-size: 14px;
+}
+.assign-contractor-fields .form-group {
+    margin-bottom: 0;
+}
 @media screen and (max-width: 1260px) {
-    .assign-contractor-fields input, .assign-contractor-fields select {
+    .assign-contractor-fields input {
         -webkit-box-flex: 0;
-        -ms-flex: 0 0 91.66666667%;
-        flex: 0 0 55%;
+        -ms-flex: 0 0 50%;
+        flex: 0 0 50%;
         max-width: 100%;
+        width: inherit !important;
     }
 }
 @media screen and (max-width: 991px) {
@@ -533,6 +548,9 @@ select.form-control option {
         -ms-flex: 0 0 90%;
         flex: 0 0 90%;
         max-width: 100%;
+    }
+    .mob-pl {
+        padding-left: 0 !important
     }
 }
 @media screen and (max-width: 600px) {
