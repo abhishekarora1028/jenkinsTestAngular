@@ -526,6 +526,32 @@ select.form-control option {
 .assign-contractor-fields .form-group {
     margin-bottom: 0;
 }
+img.placeholder {
+    width: 60px;
+    height: 60px;
+}
+a.remove-img {
+    position: absolute;
+    top: -6px;
+    left: 59px;
+}
+a.remove-img i.fa {
+    color: red;
+    padding: 1px 2px;
+    border-radius: 2px;
+}
+.profile-pic-placeholder {
+    width: calc(100% - 33.3%);
+    float: right;
+    margin-bottom: 15px;
+    position: relative;
+}
+.profile-upload-pic {
+    width: 100%;
+    float: left;
+    margin-bottom: 15px;
+    position: relative;
+}
 @media screen and (max-width: 1260px) {
     .assign-contractor-fields input {
         -webkit-box-flex: 0;
@@ -554,6 +580,11 @@ select.form-control option {
     .add-new-client .proj-desc textarea, .add_contractor .proj-desc textarea{
         width: calc(100% - 16.2%) !important;
         max-width: 100%;
+    }
+}
+@media screen and (max-width: 838px) {
+    .profile-pic-placeholder {
+        width: 100%;
     }
 }
 @media screen and (max-width: 767px) {

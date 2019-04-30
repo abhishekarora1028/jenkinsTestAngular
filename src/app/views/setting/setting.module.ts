@@ -18,6 +18,12 @@ import { ProfileComponent } from './profile.component';
 import { ChangepasswordComponent } from './changepassword.component';
 import { SettingsRoutingModule } from './setting-routing.module';
 
+// Toastr
+import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
+
+// Ng2-file-upload
+import { FileSelectDirective, FileDropDirective, FileUploadModule, FileUploader } from 'ng2-file-upload';
+
 @NgModule({
   imports: [
   	CommonModule,
@@ -26,6 +32,8 @@ import { SettingsRoutingModule } from './setting-routing.module';
     SettingsRoutingModule,
     ChartsModule,
     BsDropdownModule,
+    ToasterModule,
+    FileUploadModule,
     BsDatepickerModule.forRoot(),
     ButtonsModule.forRoot()
   ],
