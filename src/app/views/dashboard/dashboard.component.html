@@ -120,7 +120,11 @@
                 <div class="card p-0 border-0 width mb-0">
                   <div class="card-body row d-flex p-0">
                     <div class="col-3 p-0 d-flex align-items-center justify-content-center">
-                      <img class="img-fluid rounded-circle placeholder" src="https://via.placeholder.com/64/eee">
+                       <img *ngIf="item2.picstatus==1 && item2.picstatus!=undefined" class="img-fluid rounded-circle placeholder" src="{{imgUrl}}{{item2.id}}/download/{{item2.profilePic}}">
+                      
+
+                      <img *ngIf="item2.picstatus==0 || item2.picstatus==undefined" class="img-fluid rounded-circle placeholder" src="https://via.placeholder.com/64/eee">
+
                     </div>
                     <div class="col-9 d-flex flex-wrap align-items-center justify-content-start">
                       <h4 class="mb-0 width">{{item2.fname}}{{item2.lname}}</h4>

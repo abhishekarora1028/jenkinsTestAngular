@@ -29,6 +29,7 @@ countContractor: any;
 userRoleId: any;
 unassdata: any;
 userId: any;
+imgUrl: any;
 checkData: any = 0;
 checkCont: any = 0;
 activeProjectCount: any = 0;
@@ -49,6 +50,9 @@ assignpro: any = {};
     {
       this.router.navigate(['login']);
     }
+
+    this.imgUrl = API_URL+'/Containers/';
+
     this.userRoleId = localStorage.getItem('currentUserRoleId');
     this.userId     = localStorage.getItem('currentUserId');
     let options = new RequestOptions();
@@ -122,6 +126,8 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
             
   });
 
+ 
+
   if(localStorage.getItem('currentUserRoleId') == "1")
   {
     this.http.get(API_URL+'/projects/count', options)
@@ -156,6 +162,19 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
           if(response.json().length)
           {
             this.data = response.json();
+             for(let i=0; i< this.data.length; i++ ) { 
+             if(this.data[i].picstatus!=undefined && this.data[i].picstatus==1){
+                this.http.get(API_URL+'/containers/'+this.data[i].id+'/files', options)
+                    .subscribe(response => {  
+                    if(response.json().length)
+                    {
+                        this.data[i].profilePic =  response.json()[0].name;
+                    }
+                  });
+              }else{
+                        this.data[i].profilePic = '';
+                    }
+             }
             this.checkCont = 1;
           }else{
             this.checkCont = 0;
@@ -243,17 +262,31 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
           
         });  
         
+
     this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"},{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
           .subscribe(response => {
           if(response.json().length)
           {
             this.data = response.json();
+             for(let i=0; i< this.data.length; i++ ) { 
+             if(this.data[i].picstatus!=undefined && this.data[i].picstatus==1){
+                this.http.get(API_URL+'/containers/'+this.data[i].id+'/files', options)
+                    .subscribe(response => {  
+                    if(response.json().length)
+                    {
+                        this.data[i].profilePic =  response.json()[0].name;
+                    }
+                  });
+              }else{
+                        this.data[i].profilePic = '';
+                    }
+             }
             this.checkCont = 1;
           }else{
             this.checkCont = 0;
           }
             
-        });    
+        });        
 
 
         this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
@@ -294,6 +327,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
   this.toasterService = toasterService; 
     
   }
+  
 
 delproject(proid){
 this.toasterService.clear();
