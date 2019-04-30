@@ -19,6 +19,11 @@ import { ContractorsRoutingModule } from './contractor-routing.module';
 // Toastr
 import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
 
+// Ng2-file-upload
+import { FileSelectDirective, FileDropDirective, FileUploadModule, FileUploader } from 'ng2-file-upload';
+
+import {PopoverModule} from "ngx-smart-popover";
+
 @NgModule({
   imports: [
   	CommonModule,
@@ -28,6 +33,8 @@ import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster'
     ChartsModule,
     BsDropdownModule,
     ToasterModule,
+    FileUploadModule,
+    PopoverModule,
     ButtonsModule.forRoot()
   ],
   declarations: [ ContractorsComponent, AddcontractorComponent, ViewcontractorComponent, DataFilterPipe, StriphtmlPipe ]
