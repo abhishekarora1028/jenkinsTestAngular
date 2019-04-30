@@ -23,6 +23,8 @@ import { ProjectsRoutingModule } from './project-routing.module';
 // Toastr
 import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
 
+import {PopoverModule} from "ngx-smart-popover";
+
 @NgModule({
   imports: [
   	CommonModule,
@@ -32,6 +34,7 @@ import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster'
     ChartsModule,
     BsDropdownModule,
     ToasterModule,
+    PopoverModule,
     BsDatepickerModule.forRoot(),
     ButtonsModule.forRoot()
   ],

@@ -60,13 +60,13 @@
                 <td>
                   <div class="action-icons">
                     <span>
-                      <a class="btn btn-show-contact100" routerLink="/contractors/viewcontractor/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                      <a class="btn btn-show-contact100" routerLink="/contractors/viewcontractor/{{item.id}}" popover="View" [popoverOnHover]="true"><i class="fa fa-external-link" aria-hidden="true"></i></a>
                     </span>
                     <span>
-                      <a class="btn btn-show-contact100" routerLink="/contractors/editcontractor/{{item.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                      <a class="btn btn-show-contact100" routerLink="/contractors/editcontractor/{{item.id}}" popover="Edit" [popoverOnHover]="true"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                     </span>  
                     <span *ngIf="item.status != 'deleted'">
-                      <button class="btn btn-small btn-outline-0 bg-transparent" (click) ="delcontractor(item.id, index)">
+                      <button class="btn btn-small btn-outline-0 bg-transparent" (click) ="delcontractor(item.id, index)" popover="Delete" [popoverOnHover]="true">
                         <i class="fa fa-times" aria-hidden="true"></i>
                       </button>
                     </span>

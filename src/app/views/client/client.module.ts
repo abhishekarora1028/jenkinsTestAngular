@@ -19,6 +19,8 @@ import { ClientsRoutingModule } from './client-routing.module';
 // Toastr
 import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
 
+import {PopoverModule} from "ngx-smart-popover";
+
 @NgModule({
   imports: [
   	CommonModule,
@@ -28,6 +30,7 @@ import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster'
     ChartsModule,
     ToasterModule,
     BsDropdownModule,
+    PopoverModule,
     ButtonsModule.forRoot()
   ],
   declarations: [ ClientsComponent, AddclientComponent, ViewclientComponent, DataFilterPipe, StriphtmlPipe ]

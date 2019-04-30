@@ -11,6 +11,8 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 // Toastr
 import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster';
 
+import {PopoverModule} from "ngx-smart-popover";
+
 @NgModule({
   imports: [
   	CommonModule,
@@ -19,6 +21,7 @@ import { ToasterModule, ToasterService} from 'angular2-toaster/angular2-toaster'
     ChartsModule,
     BsDropdownModule,
     ToasterModule,
+    PopoverModule,
     ButtonsModule.forRoot()
   ],
   declarations: [ DashboardComponent ]
