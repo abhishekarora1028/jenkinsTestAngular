@@ -80,11 +80,11 @@
                 </div>
               </div>
               </div>
-              <div class="col-lg-4 col-md-4 col-sm-6 col-5 d-flex align-items-center justify-content-end">
+              <div class="col-lg-4 col-md-4 col-sm-6 col-5 d-flex align-items-center justify-content-end action-icons">
                 <div class="display-inline">
-                  <a data-toggle="tooltip" title="Edit" class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/viewproject/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                  <a class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/editproject/{{item.id}}" *ngIf="userRoleId == 1"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                  <a class="btn btn-small btn-outline-0 p-1 bg-transparent " (click) ="delproject(item.id)" *ngIf="userRoleId == 1 && item.status!='deleted'"><i class="fa fa-times" aria-hidden="true"></i></a>
+                  <a popover="View" [popoverOnHover]="true" class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/viewproject/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/editproject/{{item.id}}" *ngIf="userRoleId == 1" popover="Edit" [popoverOnHover]="true"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  <a class="btn btn-small btn-outline-0 p-1 bg-transparent " (click) ="delproject(item.id)" *ngIf="userRoleId == 1 && item.status!='deleted'" popover="Delete" [popoverOnHover]="true"><i class="fa fa-times" aria-hidden="true"></i></a>
                 </div> 
               </div>
             </div>
@@ -124,10 +124,10 @@
                     </div>
                     <div class="col-9 d-flex flex-wrap align-items-center justify-content-start">
                       <h4 class="mb-0 width">{{item2.fname}}{{item2.lname}}</h4>
-                      <div *ngIf="userRoleId == 1">
-			<a class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/contractors/viewcontractor/{{item2.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
-			<a class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/contractors/editcontractor/{{item2.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-			<a *ngIf="item2.status != 'deleted'" class="btn btn-small btn-outline-0 p-1 bg-transparent" (click)="delcontractor(item2.id)"><i class="fa fa-times" aria-hidden="true"></i></a>
+                      <div *ngIf="userRoleId == 1" class="action-icons">
+			<a popover="View" [popoverOnHover]="true" class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/contractors/viewcontractor/{{item2.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+			<a popover="Edit" [popoverOnHover]="true" class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/contractors/editcontractor/{{item2.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+			<a *ngIf="item2.status != 'deleted'" popover="Delete" [popoverOnHover]="true" class="btn btn-small btn-outline-0 p-1 bg-transparent" (click)="delcontractor(item2.id)"><i class="fa fa-times" aria-hidden="true"></i></a>
                       </div> 
                     </div>
                   </div>
@@ -167,9 +167,9 @@
               </div>
               </div>
               <div class="col-lg-4 col-md-4 col-sm-6 col-5 d-flex align-items-center justify-content-end" *ngIf="item3.unass == '1'">
-                <div>
- 		  <a class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/viewproject/{{item3.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
-                  <a *ngIf="userId == item3.member_id || userRoleId==1" class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/editproject/{{item3.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                <div class="action-icons">
+ 		  <a popover="View" [popoverOnHover]="true" class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/viewproject/{{item3.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a *ngIf="userId == item3.member_id || userRoleId==1" popover="Edit" [popoverOnHover]="true" class="btn btn-small btn-outline-0 p-1 bg-transparent" routerLink="/projects/editproject/{{item3.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </div>
               </div>
             </div>

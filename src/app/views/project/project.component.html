@@ -77,21 +77,21 @@
             <td>
               <div class="d-flex align-items-center action-icons">
                 <span>
-                  <a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item.id}}"><i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a class="btn btn-show-contact100" routerLink="/projects/viewproject/{{item.id}}" popover="View" [popoverOnHover]="true"><i class="fa fa-external-link" aria-hidden="true"></i></a>
                 </span>
                 <span *ngIf="currentUserRoleId == 2 && item.assignMemId == 0">
-                  <button class="btn btn-small btn-outline-0 bg-transparent " (click) ="assignproject(item.id, currentUserID)">
-                    <i class="fa fa-user" aria-hidden="true" title="Assign to Me"></i>
+                  <button class="btn btn-small btn-outline-0 bg-transparent " (click) ="assignproject(item.id, currentUserID)" popover="Assign to Me" [popoverOnHover]="true">
+                    <i class="fa fa-user" aria-hidden="true"></i>
                   </button>
                 </span>
                 <span *ngIf="currentUserRoleId == 2 && item.assignMemId == currentUserID" class="btn btn-small btn-outline-0 bg-transparent" style="opacity: 0.5; cursor: default;">
-                   <i class="fa fa-user" aria-hidden="true" title="Already Assigned"></i>
+                   <i class="fa fa-user" aria-hidden="true" popover="Already Assigned" [popoverOnHover]="true"></i>
                 </span>
                 <span *ngIf="currentUserID == item.member_id || currentUserRoleId == 1">
-                  <a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item.id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                  <a class="btn btn-show-contact100" routerLink="/projects/editproject/{{item.id}}" popover="Edit" [popoverOnHover]="true"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                 </span>  
                 <span *ngIf="currentUserRoleId == 1 && item.status != 'deleted'">
-                  <button class="btn btn-small btn-outline-0 bg-transparent " (click) ="delproject(item.id,i)">
+                  <button class="btn btn-small btn-outline-0 bg-transparent " (click) ="delproject(item.id,i)" popover="Delete" [popoverOnHover]="true">
                     <i class="fa fa-times" aria-hidden="true"></i>
                   </button>
                 </span>

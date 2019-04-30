@@ -79,7 +79,7 @@ border-radius:50%;
                     <!-- <input type="text" class="form-control p-1 " name="description" value="{{cuDes}}" placeholder="Description" [(ngModel)]="model.description" #description="ngModel"/> -->
                     <textarea class="form-control" name="description" value="{{cuDes}}" placeholder="Description" [(ngModel)]="model.description" #description="ngModel"></textarea>
                 </div>
-                <div class="input-group-append mt-2 d-flex flex-wrap w-100 justify-content-center">
+                <div class="input-group-append mt-2 d-flex flex-wrap w-100 justify-content-left">
                   <span class=""> <button class="btn btn-large btn-outline-seconday bg-transparent rounded popover-common-button" type="submit">Save</button></span>
                 </div>
               </form>
@@ -100,7 +100,7 @@ border-radius:50%;
       <tr>
         <td><div class="equal"><b>Total Rate</b></div></td>
         <td *ngFor="let item of data">
-          <div class="equal"><span class="p-2">{{getRate(item.totalStime, item.budget, item.rate, item.percentage)}}$/h</span></div>
+          <div class="equal"><span class="p-2">${{getRate(item.totalStime, item.budget, item.rate, item.percentage)}}/h</span></div>
         </td>
       </tr>
       <tr>
