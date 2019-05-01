@@ -40,7 +40,7 @@
     "dataSource": "mongo",
     "public": true
   },
-  "container": {
+  "container":{
     "dataSource": "storage",
     "public": true
   }
