@@ -51,7 +51,7 @@ assignpro: any = {};
       this.router.navigate(['login']);
     }
 
-    this.imgUrl = API_URL+'/Containers/';
+    this.imgUrl = API_URL+'/Imagecontainers/';
 
     this.userRoleId = localStorage.getItem('currentUserRoleId');
     this.userId     = localStorage.getItem('currentUserId');
@@ -164,7 +164,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
             this.data = response.json();
              for(let i=0; i< this.data.length; i++ ) { 
              if(this.data[i].picstatus!=undefined && this.data[i].picstatus==1){
-                this.http.get(API_URL+'/containers/'+this.data[i].id+'/files', options)
+                this.http.get(API_URL+'/Imagecontainers/'+this.data[i].id+'/files', options)
                     .subscribe(response => {  
                     if(response.json().length)
                     {
@@ -270,7 +270,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
             this.data = response.json();
              for(let i=0; i< this.data.length; i++ ) { 
              if(this.data[i].picstatus!=undefined && this.data[i].picstatus==1){
-                this.http.get(API_URL+'/containers/'+this.data[i].id+'/files', options)
+                this.http.get(API_URL+'/Imagecontainers/'+this.data[i].id+'/files', options)
                     .subscribe(response => {  
                     if(response.json().length)
                     {
