@@ -36,7 +36,10 @@ public toasterconfig : ToasterConfig =
   picStatus:any = 0;
   proEditStatus:any = 0;
   rate:any = 0;
+  fileStatus:any = 0;
+  dataStatus:any = 0;
   imgUrl: any;
+  fileName: any = '';
   uniqueEmail:any = 0;
   checkData:any = 0;
   private data: any;
@@ -47,7 +50,7 @@ public toasterconfig : ToasterConfig =
       this.router.navigate(['login']);
     }  
 
-    this.imgUrl = API_URL+'/Containers/';
+    this.imgUrl = API_URL+'/Imagecontainers/';
 
   if(this.route.snapshot.paramMap.get("id"))
   {
@@ -66,7 +69,7 @@ public toasterconfig : ToasterConfig =
 	        	this.model = response.json();
 	        	this.editparam.action = "edit";
              if(this.model.picstatus!=undefined && this.model.picstatus==1){
-                this.http.get(API_URL+'/containers/'+this.model.id+'/files', options)
+                this.http.get(API_URL+'/Imagecontainers/'+this.model.id+'/files', options)
                     .subscribe(response => {  
                     if(response.json().length)
                     {
@@ -132,7 +135,7 @@ removePic(contId, picName)
           options.headers.append('Content-Type', 'application/json');
           options.headers.append('Accept', 'application/json');
 
-  this.http.delete(API_URL+'/Containers/'+contId+'/files/'+picName+ '?access_token='+localStorage.getItem('currentUserToken'), options)
+  this.http.delete(API_URL+'/Imagecontainers/'+contId+'/files/'+picName+ '?access_token='+localStorage.getItem('currentUserToken'), options)
                       .subscribe(response => {
 
     this.toasterService.pop('success', 'Success ', "Profile image has deleted successfully!");
@@ -147,7 +150,7 @@ removePic(contId, picName)
             this.model = response.json();
             this.editparam.action = "edit";
              if(this.model.picstatus!=undefined && this.model.picstatus==1){
-                this.http.get(API_URL+'/containers/'+this.model.id+'/files', options)
+                this.http.get(API_URL+'/Imagecontainers/'+this.model.id+'/files', options)
                     .subscribe(response => {  
                     if(response.json().length)
                     {
@@ -218,44 +221,36 @@ removePic(contId, picName)
     if(this.uploaderProfile.queue.length > 0)
     {
         
-        //this.model.picstatus = "1";
-        this.http.get(API_URL+'/containers/'+this.editparam.id, options)
+        this.fileStatus = 1;
+        this.http.get(API_URL+'/Imagecontainers/'+this.editparam.id, options)
           .subscribe(response => { 
-                  this.http.get(API_URL+'/containers/'+this.editparam.id+'/files', options)
+                  this.http.get(API_URL+'/Imagecontainers/'+this.editparam.id+'/files?access_token='+ localStorage.getItem('currentUserToken'), options)
                   .subscribe(response => {  
-                  console.log(response.json())
                   if(response.json().length)
                   {
                     for(let i=0; i< response.json().length; i++ ) {
-                        this.http.delete(API_URL+'/Containers/'+this.editparam.id+'/files/'+response.json()[i].name+ '?access_token='+localStorage.getItem('currentUserToken'), options)
+                        this.http.delete(API_URL+'/Imagecontainers/'+this.editparam.id+'/files/'+response.json()[i].name+ '?access_token='+localStorage.getItem('currentUserToken'), options)
                         .subscribe(response => {
                       });
 
                       }
 
                   }
-                
-                });
-            }, error => {
-                 this.http.post(API_URL+'/Containers?access_token='+ localStorage.getItem('currentUserToken'), {"name":this.editparam.id},  options)
-                .subscribe(response => {
 
-                 });
-                
-          });
-
-           for(let val of this.uploaderProfile.queue){
-                val.url = API_URL+'/Containers/'+this.editparam.id +'/upload?access_token='+ localStorage.getItem('currentUserToken');
+                  for(let val of this.uploaderProfile.queue){
+                val.url = API_URL+'/Imagecontainers/'+this.editparam.id +'/upload?access_token='+ localStorage.getItem('currentUserToken');
 
                 //console.log(val);
                 val.upload();
             
                 this.uploaderProfile.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
-                    console.log("ImageUpload:uploaded:", item, status);
+                    //console.log("ImageUpload:uploaded:", item, status);
                     if(status == "200"){
+                      this.fileStatus = 2;
+                      this.fileName = item.file.name;
                       let fileStorageData = {
                         memberId: this.editparam.id ,
-                        filePath: '/Containers/'+this.editparam.id  ,
+                        filePath: '/Imagecontainers/'+this.editparam.id  ,
                         fileName: item.file.name,
                         fileTitle: '',  
                         uploadType: 'profile',
@@ -278,6 +273,54 @@ removePic(contId, picName)
                 };
 
               }
+                
+                });
+            }, error => {
+                 this.http.post(API_URL+'/Imagecontainers?access_token='+ localStorage.getItem('currentUserToken'), {"name":this.editparam.id},  options)
+                .subscribe(response => {
+
+                  for(let val of this.uploaderProfile.queue){
+                val.url = API_URL+'/Imagecontainers/'+this.editparam.id +'/upload?access_token='+ localStorage.getItem('currentUserToken');
+
+                //console.log(val);
+                val.upload();
+            
+                this.uploaderProfile.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
+                    //console.log("ImageUpload:uploaded:", item, status);
+                    if(status == "200"){
+                      this.fileStatus = 2;
+                      this.fileName = item.file.name;
+                      let fileStorageData = {
+                        memberId: this.editparam.id ,
+                        filePath: '/Imagecontainers/'+this.editparam.id  ,
+                        fileName: item.file.name,
+                        fileTitle: '',  
+                        uploadType: 'profile',
+                        eventId: '',                  
+                        status: 'active',  
+                        created_by: localStorage.getItem('currentUserId'),  
+                        updated_by: ''
+                      }
+
+                      /*this.http.post(API_URL+'/FileStorages?access_token='+ localStorage.getItem('currentUserToken'), fileStorageData ,  options)
+                      .subscribe(storageRes => {
+                        //console.log(storageRes.json());
+                      }, error => {
+                          //console.log(JSON.stringify(error.json()));
+                      });*/
+                      
+                    } else {
+                      //this.toasterService.pop('error', 'Error ',  "File: "+item.file.name+" not uploaded successfully");
+                    }
+                };
+
+              }
+
+                 });
+                
+          });
+
+           
          
     }      
 
@@ -287,31 +330,39 @@ removePic(contId, picName)
 	        .subscribe(data => {
 	      if(data.json().count)
 	      {
-          console.log(data.json().count)
+          this.dataStatus = 1;
           this.http.get(API_URL+'/members/'+ this.editparam.id, options)
           .subscribe(response => {  
             this.model = response.json();
+            if(this.fileStatus==2)
+            {
+              this.model.profilePic =  this.fileName;
+            }else{
+              this.model.profilePic =  '';
+            }
+            
             this.editparam.action = "edit";
-             
-                this.http.get(API_URL+'/containers/'+this.editparam.id+'/files', options)
-                    .subscribe(response => {  
-                    if(response.json().length)
-                    {
-                        this.model.profilePic =  response.json()[0].name;
-                        this.model.picstatus = 1;
-                    }else{
-                        this.model.profilePic = '';
-                    }
-                  });
+               
     
         });
 	        //this.proEditStatus = 1;
           this.toasterService.pop('success', 'Updated ', "Contractor has updated successfully!");
-          this.disContractor();
+          if(this.dataStatus == 1 && this.fileStatus < 2)
+          {
+            this.dataStatus = 0;
+            this.fileStatus = 0;
+            this.disContractor()
+          }
+          
 	      }else{
 	        //this.proEditStatus = 2;
           this.toasterService.pop('error', 'error ', "Error");
-          this.disContractor();
+          if(this.dataStatus == 1 && this.fileStatus < 2)
+          {
+            this.dataStatus = 0;
+            this.fileStatus = 0;
+            this.disContractor()
+          }
 	      }
 	    });
       
@@ -329,20 +380,18 @@ removePic(contId, picName)
               this.model.picstatus = 0;
             }
 
-               
-        
 	          
 	   this.http.post(API_URL+'/members', this.model, options).subscribe(data => {
 	      if(data)
 	      {
-          
+            this.dataStatus = 1;
             if(this.uploaderProfile.queue.length > 0)
             {
-                 this.http.post(API_URL+'/Containers?access_token='+ localStorage.getItem('currentUserToken'), {"name":data.json().id},  options)
+                 this.http.post(API_URL+'/Imagecontainers?access_token='+ localStorage.getItem('currentUserToken'), {"name":data.json().id},  options)
                         .subscribe(response => {
 
                     for(let val of this.uploaderProfile.queue){
-                        val.url = API_URL+'/Containers/'+data.json().id+'/upload?access_token='+ localStorage.getItem('currentUserToken');
+                        val.url = API_URL+'/Imagecontainers/'+data.json().id+'/upload?access_token='+ localStorage.getItem('currentUserToken');
 
                         //console.log(val);
                         val.upload();
@@ -350,9 +399,10 @@ removePic(contId, picName)
                         this.uploaderProfile.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
                            // console.log("ImageUpload:uploaded:", item, status);
                             if(status == "200"){
+                              this.fileStatus = 1;
                               let fileStorageData = {
                                 memberId: data.json().id,
-                                filePath: '/Containers/'+data.json().id,
+                                filePath: '/Imagecontainers/'+data.json().id,
                                 fileName: item.file.name,
                                 fileTitle: '',  
                                 uploadType: 'profile',
@@ -362,12 +412,12 @@ removePic(contId, picName)
                                 updated_by: ''
                               }
 
-                              this.http.post(API_URL+'/FileStorages?access_token='+ localStorage.getItem('currentUserToken'), fileStorageData ,  options)
+                              /*this.http.post(API_URL+'/FileStorages?access_token='+ localStorage.getItem('currentUserToken'), fileStorageData ,  options)
                               .subscribe(storageRes => {
                                 //console.log(storageRes.json());
                               }, error => {
                                   //console.log(JSON.stringify(error.json()));
-                              });
+                              });*/
                 
                               
                             } else {

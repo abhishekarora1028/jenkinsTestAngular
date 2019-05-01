@@ -46,7 +46,7 @@ public toasterconfig : ToasterConfig =
       this.router.navigate(['login']);
     }
 
- this.imgUrl = API_URL+'/Containers/';   
+ this.imgUrl = API_URL+'/Imagecontainers/';   
 
 let options = new RequestOptions();
           options.headers = new Headers();
@@ -60,7 +60,7 @@ this.http.get(API_URL+'/members/'+userId, options)
           .subscribe(response => {  
             this.model = response.json();
              if(this.model.picstatus!=undefined && this.model.picstatus==1){
-                this.http.get(API_URL+'/containers/'+userId+'/files', options)
+                this.http.get(API_URL+'/Imagecontainers/'+userId+'/files', options)
                     .subscribe(response => {  
                     if(response.json().length)
                     {
@@ -97,7 +97,7 @@ removePic(contId, picName)
           options.headers.append('Content-Type', 'application/json');
           options.headers.append('Accept', 'application/json');
 
-  this.http.delete(API_URL+'/Containers/'+contId+'/files/'+picName+ '?access_token='+localStorage.getItem('currentUserToken'), options)
+  this.http.delete(API_URL+'/Imagecontainers/'+contId+'/files/'+picName+ '?access_token='+localStorage.getItem('currentUserToken'), options)
                       .subscribe(response => {
 
     this.toasterService.pop('success', 'Success ', "Profile image has deleted successfully!");
@@ -111,7 +111,7 @@ removePic(contId, picName)
           .subscribe(response => {  
             this.model = response.json();
              if(this.model.picstatus!=undefined && this.model.picstatus==1){
-                this.http.get(API_URL+'/containers/'+this.model.id+'/files', options)
+                this.http.get(API_URL+'/Imagecontainers/'+this.model.id+'/files', options)
                     .subscribe(response => {  
                     if(response.json().length)
                     {
@@ -163,15 +163,15 @@ console.log(this.uploaderProfile.queue.length)
     {
         
         this.model.picstatus = "1";
-        this.http.get(API_URL+'/containers/'+userId, options)
+        this.http.get(API_URL+'/Imagecontainers/'+userId, options)
           .subscribe(response => { 
-                  this.http.get(API_URL+'/containers/'+userId+'/files', options)
+                  this.http.get(API_URL+'/Imagecontainers/'+userId+'/files', options)
                   .subscribe(response => {  
                   console.log(response.json())
                   if(response.json().length)
                   {
                     for(let i=0; i< response.json().length; i++ ) {
-                        this.http.delete(API_URL+'/Containers/'+userId+'/files/'+response.json()[i].name+ '?access_token='+localStorage.getItem('currentUserToken'), options)
+                        this.http.delete(API_URL+'/Imagecontainers/'+userId+'/files/'+response.json()[i].name+ '?access_token='+localStorage.getItem('currentUserToken'), options)
                         .subscribe(response => {
                       });
 
@@ -181,7 +181,7 @@ console.log(this.uploaderProfile.queue.length)
                 
                 });
             }, error => {
-                 this.http.post(API_URL+'/Containers?access_token='+ localStorage.getItem('currentUserToken'), {"name":userId},  options)
+                 this.http.post(API_URL+'/Imagecontainers?access_token='+ localStorage.getItem('currentUserToken'), {"name":userId},  options)
                 .subscribe(response => {
 
                  });
@@ -189,7 +189,7 @@ console.log(this.uploaderProfile.queue.length)
           });
 
            for(let val of this.uploaderProfile.queue){
-                val.url = API_URL+'/Containers/'+userId+'/upload?access_token='+ localStorage.getItem('currentUserToken');
+                val.url = API_URL+'/Imagecontainers/'+userId+'/upload?access_token='+ localStorage.getItem('currentUserToken');
 
                 //console.log(val);
                 val.upload();
@@ -199,7 +199,7 @@ console.log(this.uploaderProfile.queue.length)
                     if(status == "200"){
                       let fileStorageData = {
                         memberId: userId ,
-                        filePath: '/Containers/'+userId,
+                        filePath: '/Imagecontainers/'+userId,
                         fileName: item.file.name,
                         fileTitle: '',  
                         uploadType: 'profile',
@@ -247,7 +247,7 @@ this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+userId+'%22%
           .subscribe(response => {  
             this.model = response.json();
              
-                this.http.get(API_URL+'/containers/'+userId+'/files', options)
+                this.http.get(API_URL+'/Imagecontainers/'+userId+'/files', options)
                     .subscribe(response => {  
                     if(response.json().length)
                     {
