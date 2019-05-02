@@ -377,7 +377,7 @@ h4 {
 .dashboard-component .chart-wrapper {
 	min-height: 300px;
 }
-.add-project-heading .input-group-addon {
+.add-project-heading .input-group-addon, .form-calendar .input-group-addon  {
     padding: 6px 12px;
     font-size: 14px;
     font-weight: 400;
@@ -388,7 +388,7 @@ h4 {
     border: 1px solid #ccc;
     height: 35px !important;
 }
-.add-project-heading  .input-group-addon, .add-project-heading  .input-group-btn {
+.add-project-heading  .input-group-addon, .add-project-heading  .input-group-btn, .form-calendar  .input-group-addon, .form-calendar  .input-group-btn {
     width: 1%;
     white-space: nowrap;
     vertical-align: middle;
@@ -396,10 +396,13 @@ h4 {
 .add-project-heading  .input-group .form-control, .add-project-heading  .input-group-addon, .add-project-heading .input-group-btn {
     display: table-cell;
 }
-.add-project-heading  .input-group {
+.add-project-heading  .input-group, .form-calendar .input-group {
     position: relative;
     display: table;
     border-collapse: separate;
+}
+.add-project-heading  .input-group input, .input-group.form-calendar  input {
+    z-index: 9;
 }
 .add-project-heading  .input-group .form-control {
     position: relative;
@@ -447,6 +450,7 @@ button:focus {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    z-index: 1;
 }
 .form-calendar .input-group-addon {
     border-left: 1px solid #ccc !important;
@@ -551,6 +555,18 @@ a.remove-img i.fa {
     float: left;
     margin-bottom: 15px;
     position: relative;
+}
+.dropdown-menu.show a.dropdown-item.active {
+    background: transparent;
+    color: #151b1e;
+}
+.dropdown-menu.show a.dropdown-item.active i.fa {
+    color: #63c2de;
+}
+.common-button:hover {
+    background: #20a8d8 !important;
+    color: white !important;
+    border-color: #20a8d8;
 }
 @media screen and (max-width: 1260px) {
     .assign-contractor-fields input {

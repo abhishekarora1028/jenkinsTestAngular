@@ -9,14 +9,14 @@
             <div class="col-md-10 offset-md-1 p-0">
                 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                     <div class="row d-flex pl-3 pr-3">
-                        <div class="col-12 mt-4 mb-2">
+                        <!-- <div class="col-12 mt-4 mb-2">
                             <div *ngIf="proEditStatus == 1" class="alert alert-success">
                                 <strong>Profile</strong> has updated successfully!
                             </div>
                             <div *ngIf="proStatus == 2" class="alert alert-danger">
                                 <strong>Error!</strong> 
                             </div>  
-                        </div>
+                        </div> -->
                         <div class="col-sm-6 col-12">
                             <div class="form-group">
                                 <input type="text" placeholder="First Name*" class="form-control" name="fname" [(ngModel)]="model.fname" #fname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && fname.invalid }" required />
@@ -35,10 +35,11 @@
                         </div>
                         <div class="col-sm-12 col-12">
                             <div class="form-group">
-                                <input type="text" placeholder="Email*" class="form-control" name="email" (change)="onChange($event.target.value)" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+                                <input type="text" placeholder="Email*" class="form-control" name="email" (change)="onChange($event.target.value)" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
                                 <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
                                     <div *ngIf="email.errors.required">Email is required</div>
                                     <div *ngIf="email.errors.email">Email must be a valid email address</div>
+                                    <div *ngIf="email.errors?.pattern">Invalid email pattern</div>
                                 </div>
                                 <div *ngIf="uniqueEmail == 1" class="text-error">
                               Email already exist!
@@ -82,7 +83,7 @@
                         </div>
                         <div class="col-sm-12 col-12 pt-3">
                             <div class="form-group">
-                                <button class="btn btn-large btn-success solid-btn rounded" type="submit" >Save</button>               
+                                <button class="btn btn-large btn-success solid-btn rounded" [disabled] = "uniqueEmail == 1" type="submit" >Save</button>               
                             </div>
                         </div>
                     </div>
