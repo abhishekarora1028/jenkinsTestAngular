@@ -37,6 +37,7 @@ export class AppHeaderComponent {
   	profilePicture: any = 0;
   	userId: any = 0;
   	imgUrl: any;
+  	model: any = {};
 	private userLoggedInName:any = localStorage.getItem('currentUserName');
 	
 	constructor( private router:Router, private http: Http) {
