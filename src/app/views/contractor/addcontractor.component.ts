@@ -111,8 +111,6 @@ public toasterconfig : ToasterConfig =
 
           item.file.name = item.file.name.split('.')[0]+new Date().getTime()+'.'+item.file.name.split('.')[1];
 
-          console.log(item.file.name)
-
         };
     
    
@@ -216,7 +214,7 @@ removePic(contId, picName)
    	  let options = new RequestOptions();
 	          options.headers = new Headers();
 	          options.headers.append('Content-Type', 'application/json');
-	          options.headers.append('Accept', 'application/json');
+	          options.headers.append('Accept', 'application/json');      
 
     if(this.uploaderProfile.queue.length > 0)
     {
@@ -245,10 +243,10 @@ removePic(contId, picName)
             
                 this.uploaderProfile.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
                     //console.log("ImageUpload:uploaded:", item, status);
-                    if(status == "200"){
+                    if(status == 200){
                       this.fileStatus = 2;
                       this.fileName = item.file.name;
-                      let fileStorageData = {
+                      /*let fileStorageData = {
                         memberId: this.editparam.id ,
                         filePath: '/Imagecontainers/'+this.editparam.id  ,
                         fileName: item.file.name,
@@ -265,7 +263,41 @@ removePic(contId, picName)
                         //console.log(storageRes.json());
                       }, error => {
                           //console.log(JSON.stringify(error.json()));
-                      });
+                      });*/
+
+                      this.model.picstatus =  1;
+
+                      this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', this.model,  options)
+                            .subscribe(data => {
+                          if(data.json().count)
+                          {
+                            this.dataStatus = 1;
+                            this.http.get(API_URL+'/members/'+ this.editparam.id, options)
+                            .subscribe(response => {  
+                              this.model = response.json();
+                              
+                              this.editparam.action = "edit";
+                                 
+                          });
+                            //this.proEditStatus = 1;
+                            this.toasterService.pop('success', 'Updated ', "Contractor has updated successfully!");
+                            if(this.model.picstatus == 1)
+                            {
+                              this.dataStatus = 0;
+                              this.fileStatus = 0;
+                              this.fileName = '';
+                              this.disContractor()
+                            }
+                            
+                          }else{
+                            //this.proEditStatus = 2;
+                            this.toasterService.pop('error', 'error ', "Error");
+                              this.dataStatus = 0;
+                              this.fileStatus = 0;
+                              this.fileName = '';
+                              this.disContractor()
+                          }
+                        });
                       
                     } else {
                       //this.toasterService.pop('error', 'Error ',  "File: "+item.file.name+" not uploaded successfully");
@@ -308,6 +340,43 @@ removePic(contId, picName)
                       }, error => {
                           //console.log(JSON.stringify(error.json()));
                       });*/
+
+                      this.model.picstatus =  1;
+
+                      this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', this.model,  options)
+                            .subscribe(data => {
+                          if(data.json().count)
+                          {
+                            this.dataStatus = 1;
+                            this.http.get(API_URL+'/members/'+ this.editparam.id, options)
+                            .subscribe(response => {  
+                              this.model = response.json();
+                              
+                              this.editparam.action = "edit";
+                                 
+                      
+                          });
+                            //this.proEditStatus = 1;
+                            this.toasterService.pop('success', 'Updated ', "Contractor has updated successfully!");
+                            if(this.model.picstatus = 1)
+                            {
+                              this.dataStatus = 0;
+                              this.fileStatus = 0;
+                              this.fileName = '';
+                              this.model.picstatus = 0;
+                              this.disContractor()
+                            }
+                            
+                          }else{
+                            //this.proEditStatus = 2;
+                            this.toasterService.pop('error', 'error ', "Error");
+                              this.dataStatus = 0;
+                              this.fileStatus = 0;
+                              this.fileName = '';
+                              this.disContractor()
+                            
+                          }
+                        });
                       
                     } else {
                       //this.toasterService.pop('error', 'Error ',  "File: "+item.file.name+" not uploaded successfully");
@@ -322,50 +391,31 @@ removePic(contId, picName)
 
            
          
+    }else{
+
+      this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', this.model,  options)
+            .subscribe(data => {
+          if(data.json().count)
+          {
+            this.dataStatus = 1;
+            this.http.get(API_URL+'/members/'+ this.editparam.id, options)
+            .subscribe(response => {  
+              this.model = response.json();
+              this.editparam.action = "edit";
+                 
+          });
+            this.proEditStatus = 1;
+            this.toasterService.pop('success', 'Updated ', "Contractor has updated successfully!");
+            this.disContractor()
+            
+          }else{
+            this.proEditStatus = 2;
+            this.toasterService.pop('error', 'error ', "Error");
+            this.disContractor()
+          }
+        });
     }      
 
-      
-
-			this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', this.model,  options)
-	        .subscribe(data => {
-	      if(data.json().count)
-	      {
-          this.dataStatus = 1;
-          this.http.get(API_URL+'/members/'+ this.editparam.id, options)
-          .subscribe(response => {  
-            this.model = response.json();
-            if(this.fileStatus==2)
-            {
-              this.model.profilePic =  this.fileName;
-            }else{
-              this.model.profilePic =  '';
-            }
-            
-            this.editparam.action = "edit";
-               
-    
-        });
-	        //this.proEditStatus = 1;
-          this.toasterService.pop('success', 'Updated ', "Contractor has updated successfully!");
-          if(this.dataStatus == 1 && this.fileStatus < 2)
-          {
-            this.dataStatus = 0;
-            this.fileStatus = 0;
-            this.disContractor()
-          }
-          
-	      }else{
-	        //this.proEditStatus = 2;
-          this.toasterService.pop('error', 'error ', "Error");
-          if(this.dataStatus == 1 && this.fileStatus < 2)
-          {
-            this.dataStatus = 0;
-            this.fileStatus = 0;
-            this.disContractor()
-          }
-	      }
-	    });
-      
    }else{
 	  let options = new RequestOptions();
 	          options.headers = new Headers();
@@ -375,10 +425,11 @@ removePic(contId, picName)
             this.model.role_name = 'contractor'; 
             if(this.uploaderProfile.queue.length > 0)
             {
-              this.model.picstatus = 1;
+               this.model.picstatus =  1;
             }else{
-              this.model.picstatus = 0;
+              this.model.picstatus  =  0;
             }
+            
 
 	          
 	   this.http.post(API_URL+'/members', this.model, options).subscribe(data => {
@@ -399,7 +450,8 @@ removePic(contId, picName)
                         this.uploaderProfile.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
                            // console.log("ImageUpload:uploaded:", item, status);
                             if(status == "200"){
-                              this.fileStatus = 1;
+                              this.fileStatus = 2;
+                              this.model.picstatus = 1;
                               let fileStorageData = {
                                 memberId: data.json().id,
                                 filePath: '/Imagecontainers/'+data.json().id,

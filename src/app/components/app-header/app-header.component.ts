@@ -32,12 +32,22 @@ export class AppHeaderComponent {
   	private countries: any;
   	private userRoleName: any;
   	route: any;
+  	id: any;
   	private conStatus: any = 0;
 	private userLoggedInName:any = localStorage.getItem('currentUserName');
 	
 	constructor( private router:Router, private http: Http) {
 		this.route = this.router.url;
 		this.userRoleName =  localStorage.getItem('currentUserRole');
+
+		if(this.router.url =='/settings/profile')
+		{
+			this.id = 1;
+		}
+		if(this.router.url =='/settings/changepassword')
+		{
+			this.id = 2;
+		}
 
 	    if(localStorage.getItem('currentUserRole') != null) { 
 
@@ -68,5 +78,9 @@ export class AppHeaderComponent {
 		localStorage.clear();
 	    this.router.navigate(['login']);
 	}
+
+addClass(id: any) {
+    this.id = id;
+}
 
  }

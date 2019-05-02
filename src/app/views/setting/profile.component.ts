@@ -83,8 +83,6 @@ this.http.get(API_URL+'/members/'+userId, options)
 
           item.file.name = item.file.name.split('.')[0]+new Date().getTime()+'.'+item.file.name.split('.')[1];
 
-          console.log(item.file.name)
-
         };      
 
 
@@ -110,17 +108,7 @@ removePic(contId, picName)
     this.http.get(API_URL+'/members/'+contId, options)
           .subscribe(response => {  
             this.model = response.json();
-             if(this.model.picstatus!=undefined && this.model.picstatus==1){
-                this.http.get(API_URL+'/Imagecontainers/'+this.model.id+'/files', options)
-                    .subscribe(response => {  
-                    if(response.json().length)
-                    {
-                        this.model.profilePic =  response.json()[0].name;
-                    }
-                  });
-              }else{
-                        this.model.profilePic = '';
-                    }
+          
         });
 
     });
@@ -140,7 +128,10 @@ onChange(event: any) {
         if(data.json().length)
         {
           this.uniqueEmail = 0;
-          this.uniqueEmail = 1;
+          if(localStorage.getItem("currentUserId")!=data.json()[0].id)
+          {
+            this.uniqueEmail = 1;
+          }
         }else{
           this.uniqueEmail = 0;
           this.uniqueEmail = 2;
@@ -149,25 +140,21 @@ onChange(event: any) {
 }
 
 onSubmit() {
-  
+this.toasterService.clear();  
 let options = new RequestOptions();
             options.headers = new Headers();
             options.headers.append('Content-Type', 'application/json');
             options.headers.append('Accept', 'application/json');
 
-let userId = localStorage.getItem('currentUserId'); 
-
-console.log(this.uploaderProfile.queue.length)           
+let userId = localStorage.getItem('currentUserId');           
 
     if(this.uploaderProfile.queue.length > 0)
     {
         
-        this.model.picstatus = "1";
         this.http.get(API_URL+'/Imagecontainers/'+userId, options)
           .subscribe(response => { 
                   this.http.get(API_URL+'/Imagecontainers/'+userId+'/files', options)
                   .subscribe(response => {  
-                  console.log(response.json())
                   if(response.json().length)
                   {
                     for(let i=0; i< response.json().length; i++ ) {
@@ -178,26 +165,17 @@ console.log(this.uploaderProfile.queue.length)
                       }
 
                   }
-                
-                });
-            }, error => {
-                 this.http.post(API_URL+'/Imagecontainers?access_token='+ localStorage.getItem('currentUserToken'), {"name":userId},  options)
-                .subscribe(response => {
 
-                 });
-                
-          });
-
-           for(let val of this.uploaderProfile.queue){
+              for(let val of this.uploaderProfile.queue){
                 val.url = API_URL+'/Imagecontainers/'+userId+'/upload?access_token='+ localStorage.getItem('currentUserToken');
 
                 //console.log(val);
                 val.upload();
             
                 this.uploaderProfile.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
-                    console.log("ImageUpload:uploaded:", item, status);
+                    //console.log("ImageUpload:uploaded:", item, status);
                     if(status == "200"){
-                      let fileStorageData = {
+                      /*let fileStorageData = {
                         memberId: userId ,
                         filePath: '/Imagecontainers/'+userId,
                         fileName: item.file.name,
@@ -214,7 +192,29 @@ console.log(this.uploaderProfile.queue.length)
                         //console.log(storageRes.json());
                       }, error => {
                           //console.log(JSON.stringify(error.json()));
+                      });*/
+
+                      this.model.picstatus = 1;
+
+                      this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+userId+'%22%7D', this.model,  options)
+                        .subscribe(data => {
+                      if(data.json().count)
+                      {
+                        this.http.get(API_URL+'/members/'+userId, options)
+                        .subscribe(response => {  
+                          this.model = response.json();
+                          this.model.profilePic =  item.file.name;
+                  
                       });
+                        this.proEditStatus = 1;
+                        this.toasterService.pop('success', 'Updated ', "Profile has updated successfully!");
+                        
+                      }else{
+                        this.proEditStatus = 2;
+                        this.toasterService.pop('error', 'error ', "Error");
+                        
+                      }
+                    });
                       
                     } else {
                       //this.toasterService.pop('error', 'Error ',  "File: "+item.file.name+" not uploaded successfully");
@@ -222,7 +222,93 @@ console.log(this.uploaderProfile.queue.length)
                 };
 
               }
+                
+                });
+            }, error => {
+                 this.http.post(API_URL+'/Imagecontainers?access_token='+ localStorage.getItem('currentUserToken'), {"name":userId},  options)
+                .subscribe(response => {
+
+                    for(let val of this.uploaderProfile.queue){
+                val.url = API_URL+'/Imagecontainers/'+userId+'/upload?access_token='+ localStorage.getItem('currentUserToken');
+
+                //console.log(val);
+                val.upload();
+            
+                this.uploaderProfile.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
+                    //console.log("ImageUpload:uploaded:", item, status);
+                    if(status == "200"){
+                      /*let fileStorageData = {
+                        memberId: userId ,
+                        filePath: '/Imagecontainers/'+userId,
+                        fileName: item.file.name,
+                        fileTitle: '',  
+                        uploadType: 'profile',
+                        eventId: '',                  
+                        status: 'active',  
+                        created_by: localStorage.getItem('currentUserId'),  
+                        updated_by: ''
+                      }
+
+                      this.http.post(API_URL+'/FileStorages?access_token='+ localStorage.getItem('currentUserToken'), fileStorageData ,  options)
+                      .subscribe(storageRes => {
+                        //console.log(storageRes.json());
+                      }, error => {
+                          //console.log(JSON.stringify(error.json()));
+                      });*/
+
+                      this.model.picstatus = 1;
+
+                      this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+userId+'%22%7D', this.model,  options)
+                        .subscribe(data => {
+                      if(data.json().count)
+                      {
+                        this.http.get(API_URL+'/members/'+userId, options)
+                        .subscribe(response => {  
+                          this.model = response.json();
+                          this.model.profilePic =  item.file.name;
+                  
+                      });
+                        this.proEditStatus = 1;
+                        this.toasterService.pop('success', 'Updated ', "Profile has updated successfully!");
+                        
+                      }else{
+                        this.proEditStatus = 2;
+                        this.toasterService.pop('error', 'error ', "Error");
+                        
+                      }
+                    });
+                      
+                    } else {
+                      //this.toasterService.pop('error', 'Error ',  "File: "+item.file.name+" not uploaded successfully");
+                    }
+                };
+
+              }
+
+                 });
+                
+          });
          
+    }else{
+
+        this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+userId+'%22%7D', this.model,  options)
+          .subscribe(data => {
+        if(data.json().count)
+        {
+          this.http.get(API_URL+'/members/'+userId, options)
+          .subscribe(response => {  
+            this.model = response.json();
+    
+        });
+          this.proEditStatus = 1;
+          this.toasterService.pop('success', 'Updated ', "Profile has updated successfully!");
+          
+        }else{
+          this.proEditStatus = 2;
+          this.toasterService.pop('error', 'error ', "Error");
+          
+        }
+      });
     }              
 
 
@@ -238,36 +324,7 @@ console.log(this.uploaderProfile.queue.length)
 });*/
 
 
-this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+userId+'%22%7D', this.model,  options)
-          .subscribe(data => {
-        if(data.json().count)
-        {
-          console.log(data.json().count)
-          this.http.get(API_URL+'/members/'+userId, options)
-          .subscribe(response => {  
-            this.model = response.json();
-             
-                this.http.get(API_URL+'/Imagecontainers/'+userId+'/files', options)
-                    .subscribe(response => {  
-                    if(response.json().length)
-                    {
-                        this.model.profilePic =  response.json()[0].name;
-                        this.model.picstatus = 1;
-                    }else{
-                        this.model.profilePic = '';
-                    }
-                  });
-    
-        });
-          this.proEditStatus = 1;
-          this.toasterService.pop('success', 'Updated ', "Profile has updated successfully!");
-          
-        }else{
-          this.proEditStatus = 2;
-          this.toasterService.pop('error', 'error ', "Error");
-          
-        }
-      });
+
 
 } 
 
