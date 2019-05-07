@@ -24,7 +24,7 @@
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
                             <label for="fname" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">First Name <span class="text-danger font-20">*</span></label>
-                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="fname" [(ngModel)]="model.fname" #fname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && fname.invalid }" required />
+                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="fname" [(ngModel)]="model.fname" #fname="ngModel" (keypress)="keyPress($event)" [ngClass]="{ 'is-invalid': f.submitted && fname.invalid }" required />
                             <div *ngIf="f.submitted && fname.invalid" class="invalid-feedback offset-lg-4 offset-md-4 offset-sm-0 offset-0 col-lg-8 col-md-8 col-sm-12 col-12 p-0">
                                 <div *ngIf="fname.errors.required">First Name is required</div>
                             </div>
@@ -33,7 +33,7 @@
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
                             <label for="lname" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Last Name <span class="text-danger font-20">*</span></label>
-                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="lname" [(ngModel)]="model.lname" #lname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && lname.invalid }" required />
+                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="lname" [(ngModel)]="model.lname" #lname="ngModel" (keypress)="keyPress($event)" [ngClass]="{ 'is-invalid': f.submitted && lname.invalid }" required />
                             <div *ngIf="f.submitted && lname.invalid" class="invalid-feedback offset-lg-4 offset-md-4 offset-sm-0 offset-0 col-lg-8 col-md-8 col-sm-12 col-12 p-0">
                                 <div *ngIf="lname.errors.required">Last Name is required</div>
                             </div>
@@ -42,7 +42,7 @@
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
                             <label for="email" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Email <span class="text-danger font-20">*</span></label>
-                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" (change)="onChange($event.target.value)" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
+                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" (change)="onChange($event.target.value)" [(ngModel)]="model.email" (keypress)="keyPress($event)" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
 
                             <div *ngIf="f.submitted && email.invalid" class="invalid-feedback offset-lg-4 offset-md-4 offset-sm-0 offset-0 col-lg-8 col-md-8 col-sm-12 col-12 p-0">
                                 <div *ngIf="email.errors.required">Email is required</div>
@@ -67,11 +67,11 @@
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
                             <label for="phone" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Phone Number <span class="text-danger font-20">*</span></label>
-                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" (keypress)="keyPress($event)" name="phone" [(ngModel)]="model.phone" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid }" required minlength=10 maxlength=10 />
+                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" (keypress)="checkNumber($event);RemoveSpace($event)" name="phone" [(ngModel)]="model.phone" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid }" required minlength=10 maxlength=10 />
                             <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback offset-lg-4 offset-md-4 offset-sm-0 offset-0 col-lg-8 col-md-8 col-sm-12 col-12 p-0">
                                 <div *ngIf="phone.errors.required">Phone Number is required</div>
                             </div>
-                            <div *ngIf="phone.errors?.minlength">Phone Number must be at least 10 numbers</div>
+                            <div *ngIf="phone.errors?.minlength" style="margin-left: 168px; color:red;">Phone Number must be at least 10 numbers</div>
                             <div *ngIf="phone.errors?.pattern">Phone Number must be numbers only</div>
                         </div>
                     </div>
@@ -96,7 +96,7 @@
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
                             <label for="default_pay" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Default % Pay <span class="text-danger font-20">*</span></label>
-                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="default_pay" (keypress)="keyPress($event)" [(ngModel)]="model.default_pay" #default_pay="ngModel" [ngClass]="{ 'is-invalid': f.submitted && default_pay.invalid }" required />
+                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="default_pay" (keypress)="checkNumber($event);RemoveSpace($event)" [(ngModel)]="model.default_pay" #default_pay="ngModel" [ngClass]="{ 'is-invalid': f.submitted && default_pay.invalid }" required />
                             <div *ngIf="f.submitted && default_pay.invalid" class="invalid-feedback offset-lg-4 offset-md-4 offset-sm-0 offset-0 col-lg-8 col-md-8 col-sm-12 col-12 p-0">
                                 <div *ngIf="default_pay.errors.required">Default % pay is required</div>
                             </div>

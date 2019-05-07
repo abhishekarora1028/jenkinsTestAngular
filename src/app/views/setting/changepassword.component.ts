@@ -31,6 +31,16 @@ export class ChangepasswordComponent {
 
 }
 
+keyPress(event: any) {
+    //const pattern = /[0-9\ ]/;
+    const pattern = /^[a-zA-Z0-9._^%$#!~@+,-]*$/;
+
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+}
+
 onSubmit() {
   
 if(this.model.cnpass != this.model.newPassword)

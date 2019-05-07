@@ -39,6 +39,7 @@ public toasterconfig : ToasterConfig =
     {
       this.router.navigate(['login']);
     }
+   
 
   if(this.route.snapshot.paramMap.get("id"))
   {
@@ -68,6 +69,8 @@ public toasterconfig : ToasterConfig =
         email:'',
         phone:'',
         about:'',
+        status:'',
+        client_code:'',
     	}	
   }
 
@@ -75,8 +78,28 @@ public toasterconfig : ToasterConfig =
    
   }
 
-keyPress(event: any) {
+checkNumber(event: any) {
     const pattern = /[0-9]/;
+
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+}
+
+keyPress(event: any) {
+    //const pattern = /[0-9\ ]/;
+    const pattern = /^[a-zA-Z0-9._^%$#!~@+,-]*$/;
+
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+}
+
+RemoveSpace(event: any) {
+    //const pattern = /[0-9\ ]/;
+    const pattern = /^[a-zA-Z0-9._^%$#!~@+,-]*$/;
 
     let inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
@@ -91,11 +114,14 @@ onChange(event: any) {
             options.headers.append('Content-Type', 'application/json');
             options.headers.append('Accept', 'application/json');
             
-     this.http.get(API_URL+'/Members?filter=%7B%22where%22%3A%7B%22email%22%3A%20%22'+event+'%22%7D%7D', options).subscribe(data => {
+     this.http.get(API_URL+'/clients?filter=%7B%22where%22%3A%7B%22email%22%3A%20%22'+event+'%22%7D%7D', options).subscribe(data => {
         if(data.json().length)
         {
           this.uniqueEmail = 0;
-          this.uniqueEmail = 1;
+          if(data.json()[0].id !=this.editparam.id)
+          {
+            this.uniqueEmail = 1;
+          }
         }else{
           this.uniqueEmail = 0;
           this.uniqueEmail = 2;

@@ -63,30 +63,35 @@ export class LoginComponent {
 		
 	    this.http.post(API_URL+'/Members/login?include=user', this.data,  options)
 	        .subscribe(response => {
-    			localStorage.setItem('currentUserToken', response.json().id);
-    			localStorage.setItem('currentUserRoleId', response.json().user.role_id);
-            localStorage.setItem('currentUserRole', response.json().user.role_name);
-    			localStorage.setItem('currentUser', response.json());
-  				localStorage.setItem('currentUserId', response.json().user.id);
-          localStorage.setItem('currentUserName', response.json().user.fname+' '+response.json().user.lname);
-          
 
-          if(response.json().user.active != 0) {
+          if(response.json().user.status =='active') {
+          
+          localStorage.setItem('currentUserToken', response.json().id);
+          localStorage.setItem('currentUserRoleId', response.json().user.role_id);
+            localStorage.setItem('currentUserRole', response.json().user.role_name);
+          localStorage.setItem('currentUser', response.json());
+          localStorage.setItem('currentUserId', response.json().user.id);
+          localStorage.setItem('currentUserName', response.json().user.fname+' '+response.json().user.lname);
+
+          if(response.json().user.role_id) {
+                this.router.navigate([localStorage.getItem('previousUrl')]);
+        } else {
+               //this.error = 1;
+               this.toasterService.pop('error', 'Login Error ', "Username or password doesn't match!");
+               this.data = {};
+                //console.log(this.error);
+              }
 
 
           } else {
             this.toasterService.pop('error', 'Login Failed ', "This account user is not now an active user.");
+            this.data = {};
           }
           
-				if(response.json().user.role_id) {
-             		this.router.navigate([localStorage.getItem('previousUrl')]);
-				} else {
-             	 //this.error = 1;
-               this.toasterService.pop('error', 'Login Error ', "Username or password doesn't match!");
-            		//console.log(this.error);
-             	}
+				
 			       
           }, error => {
+              this.data = {};
               //this.error = 1;
               //console.log(JSON.stringify(error.json()));
               if(error.json().isTrusted){

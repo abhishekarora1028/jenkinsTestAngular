@@ -568,6 +568,7 @@ a.remove-img i.fa {
     color: white !important;
     border-color: #20a8d8;
 }
+.text-error{ color: red; }
 @media screen and (max-width: 1260px) {
     .assign-contractor-fields input {
         -webkit-box-flex: 0;
