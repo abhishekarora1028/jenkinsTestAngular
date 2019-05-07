@@ -138,7 +138,8 @@ for(let i=0; i<= 30; i++) {
 
           if(localStorage.getItem('currentUserRoleId') == '1')
           {
-            
+            this.projectData = {};
+
             this.http.get(API_URL+'/assignprojects?filter={"limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -242,18 +243,19 @@ for(let i=0; i<= 30; i++) {
           }else{
                this.data = [];
                this.checkData = 2;
-               this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+               this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
         }
             });
 
               }else{
                 this.checkData = 2;
-                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
             });
 
           }else{
-            
+            this.projectData = {};
+
             this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+this.memberId+'"}]},"limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -357,13 +359,13 @@ for(let i=0; i<= 30; i++) {
           }else{
                this.data = [];
                this.checkData = 2;
-               this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+               this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
         }
             });
 
               }else{
                 this.checkData = 2;
-                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
             });
 
@@ -478,24 +480,29 @@ onSelectCont(contId)
               }else{
                 this.data = [];
                 this.checkData = 2;
-                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
 
             });
     }else{
+            this.projectData = {};
+            let result = [];
+
             this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"member_id":"'+this.contractorId+'"}]},"limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
               {
                 
-                this.contractorId = response.json()[0].member_id;
+                //this.contractorId = response.json()[0].member_id;
                 this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"member_id":"'+this.contractorId+'"}]}}', options)
               .subscribe(response => {
                   for(let i=0; i< response.json().length; i++ ) { 
                     this.projectData[i] = response.json()[i].project_id;
                   }
 
-                  let result = [];
+
+
+                  
                   $.each(this.projectData, function (i, e) {
                       var matchingItems = $.grep(result, function (item) {
                          return item == e;
@@ -504,6 +511,7 @@ onSelectCont(contId)
                           result.push(e);
                       }
                   });
+                  
 
           if(result.length)
           {     
@@ -557,6 +565,7 @@ onSelectCont(contId)
                              ci++;
                           } 
 
+
                           for(let i=0; i< this.data.length; i++ ) {
                         let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
                           this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"}, {"member_id":"'+this.contractorId+'"}]}}', options)
@@ -585,13 +594,13 @@ onSelectCont(contId)
           }else{
                this.data = [];
                this.checkData = 2;
-               this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+               this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
         }
             });
 
               }else{
                 this.checkData = 2;
-                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
             });
 
@@ -704,11 +713,13 @@ if(localStorage.getItem('currentUserRoleId') == '1')
               }else{
                 this.data = [];
                 this.checkData = 2;
-                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
 
             });
     }else{
+            this.projectData = {};
+
             this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"member_id":"'+this.contractorId+'"}]},"limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -816,13 +827,13 @@ if(localStorage.getItem('currentUserRoleId') == '1')
           }else{
                this.data = [];
                this.checkData = 2;
-               this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+               this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
         }
             });
 
               }else{
                 this.checkData = 2;
-                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
             });
 
@@ -919,11 +930,13 @@ if(localStorage.getItem('currentUserRoleId') == '1')
               }else{
                 this.data = [];
                 this.checkData = 2;
-                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
 
             });
     }else{
+            this.projectData = {};
+
             this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"member_id":"'+this.memberId+'"}]},"limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -1031,13 +1044,13 @@ if(localStorage.getItem('currentUserRoleId') == '1')
           }else{
                this.data = [];
                this.checkData = 2;
-               this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+               this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
         }
             });
 
               }else{
                 this.checkData = 2;
-                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
             });
 
@@ -1310,19 +1323,20 @@ for(let i=0; i<= tDays; i++ ) {
               }else{
                 this.data = [];
                 this.checkData = 2;
-                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
 
             });
 
         }else{
-            
-            this.http.get(API_URL+'/assignprojects?filter={"limit":"1"}', options)
+            this.projectData = {};
+
+            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+this.contractorId+'"}]}, "limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
               {
                 
-                this.contractorId = response.json()[0].member_id;
+                //this.contractorId = response.json()[0].member_id;
                 this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"member_id":"'+this.contractorId+'"}]}}', options)
               .subscribe(response => {
                   for(let i=0; i< response.json().length; i++ ) { 
@@ -1417,13 +1431,13 @@ for(let i=0; i<= tDays; i++ ) {
           }else{
                this.data = [];
                this.checkData = 2;
-               this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+               this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
         }
             });
 
               }else{
                 this.checkData = 2;
-                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
             });
 
@@ -1532,13 +1546,14 @@ for(let i=0; i<= tDays; i++ ) {
               }else{
                 this.data = [];
                 this.checkData = 2;
-                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
 
             });
 
         }else{
-            
+            this.projectData = {};
+
             this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+this.memberId+'"}]}, "limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -1639,13 +1654,13 @@ for(let i=0; i<= tDays; i++ ) {
           }else{
                this.data = [];
                this.checkData = 2;
-               this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+               this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
         }
             });
 
               }else{
                 this.checkData = 2;
-                this.toasterService.pop('error', 'error ', "No Timesheet Found!");
+                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
             });
 
