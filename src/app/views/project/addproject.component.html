@@ -36,7 +36,7 @@
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
                             <label for="project_name" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Name <span class="text-danger font-20">*</span></label>
-                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12" name="project_name" (keypress)="keyPress($event)" [(ngModel)]="model.project_name" #project_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_name.invalid }" required />
+                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12" name="project_name" [(ngModel)]="model.project_name" #project_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_name.invalid }" required />
                             <div *ngIf="f.submitted && project_name.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
                                 <div *ngIf="project_name.errors.required">Project Name is required</div>
                             </div>
