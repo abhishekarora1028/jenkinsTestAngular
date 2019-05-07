@@ -193,14 +193,34 @@ getDefPay(contId, index)
   }
 }
 
-keyPress(event: any) {
-    const pattern = /[0-9\ ]/;
+checkNumber(event: any) {
+    const pattern = /[0-9]/;
 
     let inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
     }
-  }
+}
+
+keyPress(event: any) {
+    //const pattern = /[0-9\ ]/;
+    const pattern = /^[a-zA-Z0-9._^%$#!~@+,-]*$/;
+
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+}
+
+RemoveSpace(event: any) {
+    //const pattern = /[0-9\ ]/;
+    const pattern = /^[a-zA-Z0-9._^%$#!~@+,-]*$/;
+
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+}
 
 
 

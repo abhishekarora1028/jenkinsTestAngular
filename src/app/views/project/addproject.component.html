@@ -36,7 +36,7 @@
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
                             <label for="project_name" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Name <span class="text-danger font-20">*</span></label>
-                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12" name="project_name" [(ngModel)]="model.project_name" #project_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_name.invalid }" required />
+                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12" name="project_name" (keypress)="keyPress($event)" [(ngModel)]="model.project_name" #project_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_name.invalid }" required />
                             <div *ngIf="f.submitted && project_name.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
                                 <div *ngIf="project_name.errors.required">Project Name is required</div>
                             </div>
@@ -45,7 +45,7 @@
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
                             <label for="project_code" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Code <span class="text-danger font-20">*</span></label>
-                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12" name="project_code" [(ngModel)]="model.project_code" #project_code="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_code.invalid }" required />
+                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12" name="project_code" (keypress)="keyPress($event)" [(ngModel)]="model.project_code" #project_code="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_code.invalid }" required />
                             <div *ngIf="f.submitted && project_code.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
                                 <div *ngIf="project_code.errors.required">Project Code is required</div>
 
@@ -55,7 +55,7 @@
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
                             <label for="budget" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Budget <span class="text-danger font-20">*</span></label>
-                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12 pr-0" (keypress)="keyPress($event)" name="budget" [(ngModel)]="model.budget" #budget="ngModel" [ngClass]="{ 'is-invalid': f.submitted && budget.invalid }" required />
+                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12 pr-0" (keypress)="checkNumber($event);RemoveSpace($event)" name="budget" [(ngModel)]="model.budget" #budget="ngModel" [ngClass]="{ 'is-invalid': f.submitted && budget.invalid }" required />
                             <div *ngIf="f.submitted && budget.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
                                 <div *ngIf="budget.errors.required">Project Budget is required</div>
                             </div>
@@ -110,7 +110,7 @@
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
                             <label for="hourly_rate" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Target Rate <span class="text-danger font-20">*</span></label>
-                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12" (keypress)="keyPress($event)" name="rate" maxlength=3 [(ngModel)]="model.rate" #rate="ngModel" [ngClass]="{ 'is-invalid': f.submitted && rate.invalid }" required />
+                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12" (keypress)="checkNumber($event);RemoveSpace($event)" name="rate" maxlength=3 [(ngModel)]="model.rate" #rate="ngModel" [ngClass]="{ 'is-invalid': f.submitted && rate.invalid }" required />
                             <div *ngIf="f.submitted && budget.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
                                 <div *ngIf="rate.errors.required">Target Rate is required</div>
                             </div>
@@ -128,11 +128,11 @@
                         <div class="row d-flex width add-contrator mb-2" *ngFor="let user of data; let i = index; ">
                             <div class="col-md-6 col-sm-12 col-12 pl-0 d-flex flex-wrap align-items-center mb-2">
                                 <label class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 justify-content-start">Contractors</label>
-                                <select class="form-control col-lg-8 col-md-7 col-sm-11 col-11 pr-0" [(ngModel)]="data[i].id" name="member_id2[{{i}}]" disabfled="disabled"><option value="">--select contractor--</option><option [value]="data[i].id">{{data[i].fullname}}</option></select>
+                                <select class="form-control col-lg-8 col-md-7 col-sm-11 col-11 pr-0" [(ngModel)]="data[i].id" name="member_id2[{{i}}]" disabled="disabled"><option value="">--select contractor--</option><option [value]="data[i].id">{{data[i].fullname}}</option></select>
                             </div>
                             <div class="col-md-6 col-sm-12 col-12 d-flex flex-wrap align-items-center mb-2 mob-pl">
                                 <label class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 justify-content-start">% Pay</label>
-                               <input type="text" class="form-control col-lg-7 col-md-7 col-sm-11 col-11 pr-0" [(ngModel)]="data[i].percentage" name="percentage2[{{i}}]" (keypress)="keyPress($event)" maxlength=3  required />
+                               <input type="text" class="form-control col-lg-7 col-md-7 col-sm-11 col-11 pr-0" [(ngModel)]="data[i].percentage" name="percentage2[{{i}}]" (keypress)="checkNumber($event);RemoveSpace($event)" maxlength=3  required />
                             </div>
                             <a (click)="removeUser(i, 1, data[i].id)" style="cursor: pointer;" class="text-right"><span class="btn btn-sm btn-info rounded text-white add-icon"><i class="fa fa-remove remove-user"></i></span></a>
                         </div>
@@ -153,7 +153,7 @@
                                 </div>
                                 <div class="col-md-6 col-sm-12 col-12 d-flex flex-wrap align-items-center mb-2 mob-pl">
                                     <label class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 justify-content-start">% Pay</label>
-                                   <input type="text" class="form-control col-lg-7 col-md-7 col-sm-11 col-11 pr-0" [(ngModel)]="users[j].percentage" name="percentage[{{j}}]" value="{{users[j].percentage}}" (keypress)="keyPress($event)" maxlength=3 required />
+                                   <input type="text" class="form-control col-lg-7 col-md-7 col-sm-11 col-11 pr-0" [(ngModel)]="users[j].percentage" name="percentage[{{j}}]" value="{{users[j].percentage}}" (keypress)="checkNumber($event);RemoveSpace($event)" maxlength=3 required />
                                    <div *ngIf="f.submitted && users[j].percentage.invalid" class="invalid-feedback">
                                         <div *ngIf="users[j].percentage.errors.required">Status is required</div>
                                     </div>
