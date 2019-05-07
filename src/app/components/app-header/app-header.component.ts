@@ -67,8 +67,6 @@ export class AppHeaderComponent {
               }else{
                         this.model.profilePic = '';
                     }
-
-                    console.log(this.model)
 		    });
 
 		if(this.router.url =='/settings/profile')
