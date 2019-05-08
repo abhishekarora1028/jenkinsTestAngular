@@ -5,6 +5,9 @@ var path = require('path');
 const ejs = require('ejs');
 const Fs = require('fs');
 const app = require('../server.js');
+//const appUrl = 'http://localhost:4200/';
+const appUrl = 'http://35.236.99.173/';
+
 //const inlineCss = require('inline-css');
 var async = require('async');
 
@@ -26,20 +29,25 @@ module.exports = function(Member) {
      const {Email,EmailContent} = app.models;
     //console.log('Finding customer with id', userEmail);
     const member = await Member.findOne({where: {email: userEmail}});
+    const userId = member.id;
     //const emailHtml = await EmailContent.findOne({where : {code : 'forgot-password'}});
    //console.log(emailHtml);
 
-    const url = app.get('portalUrl')+`/#/resetpassword/${member.id}/${info.accessToken.id}`;
+    const url = appUrl+`/#/resetpassword/${member.id}/${info.accessToken.id}`;
 
-    let replaceArray = ['username', 'reset_password_url'];
-    let replaceWith = [ member.username, url];
+    //let replaceArray = ['username', 'reset_password_url'];
+    //let replaceWith = [ member.username, url];
 
     const emailTemplateParams = {
-      logoUrl: '',
+      appUrl,
       url,
       member
     };
 
+  const emailHtml = ejs.render(passwordEmailTemplate, emailTemplateParams);
+    //const emailHtml = emailHtml.emailcontent;
+     //console.log(emailHtml);
+    //let emailContent = emailHtml.emailcontent;
 
     Email.send(
       {
@@ -49,7 +57,7 @@ module.exports = function(Member) {
           address: 'noreply@esquared.com'
         },
         subject: 'Forgot Password',
-        html: passwordEmailTemplate
+        html: emailHtml
       },
       function(err)
       {
@@ -85,11 +93,9 @@ module.exports = function(Member) {
                       //next();
                     });*/
     
-    //const emailHtml = ejs.render(passwordEmailTemplate, emailTemplateParams);
-   // const emailHtml = emailHtml.emailcontent;
-   /* let emailContent = '';
-             async.each(replaceArray,  function (item, callback) {
-               console.log(emailContent);
+             
+              //let emailContent = '';
+             /*async.each(replaceArray,  function (item, callback) {
                emailContent  = emailContent.replace(new RegExp('{{' + item + '}}', 'gi'), replaceWith[replaceArray.indexOf(item)]);
                
                callback();
@@ -104,7 +110,7 @@ module.exports = function(Member) {
                     Email.send({
                       to: member.email,
                       from: {
-                      name: 'Esquared SalesEvent',
+                      name: 'Forgot Password',
                       address: app.get('email')
                     }, 
                       subject: emailHtml.subject,

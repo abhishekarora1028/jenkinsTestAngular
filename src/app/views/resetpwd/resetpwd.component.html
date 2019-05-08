@@ -1,8 +1,8 @@
 <div class="container">
     <div class="row" style="margin:15% 0">
         <div class="col-sm-4 col-sm-offset-4" style="margin:auto;">
-            <div class="card">         
-              <form class="form-horizontal ng-untouched ng-pristine ng-valid" novalidate="" (ngSubmit)="onSubmit()" #resetForm="ngForm">  
+            <div class="card">          
+              <form name="form" class="form-inline add-project mt-3 mb-3" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                 <div class="alert alert-danger" [hidden]="!error">New password and confirm password doesnot match!</div>
                  <div class="alert alert-success" [hidden]="!success">Password reset successfully!</div>
                   <div class="text-center img-responsive" style="margin: 15px 0 0 15px">
@@ -16,8 +16,9 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-lock"></i></span>
                           </div>
-                          <input class="form-control" name="id" type="hidden" [(ngModel)]="data.id">
-                          <input class="form-control" name="password" placeholder="New Password" type="password" [ngModel]="data.newPassword" required>
+                           <!-- <input class="form-control" name="id" type="hidden" [(ngModel)]="data.id"> -->
+                          <!-- <input class="form-control" name="newPassword" placeholder="New Password" type="password" [ngModel]="data.newPassword" required> -->
+                          <input type="password" class="form-control" (keypress)="keyPress($event)" name="newPassword" [(ngModel)]="data.newPassword" #newPassword="ngModel" [ngClass]="{ 'is-invalid': f.submitted && newPassword.invalid }" required />
                         </div>
                       </div>
                     </div>
@@ -27,13 +28,14 @@
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa fa-lock"></i></span>
                           </div>
-                          <input class="form-control" name="confirmpassword" placeholder="Confirm New Password" type="password" [ngModel]="data.confirmpassword" required>
+                          <!-- <input class="form-control" name="confirmpassword" placeholder="Confirm New Password" type="password" [ngModel]="data.confirmpassword" required> -->
+                          <input type="password" class="form-control" (keypress)="keyPress($event)" name="confirmpassword" [(ngModel)]="data.confirmpassword" #confirmpassword="ngModel" [ngClass]="{ 'is-invalid': f.submitted && confirmpassword.invalid }" required />
                         </div>
                       </div>
                     </div>
                     <div class="form-group row">
                       <div class="col-md-12">                        
-                         <button class="btn btn-large btn-primary" type="submit" [disabled] = "!resetForm.form.valid" ><!-- <i class="fa fa-save"></i> --> Reset Password</button>
+                         <button class="btn btn-large btn-primary mt-3" type="submit" [disabled] = "!f.form.valid" ><!-- <i class="fa fa-save"></i> --> Reset Password</button>
                       </div>
                     </div> 
                 </div>                                  

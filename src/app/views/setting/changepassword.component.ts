@@ -53,7 +53,7 @@ this.passStatus = 0;
             options.headers.append('Content-Type', 'application/json');
             options.headers.append('Accept', 'application/json');
 
-console.log(this.model)           
+          
 this.fData.password = this.model.newPassword;
 
 let userId = localStorage.getItem("currentUserId");

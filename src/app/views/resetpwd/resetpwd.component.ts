@@ -34,10 +34,10 @@ export class ResetpwdComponent {
 
 	constructor(@Inject(Http) private http: Http, @Inject(Router)private router:Router, @Inject(ActivatedRoute) private activatedRoute: ActivatedRoute, toasterService: ToasterService) {
 	  	this.data = {
-	  	  id:'',
+	  	  //id:'',
 	      newPassword:'',
 	      confirmpassword:'',
-	      token : ''
+	      //token : ''
 	    };
 
      	this.toasterService = toasterService;
@@ -45,14 +45,33 @@ export class ResetpwdComponent {
 	    this.activatedRoute.params.subscribe((params) => {
 	        this.id = params.id;
 	        this.token = params.token;
+	        //this.data.userId = params.id;
+	        //this.data.token = params.token;
 	    });
 
 	  }
+keyPress(event: any) {
+    //const pattern = /[0-9\ ]/;
+    const pattern = /^[a-zA-Z0-9._^%$#!~@+,-]*$/;
+
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+}
 
 	 onSubmit() {
 
+	 //this.data.id = this.id;
+	 //this.data.userId = this.id;
+	 //this.data.token = this.token;
+
+	 
+
 	 	if(this.data.newPassword == this.data.confirmpassword) {
 	 		//this.data.newPassword = btoa(this.data.newPassword);  // encrypt to base64
+
+	 		this.data.newPassword = this.data.newPassword+'_reset_'+this.id;
 
 		  	this.http.post(API_URL+'/Members/reset-password' +'?access_token='+ this.token, this.data)
 	        .subscribe(response => {   
@@ -60,6 +79,7 @@ export class ResetpwdComponent {
 	     		this.router.navigate(['login']);
           	}, error => {
           		console.log(JSON.stringify(error.json()));
+          		console.log(error.json().error.message)
 				if(error.json().isTrusted){
 					this.toasterService.pop('error', 'Error ', "API not working.");
 				} else {				
