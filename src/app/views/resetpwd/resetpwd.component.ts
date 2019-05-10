@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
 import { HttpModule } from '@angular/http';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {Injectable, Inject} from '@angular/core';
@@ -18,7 +18,7 @@ import { ToasterModule, ToasterService, ToasterConfig }  from 'angular2-toaster/
 
 @Injectable()
 export class ResetpwdComponent {
-	
+	@ViewChild('f') formValues;
   	private data: any;
   	private id: any;
   	private token: any;
@@ -89,5 +89,7 @@ keyPress(event: any) {
 		} else {
             this.toasterService.pop('error', 'Information Mismatch ', "Password and confirm password doesn't match");
 		}
+
+		this.formValues.resetForm();
 	}
 }
