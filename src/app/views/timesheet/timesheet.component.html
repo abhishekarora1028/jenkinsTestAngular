@@ -28,13 +28,13 @@ border-radius:50%;
 </div> 
  <form name="form" (ngSubmit)="sf.form.valid" #sf="ngForm" novalidate> 
      <div class="row mt-4 mb-2 contractor-list align-items-center justify-content-end">
-      <div *ngIf="currentRoleId == 1" class="d-inline col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
+      <div *ngIf="currentRoleId == 1" class="d-inline col-lg-3 col-md-3 col-sm-3 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
         <select class="form-control" (change)="onSelectCont($event.target.value)" [(ngModel)]="contractorId" #member_id="ngModel" name="member_id" style="height: 35px;">
               <option value="" [selected]="">--select contractor--</option>
               <option *ngFor="let con of conData" [value]="con.id">{{con.fname+' '+con.lname}}</option>
             </select>
       </div>
-      <div class="d-inline col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
+      <div class="d-inline col-lg-3 col-md-3 col-sm-5 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
         <div class="input-group date form-calendar" id="datetimepicker1">
               <input type="text" class="form-control w-100" name="sheettime" id="sheettime" [(ngModel)]="sheettimeData" #sheettime="ngModel" readonly #sdp="bsDaterangepicker" bsDaterangepicker (ngModelChange)="onPickSheet($event)" [ngClass]="{ 'is-invalid': sf.submitted && sheettime.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required placeholder="Select Date" />
               <span class="input-group-addon bg-transparent">
@@ -61,11 +61,11 @@ border-radius:50%;
         </tr>
       </thead>
       <tr *ngFor="let itemdate of datesData;let i = index ">
-        <td><div class="equal"><b>{{itemdate.split('/')[1]}}/{{itemdate.split('/')[0]}}/{{itemdate.split('/')[2]}}</b></div></td>
-        <td *ngFor="let item of data;let j = index ">
+        <td><div class="equal"><b>{{itemdate.split('_')[0].split('/')[1]}}/{{itemdate.split('_')[0].split('/')[0]}}/{{itemdate.split('_')[0].split('/')[2]}}</b></div></td>
+         <td *ngFor="let item of data;let j = index ">
           <div class="equal">
-            <span class="p-2" *ngIf="item.stime">{{item.stime.split('_')[i]}}</span>
-            <popover-content #mycont [animation]="true" 
+            <span class="p-2">{{itemdate.split('_')[j+1]}}</span>
+             <popover-content #mycont [animation]="true" 
                 [closeOnClickOutside]="true">
               <form class="d-flex flex-wrap align-items-center mt-2 mb-2" name="form" (ngSubmit)="f.form.valid && onSubmit();" (ngSubmit)="checkTimesheet(f.value)" #f="ngForm">
                 <div class="form-group form-inline mb-2">
@@ -76,7 +76,6 @@ border-radius:50%;
                           </timepicker>
                 </div>
                 <div class="input-group">
-                    <!-- <input type="text" class="form-control p-1 " name="description" value="{{cuDes}}" placeholder="Description" [(ngModel)]="model.description" #description="ngModel"/> -->
                     <textarea class="form-control" name="description" value="{{cuDes}}" placeholder="Description" [(ngModel)]="model.description" #description="ngModel"></textarea>
                 </div>
                 <div class="input-group-append mt-2 d-flex flex-wrap w-100 justify-content-left">
@@ -84,7 +83,7 @@ border-radius:50%;
                 </div>
               </form>
             </popover-content>
-            <span [popover]="mycont" [popoverCloseOnClickOutside]="true" [popoverOnHover]="false" [popoverCloseOnMouseOutside]="false" [popoverDisabled]="false" [popoverAnimation]="true" class="fa fa-edit p-2" (click)="getDate(datesData[i],item.id,item.stime.split('_')[i],item.des.split('_')[i],item.tsId.split('_')[i], item.contractorid, item.fullstime.split('@')[i], i);" *ngIf="item.assign == 1 && (item.status == 'active' || item.status == 'draft' || item.status == 'inprogress' || item.status == 'completed') && item.memberstatus=='active'"></span>
+            <span [popover]="mycont" [popoverCloseOnClickOutside]="true" [popoverOnHover]="false" [popoverCloseOnMouseOutside]="false" [popoverDisabled]="false" [popoverAnimation]="true" class="fa fa-edit p-2" (click)="getDate(datesData[i].split('_')[0],item.id,datesData[i].split('_')[j+1],item.des.split('_')[i],item.tsId.split('_')[i], item.contractorid, item.fullstime.split('@')[i], i);" *ngIf="item.assign == 1 && (item.status == 'active' || item.status == 'draft' || item.status == 'inprogress' || item.status == 'completed') && item.memberstatus=='active'"></span>
             <!-- <span *ngIf="addTimeForm == 1 && formDis.split('_')[0] == item.project_id && formDis.split('_')[1] == i">
 
                   </span> -->
