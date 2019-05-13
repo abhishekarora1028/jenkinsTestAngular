@@ -34,7 +34,7 @@ border-radius:50%;
               <option *ngFor="let con of conData" [value]="con.id">{{con.fname+' '+con.lname}}</option>
             </select>
       </div>
-      <div class="d-inline col-lg-3 col-md-3 col-sm-5 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0">
+      <div class="d-inline col-lg-3 col-md-3 col-sm-5 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
         <div class="input-group date form-calendar" id="datetimepicker1">
               <input type="text" class="form-control w-100" name="sheettime" id="sheettime" [(ngModel)]="sheettimeData" #sheettime="ngModel" readonly #sdp="bsDaterangepicker" bsDaterangepicker (ngModelChange)="onPickSheet($event)" [ngClass]="{ 'is-invalid': sf.submitted && sheettime.invalid }" [bsConfig]="{ dateInputFormat: 'MMMM Do YYYY' }" required placeholder="Select Date" />
               <span class="input-group-addon bg-transparent">
@@ -42,7 +42,7 @@ border-radius:50%;
               </span>
           </div>
         </div>
-        <div class="d-inline col-lg-3 col-md-3 col-sm-4 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
+        <div class="d-inline col-xl-3 col-lg-4 col-md-4 col-sm-4 col-12 pl-lg-2 pl-md-2 pl-sm-2 pl-0 mb-lg-0 mb-md-0 mb-sm-0 mb-3">
         <select class="form-control" [(ngModel)]="timesheetStatusData" #timesheetstatus="ngModel" (change)="onSelectFilter($event.target.value)" name="timesheetstatus" style="height: 35px;">
               <option value="active">Active Timesheets</option>
               <option value="alltimesheet">All Timesheets</option>
