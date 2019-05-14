@@ -632,6 +632,14 @@ a.remove-img i.fa {
         padding-left: 0 !important
     }
     .theme-green {
+        -webkit-transform: scale(0.7) !important;
+        transform: scale(0.7) !important;
+    }
+}
+@media (orientation:landscape) and (max-width: 767px){
+     /* Your CSS Here*/
+    .bs-datepicker.theme-green {
+        -webkit-transform: scale(0.5) !important;
         transform: scale(0.5) !important;
     }
 }

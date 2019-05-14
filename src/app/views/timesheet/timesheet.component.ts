@@ -97,6 +97,8 @@ public options:any = {
   let tinc = 0;
   let binc = 1;
 
+  this.datesData = [];
+
 
 for(let i=0; i<= 30; i++) {
     let nextDay = new Date();
@@ -118,7 +120,7 @@ for(let i=0; i<= 30; i++) {
   let lastMonthDay = todayDate.getDate() + 1;
   let lastMonthM   = tMonth - 1;
 
-  this.sheettimeData = lastMonthM+"/"+lastMonthDay+"/2019 - "+tMonth+"/"+todayDate.getDate()+"/2019";
+  this.sheettimeData = lastMonthM+"/"+lastMonthDay+"/"+todayDate.getFullYear()+" - "+tMonth+"/"+todayDate.getDate()+"/"+todayDate.getFullYear();
 
     
     let userID = localStorage.getItem('currentUserId');
@@ -139,7 +141,7 @@ for(let i=0; i<= 30; i++) {
           if(localStorage.getItem('currentUserRoleId') == '1')
           {
             this.projectData = {};
-
+            this.data = [];
             this.http.get(API_URL+'/assignprojects?filter={"limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -196,50 +198,66 @@ for(let i=0; i<= 30; i++) {
                             //this.data[i].stime = '';
                             if(response.json().length)
                             {
-                              tsId  += response.json()[0].id+'_';
-                              stime += response.json()[0].stime+'_';
-                              fullstime += response.json()[0].fullstime;
-                              des   += response.json()[0].description+'_';
+
+                              if(response.json()[0].stime!=undefined && response.json()[0].id!=undefined)
+                              {
+                                tsId  += response.json()[0].id+'_';
+                                stime = response.json()[0].stime;
+                                fullstime += response.json()[0].fullstime;
+                                des   += response.json()[0].description+'_';
+
+                                this.datesData[j] = this.datesData[j]+'_'+stime;
+                              }
                             }else{
-                               tsId += '-'+'_';
-                               stime += '-'+'_';
-                               fullstime += '@';
-                               des += '-'+'_';
+                                 tsId += '-'+'_';
+                                 stime = '-';
+                                 fullstime += '@';
+                                 des += '-'+'_';
+
+                                 this.datesData[j] = this.datesData[j]+'_'+stime;
                             }
+
+                                  this.data[i].tsId  = tsId;
+                                  this.data[i].fullstime = fullstime;
+                                  this.data[i].des   = des;
+                                  stime = '';
                             
-                            this.data[i].tsId  = tsId;
-                            this.data[i].stime = stime;
-                            this.data[i].fullstime = fullstime;
-                            this.data[i].des   = des;
                            });
                              ci++;
                           } 
+                          let datalength = this.data.length;
 
-                          for(let i=0; i< this.data.length; i++ ) {
-                        let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
-                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"}, {"member_id":"'+this.contractorId+'"}]}}', options)
-                                  .subscribe(response => { 
-                                  if(response.json().length)
-                                  { 
-                                    for(let j=0; j< response.json().length; j++ ) {
-                                    //tDate   = new Date(response.json()[j].stime);
-                                    hours   = response.json()[j].stime.split(':')[0]; 
-                                    minutes = response.json()[j].stime.split(':')[1]; 
+                          for(let i=0; i< datalength; i++ ) {
+                            let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
+                            let timeProjectId = this.data[i].id;
+                              this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+timeProjectId+'"}, {"member_id":"'+this.contractorId+'"}]}}', options)
+                                      .subscribe(response => { 
+                                      if(response.json().length)
+                                      { 
+                                        for(let j=0; j< response.json().length; j++ ) {
+                                        //tDate   = new Date(response.json()[j].stime);
+                                        hours   = response.json()[j].stime.split(':')[0]; 
+                                        minutes = response.json()[j].stime.split(':')[1]; 
 
-                                    totalTime     += Number(hours);
-                                    totalMin      += Number(minutes);
-                                    }
-                                  }else{
-                                    this.data[i].totalStime = "0:00";
-                                  }
-                                  this.data[i].totalStime = totalTime+':'+totalMin;
-                          });
-                    }
+                                        totalTime     += Number(hours);
+                                        totalMin      += Number(minutes);
+
+                                        this.data[i].totalStime = totalTime+':'+totalMin;
+                                        }
+                                      }else{
+                                        this.data[i].totalStime = "0:00";
+                                      }
+                                      
+                              });
+                        }
+
+                    
                         
                         });
                 }
             
             this.checkData = 1;
+            this.data = [];
           }else{
                this.data = [];
                this.checkData = 2;
@@ -255,7 +273,7 @@ for(let i=0; i<= 30; i++) {
 
           }else{
             this.projectData = {};
-
+            this.data = [];
             this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+this.memberId+'"}]},"limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -312,50 +330,65 @@ for(let i=0; i<= 30; i++) {
                             //this.data[i].stime = '';
                             if(response.json().length)
                             {
-                              tsId  += response.json()[0].id+'_';
-                              stime += response.json()[0].stime+'_';
-                              fullstime += response.json()[0].fullstime;
-                              des   += response.json()[0].description+'_';
+
+                              if(response.json()[0].stime!=undefined && response.json()[0].id!=undefined)
+                              {
+                                tsId  += response.json()[0].id+'_';
+                                stime = response.json()[0].stime;
+                                fullstime += response.json()[0].fullstime;
+                                des   += response.json()[0].description+'_';
+
+                                this.datesData[j] = this.datesData[j]+'_'+stime;
+                              }
                             }else{
-                               tsId += '-'+'_';
-                               stime += '-'+'_';
-                               fullstime += '@';
-                               des += '-'+'_';
+                                 tsId += '-'+'_';
+                                 stime = '-';
+                                 fullstime += '@';
+                                 des += '-'+'_';
+
+                                 this.datesData[j] = this.datesData[j]+'_'+stime;
                             }
+
+                                  this.data[i].tsId  = tsId;
+                                  this.data[i].fullstime = fullstime;
+                                  this.data[i].des   = des;
+                                  stime = '';
                             
-                            this.data[i].tsId  = tsId;
-                            this.data[i].stime = stime;
-                            this.data[i].fullstime = fullstime;
-                            this.data[i].des   = des;
                            });
                              ci++;
                           } 
 
-                          for(let i=0; i< this.data.length; i++ ) {
-                        let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
-                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"}, {"member_id":"'+this.memberId+'"}]}}', options)
-                                  .subscribe(response => { 
-                                  if(response.json().length)
-                                  { 
-                                    for(let j=0; j< response.json().length; j++ ) {
-                                    //tDate   = new Date(response.json()[j].stime);
-                                    hours   = response.json()[j].stime.split(':')[0]; 
-                                    minutes = response.json()[j].stime.split(':')[1]; 
+                          let datalength = this.data.length;
+                          
+                          for(let i=0; i< datalength; i++ ) {
+                            let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
+                            let timeProjectId = this.data[i].id;
+                              this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+timeProjectId+'"}, {"member_id":"'+this.memberId+'"}]}}', options)
+                                      .subscribe(response => { 
+                                      if(response.json().length)
+                                      { 
+                                        for(let j=0; j< response.json().length; j++ ) {
+                                        //tDate   = new Date(response.json()[j].stime);
+                                        hours   = response.json()[j].stime.split(':')[0]; 
+                                        minutes = response.json()[j].stime.split(':')[1]; 
 
-                                    totalTime     += Number(hours);
-                                    totalMin      += Number(minutes);
-                                    }
-                                  }else{
-                                    this.data[i].totalStime = "0:00";
-                                  }
-                                  this.data[i].totalStime = totalTime+':'+totalMin;
-                          });
+                                        totalTime     += Number(hours);
+                                        totalMin      += Number(minutes);
+
+                                        this.data[i].totalStime = totalTime+':'+totalMin;
+                                        }
+                                      }else{
+                                        this.data[i].totalStime = "0:00";
+                                      }
+                                      
+                              });
                     }
                         
                         });
                 }
             
             this.checkData = 1;
+            this.data = [];
           }else{
                this.data = [];
                this.checkData = 2;
@@ -386,6 +419,45 @@ onSelectCont(contId)
   this.toasterService.clear();
   if(contId)
   {
+
+  let todayDate = new Date();
+  this.seldata  = todayDate;
+  let tMonth  = todayDate.getMonth()+1;
+  let tDay      = todayDate.getDate();
+  let months    = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  let curMonth  = months[todayDate.getMonth()];
+  let days      = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  let curDay    = todayDate.getDay();
+
+  let tinc = 0;
+  let binc = 1;
+
+  this.datesData = [];
+
+
+for(let i=0; i<= 30; i++) {
+    let nextDay = new Date();
+    nextDay.setDate(nextDay.getDate() - i);
+    let lastDay = new Date(nextDay.getFullYear(), nextDay.getMonth() + 1, 0);
+    if(nextDay.getDate() == lastDay.getDate() && i!=0)
+    {
+      tinc  = tinc + 1;
+      binc  = binc - 1;
+    }
+
+     let strDate = (todayDate.getMonth()+binc) + "/" + nextDay.getDate() + "/" + nextDay.getFullYear();
+     this.datesData[i]   = strDate;
+
+      //this.datesData[i]   = days[nextDay.getDay()]+'_'+months[todayDate.getMonth()+binc]+'_'+nextDay.getDate()+'_'+strDate;
+  
+  }
+
+  let lastMonthDay = todayDate.getDate() + 1;
+  let lastMonthM   = tMonth - 1;
+
+  this.sheettimeData = lastMonthM+"/"+lastMonthDay+"/"+todayDate.getFullYear()+" - "+tMonth+"/"+todayDate.getDate()+"/"+todayDate.getFullYear();
+
+    
     let options = new RequestOptions();
             options.headers = new Headers();
             options.headers.append('Content-Type', 'application/json');
@@ -393,11 +465,12 @@ onSelectCont(contId)
 
     if(this.timesheetStatusData == 'alltimesheet')
     {
+      this.data = [];
       this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+contId+'"}]}}', options)
             .subscribe(response => {
               if(response.json().length)
               {
-                this.contractorId = contId;
+                //this.contractorId = contId;
                   this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+contId+'"}]}}', options)
                     .subscribe(response => {
                     this.data = response.json();
@@ -407,13 +480,13 @@ onSelectCont(contId)
                           this.http.get(API_URL+'/projects/'+this.data[i].project_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                           .subscribe(response => {      
                             this.data[i].project_name = response.json().project_name;  
-                            this.data[i].member_id   = this.data[i].member_id;  
+                            this.data[i].member_id   = contId;  
                             this.data[i].rate        = response.json().rate;  
                             this.data[i].type        = response.json().project_type;  
                             this.data[i].budget      = response.json().budget;  
                             this.data[i].status      = response.json().status;  
 
-                            this.http.get(API_URL+'/Members/'+this.data[i].member_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
+                            this.http.get(API_URL+'/Members/'+contId+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                           .subscribe(response => { 
                               this.data[i].membername   = response.json().fname+' '+response.json().lname;
                               this.data[i].memberstatus = response.json().status;
@@ -428,34 +501,44 @@ onSelectCont(contId)
                             let projectID = this.data[i].project_id;
                             let cDate     = this.datesData[j];
                         
-                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+projectID+'"},{"cdate":"'+cDate+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
+                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+projectID+'"},{"cdate":"'+cDate+'"}, {"member_id":"'+contId+'"}]}}', options)
                             .subscribe(response => {    
                             //this.data[i].stime = '';
                             if(response.json().length)
                             {
-                              tsId  += response.json()[0].id+'_';
-                              stime += response.json()[0].stime+'_';
-                              fullstime += response.json()[0].fullstime;
-                              des   += response.json()[0].description+'_';
+
+                              if(response.json()[0].stime!=undefined && response.json()[0].id!=undefined)
+                              {
+                                tsId  += response.json()[0].id+'_';
+                                stime = response.json()[0].stime;
+                                fullstime += response.json()[0].fullstime;
+                                des   += response.json()[0].description+'_';
+
+                                this.datesData[j] = this.datesData[j]+'_'+stime;
+                              }
                             }else{
-                               tsId += '-'+'_';
-                               stime += '-'+'_';
-                               fullstime += '@';
-                               des += '-'+'_';
+                                 tsId += '-'+'_';
+                                 stime = '-';
+                                 fullstime += '@';
+                                 des += '-'+'_';
+
+                                 this.datesData[j] = this.datesData[j]+'_'+stime;
                             }
+
+                                  this.data[i].tsId  = tsId;
+                                  this.data[i].fullstime = fullstime;
+                                  this.data[i].des   = des;
+                                  stime = '';
                             
-                            this.data[i].tsId  = tsId;
-                            this.data[i].stime = stime;
-                            this.data[i].fullstime = fullstime;
-                            this.data[i].des   = des;
                            });
                              ci++;
                           } 
                       }
-
-                      for(let i=0; i< this.data.length; i++ ) {
+                      let datalength = this.data.length;
+                      for(let i=0; i< datalength; i++ ) {
                         let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
-                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].project_id+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
+                        let timeProjectId = this.data[i].project_id;
+                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+timeProjectId+'"}, {"member_id":"'+contId+'"}]}}', options)
                                   .subscribe(response => { 
                                   if(response.json().length)
                                   { 
@@ -466,17 +549,19 @@ onSelectCont(contId)
 
                                     totalTime     += Number(hours);
                                     totalMin      += Number(minutes);
+
+                                    this.data[i].totalStime = totalTime+':'+totalMin;
                                     }
                                   }else{
                                     this.data[i].totalStime = "0:00";
                                   }
-                                  this.data[i].totalStime = totalTime+':'+totalMin;
+                                  
                           });
                     }
                    
                 });
                 this.checkData = 1;
-
+                this.data = [];
               }else{
                 this.data = [];
                 this.checkData = 2;
@@ -486,8 +571,7 @@ onSelectCont(contId)
             });
     }else{
             this.projectData = {};
-            let result = [];
-
+            this.data = [];
             this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"member_id":"'+this.contractorId+'"}]},"limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -499,10 +583,8 @@ onSelectCont(contId)
                   for(let i=0; i< response.json().length; i++ ) { 
                     this.projectData[i] = response.json()[i].project_id;
                   }
-
-
-
                   
+                  let result = [];
                   $.each(this.projectData, function (i, e) {
                       var matchingItems = $.grep(result, function (item) {
                          return item == e;
@@ -517,7 +599,7 @@ onSelectCont(contId)
           {     
                 this.data = [];
                 for(let i=0; i< result.length; i++ ) {
-                  let stime = '', des = '', tsId = '';
+                  
                    this.http.get(API_URL+'/projects/'+result[i]+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                           .subscribe(response => {     
                           this.data[i] = response.json();
@@ -535,40 +617,53 @@ onSelectCont(contId)
                           });
 
                         let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = '';
+
                         
                           for(let j=0; j< this.datesData.length; j++ ) {
                             let userID    = localStorage.getItem('currentUserId');
                             let projectID = this.data[i].id;
                             let cDate     = this.datesData[j];
+                            let stime = '', des = '', tsId = '';
+
                         
                           this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+projectID+'"},{"cdate":"'+cDate+'"}, {"member_id":"'+this.contractorId+'"}]}}', options)
                             .subscribe(response => {    
                             //this.data[i].stime = '';
                             if(response.json().length)
                             {
-                              tsId  += response.json()[0].id+'_';
-                              stime += response.json()[0].stime+'_';
-                              fullstime += response.json()[0].fullstime;
-                              des   += response.json()[0].description+'_';
+
+                              if(response.json()[0].stime!=undefined && response.json()[0].id!=undefined)
+                              {
+                                tsId  += response.json()[0].id+'_';
+                                stime = response.json()[0].stime;
+                                fullstime += response.json()[0].fullstime;
+                                des   += response.json()[0].description+'_';
+
+                                this.datesData[j] = this.datesData[j]+'_'+stime;
+                              }
                             }else{
-                               tsId += '-'+'_';
-                               stime += '-'+'_';
-                               fullstime += '@';
-                               des += '-'+'_';
+                                 tsId += '-'+'_';
+                                 stime = '-';
+                                 fullstime += '@';
+                                 des += '-'+'_';
+
+                                 this.datesData[j] = this.datesData[j]+'_'+stime;
                             }
+
+                                  this.data[i].tsId  = tsId;
+                                  this.data[i].fullstime = fullstime;
+                                  this.data[i].des   = des;
+                                  stime = '';
                             
-                            this.data[i].tsId  = tsId;
-                            this.data[i].stime = stime;
-                            this.data[i].fullstime = fullstime;
-                            this.data[i].des   = des;
                            });
                              ci++;
                           } 
 
-
-                          for(let i=0; i< this.data.length; i++ ) {
+                          let datalength = this.data.length;
+                          for(let i=0; i< datalength; i++ ) {
                         let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
-                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"}, {"member_id":"'+this.contractorId+'"}]}}', options)
+                        let timeProjectId = this.data[i].id;
+                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+timeProjectId+'"}, {"member_id":"'+this.contractorId+'"}]}}', options)
                                   .subscribe(response => { 
                                   if(response.json().length)
                                   { 
@@ -579,18 +674,21 @@ onSelectCont(contId)
 
                                     totalTime     += Number(hours);
                                     totalMin      += Number(minutes);
+
+                                    this.data[i].totalStime = totalTime+':'+totalMin;
                                     }
                                   }else{
                                     this.data[i].totalStime = "0:00";
                                   }
-                                  this.data[i].totalStime = totalTime+':'+totalMin;
+                                  
                           });
                     }
                         
                         });
                 }
-                
+               
             this.checkData = 1;
+            this.data = [];
           }else{
                this.data = [];
                this.checkData = 2;
@@ -616,6 +714,7 @@ onSelectFilter(sheetFilter)
   this.toasterService.clear();
   if(sheetFilter)
   {
+    
     let options = new RequestOptions();
             options.headers = new Headers();
             options.headers.append('Content-Type', 'application/json');
@@ -626,6 +725,7 @@ if(localStorage.getItem('currentUserRoleId') == '1')
 {
     if(sheetFilter == 'alltimesheet')
     {
+      this.data = [];
       this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+this.contractorId+'"}]}}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -667,29 +767,39 @@ if(localStorage.getItem('currentUserRoleId') == '1')
                             //this.data[i].stime = '';
                             if(response.json().length)
                             {
-                              tsId  += response.json()[0].id+'_';
-                              stime += response.json()[0].stime+'_';
-                              fullstime += response.json()[0].fullstime;
-                              des   += response.json()[0].description+'_';
+
+                              if(response.json()[0].stime!=undefined && response.json()[0].id!=undefined)
+                              {
+                                tsId  += response.json()[0].id+'_';
+                                stime = response.json()[0].stime;
+                                fullstime += response.json()[0].fullstime;
+                                des   += response.json()[0].description+'_';
+
+                                this.datesData[j] = this.datesData[j]+'_'+stime;
+                              }
                             }else{
-                               tsId += '-'+'_';
-                               stime += '-'+'_';
-                               fullstime += '@';
-                               des += '-'+'_';
+                                 tsId += '-'+'_';
+                                 stime = '-';
+                                 fullstime += '@';
+                                 des += '-'+'_';
+
+                                 this.datesData[j] = this.datesData[j]+'_'+stime;
                             }
+
+                                  this.data[i].tsId  = tsId;
+                                  this.data[i].fullstime = fullstime;
+                                  this.data[i].des   = des;
+                                  stime = '';
                             
-                            this.data[i].tsId  = tsId;
-                            this.data[i].stime = stime;
-                            this.data[i].fullstime = fullstime;
-                            this.data[i].des   = des;
                            });
                              ci++;
                           } 
                       }
-
-                      for(let i=0; i< this.data.length; i++ ) {
+                      let datalength = this.data.length;
+                      for(let i=0; i< datalength; i++ ) {
                         let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
-                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].project_id+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
+                        let timeProjectId = this.data[i].project_id;
+                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+timeProjectId+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
                                   .subscribe(response => { 
                                   if(response.json().length)
                                   { 
@@ -700,16 +810,19 @@ if(localStorage.getItem('currentUserRoleId') == '1')
 
                                     totalTime     += Number(hours);
                                     totalMin      += Number(minutes);
+
+                                    this.data[i].totalStime = totalTime+':'+totalMin;
                                     }
                                   }else{
                                     this.data[i].totalStime = "0:00";
                                   }
-                                  this.data[i].totalStime = totalTime+':'+totalMin;
+                                  
                           });
                     }
                    
                 });
                 this.checkData = 1;
+                this.data = [];
               }else{
                 this.data = [];
                 this.checkData = 2;
@@ -719,7 +832,7 @@ if(localStorage.getItem('currentUserRoleId') == '1')
             });
     }else{
             this.projectData = {};
-
+            this.data = [];
             this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"member_id":"'+this.contractorId+'"}]},"limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -778,30 +891,40 @@ if(localStorage.getItem('currentUserRoleId') == '1')
                             //this.data[i].stime = '';
                             if(response.json().length)
                             {
-                              tsId  += response.json()[0].id+'_';
-                              stime += response.json()[0].stime+'_';
-                              fullstime += response.json()[0].fullstime;
-                              des   += response.json()[0].description+'_';
+
+                              if(response.json()[0].stime!=undefined && response.json()[0].id!=undefined)
+                              {
+                                tsId  += response.json()[0].id+'_';
+                                stime = response.json()[0].stime;
+                                fullstime += response.json()[0].fullstime;
+                                des   += response.json()[0].description+'_';
+
+                                this.datesData[j] = this.datesData[j]+'_'+stime;
+                              }
                             }else{
-                               tsId += '-'+'_';
-                               stime += '-'+'_';
-                               fullstime += '@';
-                               des += '-'+'_';
+                                 tsId += '-'+'_';
+                                 stime = '-';
+                                 fullstime += '@';
+                                 des += '-'+'_';
+
+                                 this.datesData[j] = this.datesData[j]+'_'+stime;
                             }
+
+                                  this.data[i].tsId  = tsId;
+                                  this.data[i].fullstime = fullstime;
+                                  this.data[i].des   = des;
+                                  stime = '';
                             
-                            this.data[i].tsId  = tsId;
-                            this.data[i].stime = stime;
-                            this.data[i].fullstime = fullstime;
-                            this.data[i].des   = des;
                            });
                              ci++;
                           } 
 
-                          
+                          let datalength = this.data.length;
 
-                          for(let i=0; i< this.data.length; i++ ) {
+                          for(let i=0; i< datalength; i++ ) {
                         let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
-                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"}, {"member_id":"'+this.contractorId+'"}]}}', options)
+                        let timeProjectId = this.data[i].id;
+                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+timeProjectId+'"}, {"member_id":"'+this.contractorId+'"}]}}', options)
                                   .subscribe(response => { 
                                   if(response.json().length)
                                   { 
@@ -812,18 +935,20 @@ if(localStorage.getItem('currentUserRoleId') == '1')
 
                                     totalTime     += Number(hours);
                                     totalMin      += Number(minutes);
+
+                                    this.data[i].totalStime = totalTime+':'+totalMin;
                                     }
                                   }else{
                                     this.data[i].totalStime = "0:00";
                                   }
-                                  this.data[i].totalStime = totalTime+':'+totalMin;
+                                  
                           });
                     }
                         
                         });
                 }
             this.checkData = 1;
-           
+            this.data = [];
           }else{
                this.data = [];
                this.checkData = 2;
@@ -843,6 +968,7 @@ if(localStorage.getItem('currentUserRoleId') == '1')
 
     if(sheetFilter == 'alltimesheet')
     {
+      this.data = [];
       this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+this.memberId+'"}]}}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -884,29 +1010,39 @@ if(localStorage.getItem('currentUserRoleId') == '1')
                             //this.data[i].stime = '';
                             if(response.json().length)
                             {
-                              tsId  += response.json()[0].id+'_';
-                              stime += response.json()[0].stime+'_';
-                              fullstime += response.json()[0].fullstime;
-                              des   += response.json()[0].description+'_';
+
+                              if(response.json()[0].stime!=undefined && response.json()[0].id!=undefined)
+                              {
+                                tsId  += response.json()[0].id+'_';
+                                stime = response.json()[0].stime;
+                                fullstime += response.json()[0].fullstime;
+                                des   += response.json()[0].description+'_';
+
+                                this.datesData[j] = this.datesData[j]+'_'+stime;
+                              }
                             }else{
-                               tsId += '-'+'_';
-                               stime += '-'+'_';
-                               fullstime += '@';
-                               des += '-'+'_';
+                                 tsId += '-'+'_';
+                                 stime = '-';
+                                 fullstime += '@';
+                                 des += '-'+'_';
+
+                                 this.datesData[j] = this.datesData[j]+'_'+stime;
                             }
+
+                                  this.data[i].tsId  = tsId;
+                                  this.data[i].fullstime = fullstime;
+                                  this.data[i].des   = des;
+                                  stime = '';
                             
-                            this.data[i].tsId  = tsId;
-                            this.data[i].stime = stime;
-                            this.data[i].fullstime = fullstime;
-                            this.data[i].des   = des;
                            });
                              ci++;
                           } 
                       }
-
-                      for(let i=0; i< this.data.length; i++ ) {
+                      let datalength = this.data.length;
+                      for(let i=0; i< datalength; i++ ) {
                         let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
-                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].project_id+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
+                        let timeProjectId = this.data[i].project_id;
+                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+timeProjectId+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
                                   .subscribe(response => { 
                                   if(response.json().length)
                                   { 
@@ -917,16 +1053,19 @@ if(localStorage.getItem('currentUserRoleId') == '1')
 
                                     totalTime     += Number(hours);
                                     totalMin      += Number(minutes);
+
+                                    this.data[i].totalStime = totalTime+':'+totalMin;
                                     }
                                   }else{
                                     this.data[i].totalStime = "0:00";
                                   }
-                                  this.data[i].totalStime = totalTime+':'+totalMin;
+                                  
                           });
                     }
                    
                 });
                 this.checkData = 1;
+                this.data = [];
               }else{
                 this.data = [];
                 this.checkData = 2;
@@ -936,7 +1075,7 @@ if(localStorage.getItem('currentUserRoleId') == '1')
             });
     }else{
             this.projectData = {};
-
+            this.data = [];
             this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"member_id":"'+this.memberId+'"}]},"limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -995,30 +1134,40 @@ if(localStorage.getItem('currentUserRoleId') == '1')
                             //this.data[i].stime = '';
                             if(response.json().length)
                             {
-                              tsId  += response.json()[0].id+'_';
-                              stime += response.json()[0].stime+'_';
-                              fullstime += response.json()[0].fullstime;
-                              des   += response.json()[0].description+'_';
+
+                              if(response.json()[0].stime!=undefined && response.json()[0].id!=undefined)
+                              {
+                                tsId  += response.json()[0].id+'_';
+                                stime = response.json()[0].stime;
+                                fullstime += response.json()[0].fullstime;
+                                des   += response.json()[0].description+'_';
+
+                                this.datesData[j] = this.datesData[j]+'_'+stime;
+                              }
                             }else{
-                               tsId += '-'+'_';
-                               stime += '-'+'_';
-                               fullstime += '@';
-                               des += '-'+'_';
+                                 tsId += '-'+'_';
+                                 stime = '-';
+                                 fullstime += '@';
+                                 des += '-'+'_';
+
+                                 this.datesData[j] = this.datesData[j]+'_'+stime;
                             }
+
+                                  this.data[i].tsId  = tsId;
+                                  this.data[i].fullstime = fullstime;
+                                  this.data[i].des   = des;
+                                  stime = '';
                             
-                            this.data[i].tsId  = tsId;
-                            this.data[i].stime = stime;
-                            this.data[i].fullstime = fullstime;
-                            this.data[i].des   = des;
                            });
                              ci++;
                           } 
 
-                          
+                          let datalength = this.data.length;
 
-                          for(let i=0; i< this.data.length; i++ ) {
+                          for(let i=0; i< datalength; i++ ) {
                         let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
-                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"}, {"member_id":"'+this.memberId+'"}]}}', options)
+                        let timeProjectId = this.data[i].id;
+                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+timeProjectId+'"}, {"member_id":"'+this.memberId+'"}]}}', options)
                                   .subscribe(response => { 
                                   if(response.json().length)
                                   { 
@@ -1040,7 +1189,7 @@ if(localStorage.getItem('currentUserRoleId') == '1')
                         });
                 }
             this.checkData = 1;
-           
+            this.data = [];
           }else{
                this.data = [];
                this.checkData = 2;
@@ -1112,7 +1261,7 @@ if(localStorage.getItem('currentUserRoleId') == '1')
 
     //this.cuStime = stime;
     this.cuDes   = des;
-    if(stime =='-' || des == '-')
+    if(stime == '-' && tsId == '-')
     { 
       this.sheetStatus = 'add';
       this.model.stime = '';
@@ -1140,6 +1289,7 @@ getAmount(totalStime, budget, rate, percentage)
 
 onPickSheet(pickDate)
 {
+  this.datesData = [];
   if(pickDate.length == undefined)
   {
       let todayDate = new Date();
@@ -1175,7 +1325,7 @@ for(let i=0; i<= 30; i++) {
   }else{
     this.seldata  = pickDate[0];
     //let strDate = pickDate.getDate() + "/" + (pickDate.getMonth()+1) + "/" + pickDate.getFullYear();
-      this.datesData = [];
+      
       this.seldata = pickDate;
       this.checkData = 0;
       this.sheetStatus = '';
@@ -1277,29 +1427,40 @@ for(let i=0; i<= tDays; i++ ) {
                             //this.data[i].stime = '';
                             if(response.json().length)
                             {
-                              tsId  += response.json()[0].id+'_';
-                              stime += response.json()[0].stime+'_';
-                              fullstime += response.json()[0].fullstime;
-                              des   += response.json()[0].description+'_';
+
+                              if(response.json()[0].stime!=undefined && response.json()[0].id!=undefined)
+                              {
+                                tsId  += response.json()[0].id+'_';
+                                stime = response.json()[0].stime;
+                                fullstime += response.json()[0].fullstime;
+                                des   += response.json()[0].description+'_';
+
+                                this.datesData[j] = this.datesData[j]+'_'+stime;
+                              }
                             }else{
-                               tsId += '-'+'_';
-                               stime += '-'+'_';
-                               fullstime += '@';
-                               des += '-'+'_';
+                                 tsId += '-'+'_';
+                                 stime = '-';
+                                 fullstime += '@';
+                                 des += '-'+'_';
+
+                                 this.datesData[j] = this.datesData[j]+'_'+stime;
                             }
+
+                                  this.data[i].tsId  = tsId;
+                                  this.data[i].fullstime = fullstime;
+                                  this.data[i].des   = des;
+                                  stime = '';
                             
-                            this.data[i].tsId  = tsId;
-                            this.data[i].stime = stime;
-                            this.data[i].fullstime = fullstime;
-                            this.data[i].des   = des;
                            });
                              ci++;
                           } 
                       }
+                      let datalength = this.data.length;
 
-                      for(let i=0; i< this.data.length; i++ ) {
+                      for(let i=0; i< datalength; i++ ) {
                         let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
-                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].project_id+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
+                        let timeProjectId = this.data[i].project_id;
+                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+timeProjectId+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
                                   .subscribe(response => { 
                                   if(response.json().length)
                                   { 
@@ -1310,16 +1471,18 @@ for(let i=0; i<= tDays; i++ ) {
 
                                     totalTime     += Number(hours);
                                     totalMin      += Number(minutes);
+
+                                    this.data[i].totalStime = totalTime+':'+totalMin;
                                     }
                                   }else{
                                     this.data[i].totalStime = "0:00";
                                   }
-                                  this.data[i].totalStime = totalTime+':'+totalMin;
+                                  
                           });
                     }
                 });
                 this.checkData = 1;
-
+                this.data = [];
               }else{
                 this.data = [];
                 this.checkData = 2;
@@ -1330,7 +1493,7 @@ for(let i=0; i<= tDays; i++ ) {
 
         }else{
             this.projectData = {};
-
+            this.data = [];
             this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+this.contractorId+'"}]}, "limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -1385,28 +1548,39 @@ for(let i=0; i<= tDays; i++ ) {
                             //this.data[i].stime = '';
                             if(response.json().length)
                             {
-                              tsId  += response.json()[0].id+'_';
-                              stime += response.json()[0].stime+'_';
-                              fullstime += response.json()[0].fullstime;
-                              des   += response.json()[0].description+'_';
+
+                              if(response.json()[0].stime!=undefined && response.json()[0].id!=undefined)
+                              {
+                                tsId  += response.json()[0].id+'_';
+                                stime = response.json()[0].stime;
+                                fullstime += response.json()[0].fullstime;
+                                des   += response.json()[0].description+'_';
+
+                                this.datesData[j] = this.datesData[j]+'_'+stime;
+                              }
                             }else{
-                               tsId += '-'+'_';
-                               stime += '-'+'_';
-                               fullstime += '@';
-                               des += '-'+'_';
+                                 tsId += '-'+'_';
+                                 stime = '-';
+                                 fullstime += '@';
+                                 des += '-'+'_';
+
+                                 this.datesData[j] = this.datesData[j]+'_'+stime;
                             }
+
+                                  this.data[i].tsId  = tsId;
+                                  this.data[i].fullstime = fullstime;
+                                  this.data[i].des   = des;
+                                  stime = '';
                             
-                            this.data[i].tsId  = tsId;
-                            this.data[i].stime = stime;
-                            this.data[i].fullstime = fullstime;
-                            this.data[i].des   = des;
                            });
                              ci++;
                           } 
+                          let datalength = this.data.length;
 
-                          for(let i=0; i< this.data.length; i++ ) {
+                          for(let i=0; i< datalength; i++ ) {
                         let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
-                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"}, {"member_id":"'+this.contractorId+'"}]}}', options)
+                        let timeProjectId = this.data[i].id;
+                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+timeProjectId+'"}, {"member_id":"'+this.contractorId+'"}]}}', options)
                                   .subscribe(response => { 
                                   if(response.json().length)
                                   { 
@@ -1417,17 +1591,20 @@ for(let i=0; i<= tDays; i++ ) {
 
                                     totalTime     += Number(hours);
                                     totalMin      += Number(minutes);
+
+                                    this.data[i].totalStime = totalTime+':'+totalMin;
                                     }
                                   }else{
                                     this.data[i].totalStime = "0:00";
                                   }
-                                  this.data[i].totalStime = totalTime+':'+totalMin;
+                                  
                           });
                     }
                         
                         });
                 }
             this.checkData = 1;
+            this.data = [];
           }else{
                this.data = [];
                this.checkData = 2;
@@ -1500,29 +1677,39 @@ for(let i=0; i<= tDays; i++ ) {
                             //this.data[i].stime = '';
                             if(response.json().length)
                             {
-                              tsId  += response.json()[0].id+'_';
-                              stime += response.json()[0].stime+'_';
-                              fullstime += response.json()[0].fullstime;
-                              des   += response.json()[0].description+'_';
+
+                              if(response.json()[0].stime!=undefined && response.json()[0].id!=undefined)
+                              {
+                                tsId  += response.json()[0].id+'_';
+                                stime = response.json()[0].stime;
+                                fullstime += response.json()[0].fullstime;
+                                des   += response.json()[0].description+'_';
+
+                                this.datesData[j] = this.datesData[j]+'_'+stime;
+                              }
                             }else{
-                               tsId += '-'+'_';
-                               stime += '-'+'_';
-                               fullstime += '@';
-                               des += '-'+'_';
+                                 tsId += '-'+'_';
+                                 stime = '-';
+                                 fullstime += '@';
+                                 des += '-'+'_';
+
+                                 this.datesData[j] = this.datesData[j]+'_'+stime;
                             }
+
+                                  this.data[i].tsId  = tsId;
+                                  this.data[i].fullstime = fullstime;
+                                  this.data[i].des   = des;
+                                  stime = '';
                             
-                            this.data[i].tsId  = tsId;
-                            this.data[i].stime = stime;
-                            this.data[i].fullstime = fullstime;
-                            this.data[i].des   = des;
                            });
                              ci++;
                           } 
                       }
-
-                      for(let i=0; i< this.data.length; i++ ) {
+                      let datalength = this.data.length;
+                      for(let i=0; i< datalength; i++ ) {
                         let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
-                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].project_id+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
+                        let timeProjectId = this.data[i].project_id;
+                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+timeProjectId+'"}, {"member_id":"'+this.data[i].member_id+'"}]}}', options)
                                   .subscribe(response => { 
                                   if(response.json().length)
                                   { 
@@ -1533,16 +1720,18 @@ for(let i=0; i<= tDays; i++ ) {
 
                                     totalTime     += Number(hours);
                                     totalMin      += Number(minutes);
+
+                                    this.data[i].totalStime = totalTime+':'+totalMin;
                                     }
                                   }else{
                                     this.data[i].totalStime = "0:00";
                                   }
-                                  this.data[i].totalStime = totalTime+':'+totalMin;
+                                  
                           });
                     }
                 });
                 this.checkData = 1;
-
+                this.data = [];
               }else{
                 this.data = [];
                 this.checkData = 2;
@@ -1553,7 +1742,7 @@ for(let i=0; i<= tDays; i++ ) {
 
         }else{
             this.projectData = {};
-
+            this.data = [];
             this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+this.memberId+'"}]}, "limit":"1"}', options)
             .subscribe(response => {
               if(response.json().length)
@@ -1608,28 +1797,38 @@ for(let i=0; i<= tDays; i++ ) {
                             //this.data[i].stime = '';
                             if(response.json().length)
                             {
-                              tsId  += response.json()[0].id+'_';
-                              stime += response.json()[0].stime+'_';
-                              fullstime += response.json()[0].fullstime;
-                              des   += response.json()[0].description+'_';
+
+                              if(response.json()[0].stime!=undefined && response.json()[0].id!=undefined)
+                              {
+                                tsId  += response.json()[0].id+'_';
+                                stime = response.json()[0].stime;
+                                fullstime += response.json()[0].fullstime;
+                                des   += response.json()[0].description+'_';
+
+                                this.datesData[j] = this.datesData[j]+'_'+stime;
+                              }
                             }else{
-                               tsId += '-'+'_';
-                               stime += '-'+'_';
-                               fullstime += '@';
-                               des += '-'+'_';
+                                 tsId += '-'+'_';
+                                 stime = '-';
+                                 fullstime += '@';
+                                 des += '-'+'_';
+
+                                 this.datesData[j] = this.datesData[j]+'_'+stime;
                             }
+
+                                  this.data[i].tsId  = tsId;
+                                  this.data[i].fullstime = fullstime;
+                                  this.data[i].des   = des;
+                                  stime = '';
                             
-                            this.data[i].tsId  = tsId;
-                            this.data[i].stime = stime;
-                            this.data[i].fullstime = fullstime;
-                            this.data[i].des   = des;
                            });
                              ci++;
                           } 
-
-                          for(let i=0; i< this.data.length; i++ ) {
+                          let datalength = this.data.length;
+                          for(let i=0; i< datalength; i++ ) {
                         let totalTime = 0, totalMin = 0, hours = 0, minutes = 0;
-                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"}, {"member_id":"'+this.memberId+'"}]}}', options)
+                        let timeProjectId = this.data[i].id;
+                          this.http.get(API_URL+'/timesheets?filter={"where":{"and":[{"project_id":"'+timeProjectId+'"}, {"member_id":"'+this.memberId+'"}]}}', options)
                                   .subscribe(response => { 
                                   if(response.json().length)
                                   { 
@@ -1640,17 +1839,20 @@ for(let i=0; i<= tDays; i++ ) {
 
                                     totalTime     += Number(hours);
                                     totalMin      += Number(minutes);
+
+                                    this.data[i].totalStime = totalTime+':'+totalMin;
                                     }
                                   }else{
                                     this.data[i].totalStime = "0:00";
                                   }
-                                  this.data[i].totalStime = totalTime+':'+totalMin;
+                                  
                           });
                     }
                         
                         });
                 }
             this.checkData = 1;
+            this.data = [];
           }else{
                this.data = [];
                this.checkData = 2;
@@ -1709,7 +1911,14 @@ checkTimesheet(form:any)
                     minutes = '00';
                   }
 
-                  this.sheetData.stime       = hours+':'+minutes;
+                  if(hours+':'+minutes == '0:00')
+                  {
+                    this.sheetData.stime       = "24:00";
+                  }else{
+                    this.sheetData.stime       = hours+':'+minutes;
+                  }
+
+                  
                   this.sheetData.fullstime   = this.model.stime;
 
 
@@ -1760,7 +1969,14 @@ checkTimesheet(form:any)
                   minutes = '00';
                 }
 
-                this.editsheetData.stime       = hours+':'+minutes;
+                if(hours+':'+minutes == '0:00')
+                {
+                  this.editsheetData.stime       = "24:00";
+                }else{
+                  this.editsheetData.stime       = hours+':'+minutes;
+                }
+
+                
                 this.editsheetData.fullstime   = this.model.stime;
 
                 if(tsId.indexOf(undefined) != -1){
