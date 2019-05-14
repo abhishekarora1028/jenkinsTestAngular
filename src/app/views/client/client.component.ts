@@ -50,10 +50,10 @@ public filterQuery = '';
 	        	this.data = response.json();
 	        	this.checkData = 0;
 	        	this.checkData = 1;
-	        	$('.preloader').hide();
+	        	setTimeout(function(){$('.preloader').hide();}, 3000);
 	        }else{
 	        	this.checkData = 0;
-	        	$('.preloader').hide();
+	        	setTimeout(function(){$('.preloader').hide();}, 3000);
 	        }
 	        	
 		    });	
