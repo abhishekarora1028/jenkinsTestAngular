@@ -79,7 +79,7 @@ public options:any = {
       this.router.navigate(['login']);
     }
 
-
+    $('.preloader').show();
 
   this.timesheetStatusData = 'active';
   this.memberId    = localStorage.getItem('currentUserId');
@@ -258,15 +258,18 @@ for(let i=0; i<= 30; i++) {
             
             this.checkData = 1;
             this.data = [];
+            $('.preloader').hide();
           }else{
                this.data = [];
                this.checkData = 2;
+               $('.preloader').hide();
                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
         }
             });
 
               }else{
                 this.checkData = 2;
+                $('.preloader').hide();
                 this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
             });
@@ -388,16 +391,19 @@ for(let i=0; i<= 30; i++) {
                 }
             
             this.checkData = 1;
+            $('.preloader').hide();
             this.data = [];
           }else{
                this.data = [];
                this.checkData = 2;
+               $('.preloader').hide();
                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
         }
             });
 
               }else{
                 this.checkData = 2;
+                $('.preloader').hide();
                 this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
             });

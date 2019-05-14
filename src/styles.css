@@ -117,83 +117,83 @@ body {
     font-family: SourceSansPro;
 }
 .border {
-	border: 1px solid #dee2e6!important
+    border: 1px solid #dee2e6!important
 }
 
 .border-top {
-	border-top: 1px solid #dee2e6!important
+    border-top: 1px solid #dee2e6!important
 }
 
 .border-right {
-	border-right: 1px solid #dee2e6!important
+    border-right: 1px solid #dee2e6!important
 }
 
 .border-bottom {
-	border-bottom: 1px solid #dee2e6!important
+    border-bottom: 1px solid #dee2e6!important
 }
 
 .border-left {
-	border-left: 1px solid #dee2e6!important
+    border-left: 1px solid #dee2e6!important
 }
 
 .border-0 {
-	border: 0!important
+    border: 0!important
 }
 
 .border-top-0 {
-	border-top: 0!important
+    border-top: 0!important
 }
 
 .border-right-0 {
-	border-right: 0!important
+    border-right: 0!important
 }
 
 .border-bottom-0 {
-	border-bottom: 0!important
+    border-bottom: 0!important
 }
 
 .border-left-0 {
-	border-left: 0!important
+    border-left: 0!important
 }
 
 .border-primary {
-	border-color: #007bff!important
+    border-color: #007bff!important
 }
 
 .border-secondary {
-	border-color: #6c757d!important
+    border-color: #6c757d!important
 }
 
 .border-success {
-	border-color: #28a745!important
+    border-color: #28a745!important
 }
 
 .border-info {
-	border-color: #17a2b8!important
+    border-color: #17a2b8!important
 }
 
 .border-warning {
-	border-color: #ffc107!important
+    border-color: #ffc107!important
 }
 
 .border-danger {
-	border-color: #dc3545!important
+    border-color: #dc3545!important
 }
 
 .border-light {
-	border-color: #f8f9fa!important
+    border-color: #f8f9fa!important
 }
 
 .border-dark {
-	border-color: #343a40!important
+    border-color: #343a40!important
 }
 
 .border-white {
-	border-color: #fff!important
+    border-color: #fff!important
 }
 .row {
-	margin-left: 0 !important;
-	margin-right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 .login-block .input-group {
     border-bottom: 0 !important;
@@ -203,25 +203,25 @@ body {
     border-bottom: 1px solid #dee2e6;
 }
 .text-center {
-	text-align: center !important;
+    text-align: center !important;
 }
 .text-left {
-	text-align: left !important;
+    text-align: left !important;
 }
 .text-right {
-	text-align: right !important;
+    text-align: right !important;
 }
 .login-block .card-body {
     padding: 15px;
 }
 .p-15 {
-	padding: 10px 15px !important;
+    padding: 10px 15px !important;
 }
 .pl-30 {
-	padding-left: 31px !important;
+    padding-left: 31px !important;
 }
 .width {
-	width: 100% !important;
+    width: 100% !important;
 }
 .dashboard-component .card i.fa {
     font-size: 20px;
@@ -290,12 +290,12 @@ h4 {
     margin-bottom: 15px;
 }
 .proj-desc label {
-	width: 16.2%;
-	max-width: 100%;
+    width: 16.2%;
+    max-width: 100%;
 }
 .proj-desc textarea {
-	width: calc(100% - 16.2%) !important;
-	max-width: 100%;
+    width: calc(100% - 16.2%) !important;
+    max-width: 100%;
 }
 .assign-contractor a {
     font-weight: bold;
@@ -326,15 +326,15 @@ h4 {
     justify-content: center;
 }
 .add-contrator {
-	position: relative;
+    position: relative;
 }
 .add-contrator .add-icon {
     position: absolute;
     right: 15px;
 }
 .common-button {
-	color: #212121;
-	border-color: #212121;
+    color: #212121;
+    border-color: #212121;
     padding: 10px 38px;
     font-size: 14px;
 }
@@ -370,12 +370,12 @@ h4 {
     bottom: -7px;
 }
 .solid-btn {
-	padding: 10px 38px;
+    padding: 10px 38px;
     font-size: 14px;
     background: #5cb85c;
 }
 .dashboard-component .chart-wrapper {
-	min-height: 300px;
+    min-height: 300px;
 }
 .add-project-heading .input-group-addon, .form-calendar .input-group-addon  {
     padding: 6px 12px;
@@ -605,13 +605,13 @@ a.remove-img i.fa {
     }
 }
 @media screen and (max-width: 767px) {
-	.container.add-project-heading {
-	    max-width: 100%;
-	}
-	.proj-desc label, .add-new-client .proj-desc textarea, .add-new-client .proj-desc label, .add_contractor .proj-desc textarea, .add_contractor .proj-desc label {
-		width: 100% !important;
-		max-width: 100%;
-	}
+    .container.add-project-heading {
+        max-width: 100%;
+    }
+    .proj-desc label, .add-new-client .proj-desc textarea, .add-new-client .proj-desc label, .add_contractor .proj-desc textarea, .add_contractor .proj-desc label {
+        width: 100% !important;
+        max-width: 100%;
+    }
     ul.nav.navbar-nav li:first-child {
         display: none;
     }
@@ -646,8 +646,8 @@ a.remove-img i.fa {
         -webkit-transform: inherit;
         transform: inherit;
         position: absolute !important;
-        left: 0 !important;
-        top: 58% !important;
+        left: 10% !important;
+        top: 52% !important;
     }
     .theme-green .bs-datepicker-multiple + .bs-datepicker-multiple {
         margin-top: 0;
@@ -658,7 +658,7 @@ a.remove-img i.fa {
         transform: scale(0.8) !important;
     }
 }
-@media (orientation:landscape) and (max-width: 575px){
+@media (orientation:landscape) and (max-width: 600px){
      /* Your CSS Here*/
     
     .aside-menu-fixed bs-daterangepicker-container {
@@ -666,7 +666,7 @@ a.remove-img i.fa {
         transform: inherit;
         position: absolute !important;
         left: -14% !important;
-        top: 78% !important;
+        top: 56% !important;
     }
     .bs-datepicker.theme-green {
         -webkit-transform: scale(0.7) !important;
@@ -674,13 +674,24 @@ a.remove-img i.fa {
         left:10%;
     }
 }
+@media (orientation:landscape) and (max-width: 480px){
+     /* Your CSS Here*/
+    
+    .aside-menu-fixed bs-daterangepicker-container {
+        -webkit-transform: inherit;
+        transform: inherit;
+        position: absolute !important;
+        left: -25% !important;
+        top: 78% !important;
+    }
+}
 @media screen and (max-width: 600px) {
-	.main .container-fluid {
-		padding: 0;
-	}
-	.project-component h4 span {
-	    margin-bottom: 8px;
-	}
+    .main .container-fluid {
+        padding: 0;
+    }
+    .project-component h4 span {
+        margin-bottom: 8px;
+    }
     .assign-contractor-fields input, .assign-contractor-fields select {
         -webkit-box-flex: 0;
         -ms-flex: 0 0 83%;

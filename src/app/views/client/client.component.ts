@@ -36,6 +36,7 @@ public filterQuery = '';
       this.router.navigate(['login']);
     }
     
+    $('.preloader').show();
 
     let options = new RequestOptions();
 	        options.headers = new Headers();
@@ -49,8 +50,10 @@ public filterQuery = '';
 	        	this.data = response.json();
 	        	this.checkData = 0;
 	        	this.checkData = 1;
+	        	$('.preloader').hide();
 	        }else{
 	        	this.checkData = 0;
+	        	$('.preloader').hide();
 	        }
 	        	
 		    });	

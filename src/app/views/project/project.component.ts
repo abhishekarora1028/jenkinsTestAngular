@@ -42,6 +42,8 @@ public filterQuery = '';
       this.router.navigate(['login']);
     }
 
+    $('.preloader').show();
+
     this.currentUserRoleId = localStorage.getItem("currentUserRoleId"); 
     
     if(localStorage.getItem('currentUserRoleId') == "1")
@@ -73,8 +75,10 @@ public filterQuery = '';
 				        });
 	          		}
 		        	this.checkData = 1;
+		        	$('.preloader').hide();
 		        }else{
 		        	this.checkData = 0;
+		        	$('.preloader').hide();
 		        }
 		        
 			    });	
@@ -120,8 +124,10 @@ public filterQuery = '';
 				        });
 	          		}
 		        	this.checkData = 1;
+		        	$('.preloader').hide();
 		        }else{
 		        	this.checkData = 0;
+		        	$('.preloader').hide();
 		        }
 		        
 			    });	
