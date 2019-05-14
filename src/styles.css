@@ -658,6 +658,22 @@ a.remove-img i.fa {
         transform: scale(0.8) !important;
     }
 }
+@media (orientation:landscape) and (max-width: 575px){
+     /* Your CSS Here*/
+    
+    .aside-menu-fixed bs-daterangepicker-container {
+        -webkit-transform: inherit;
+        transform: inherit;
+        position: absolute !important;
+        left: -14% !important;
+        top: 78% !important;
+    }
+    .bs-datepicker.theme-green {
+        -webkit-transform: scale(0.7) !important;
+        transform: scale(0.7) !important;
+        left:10%;
+    }
+}
 @media screen and (max-width: 600px) {
 	.main .container-fluid {
 		padding: 0;
