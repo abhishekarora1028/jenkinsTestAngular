@@ -258,18 +258,18 @@ for(let i=0; i<= 30; i++) {
             
             this.checkData = 1;
             this.data = [];
-            $('.preloader').hide();
+            setTimeout(function(){$('.preloader').hide();}, 3000);
           }else{
                this.data = [];
                this.checkData = 2;
-               $('.preloader').hide();
+               setTimeout(function(){$('.preloader').hide();}, 3000);
                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
         }
             });
 
               }else{
                 this.checkData = 2;
-                $('.preloader').hide();
+                setTimeout(function(){$('.preloader').hide();}, 3000);
                 this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
             });
@@ -391,19 +391,19 @@ for(let i=0; i<= 30; i++) {
                 }
             
             this.checkData = 1;
-            $('.preloader').hide();
+            setTimeout(function(){$('.preloader').hide();}, 3000);
             this.data = [];
           }else{
                this.data = [];
                this.checkData = 2;
-               $('.preloader').hide();
+               setTimeout(function(){$('.preloader').hide();}, 3000);
                this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
         }
             });
 
               }else{
                 this.checkData = 2;
-                $('.preloader').hide();
+                setTimeout(function(){$('.preloader').hide();}, 3000);
                 this.toasterService.pop('success', 'Message ', "No Timesheet Found!");
               }
             });
