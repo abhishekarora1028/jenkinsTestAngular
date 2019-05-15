@@ -647,7 +647,7 @@ a.remove-img i.fa {
         transform: inherit;
         position: absolute !important;
         left: 10% !important;
-        top: 52% !important;
+        top: 51% !important;
     }
     .theme-green .bs-datepicker-multiple + .bs-datepicker-multiple {
         margin-top: 0;
@@ -658,6 +658,19 @@ a.remove-img i.fa {
         transform: scale(0.8) !important;
     }
 }
+@media (orientation:landscape) and (max-width: 667px){
+     /* Your CSS Here*/
+     .aside-menu-fixed bs-daterangepicker-container {
+        top: 57% !important;
+    }
+ }
+ @media (orientation:landscape) and (max-width: 640px){
+     /* Your CSS Here*/
+     .aside-menu-fixed bs-daterangepicker-container {
+        left: 3% !important;
+        top: 58% !important;
+    }
+ }
 @media (orientation:landscape) and (max-width: 600px){
      /* Your CSS Here*/
     
@@ -674,6 +687,13 @@ a.remove-img i.fa {
         left:10%;
     }
 }
+ @media (orientation:landscape) and (max-width: 568px){
+     /* Your CSS Here*/
+     .aside-menu-fixed bs-daterangepicker-container {
+        left: -12% !important;
+        top: 77% !important;
+    }
+ }
 @media (orientation:landscape) and (max-width: 480px){
      /* Your CSS Here*/
     
