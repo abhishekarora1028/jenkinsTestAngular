@@ -51,6 +51,8 @@ assignpro: any = {};
       this.router.navigate(['login']);
     }
 
+    $('.preloader').show();
+
     this.imgUrl = API_URL+'/Imagecontainers/';
 
     this.userRoleId = localStorage.getItem('currentUserRoleId');
@@ -224,6 +226,8 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
           
         });
 
+        setTimeout(function(){$('.preloader').hide();}, 3000);
+
   }else{
   let userID = localStorage.getItem('currentUserId');
     /*this.http.get(API_URL+'/projects?filter={"where":{"member_id":"'+userID+'"}}', options)
@@ -319,7 +323,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
           
         });
 
-
+        setTimeout(function(){$('.preloader').hide();}, 3000);
 
   }        
 
