@@ -2,11 +2,6 @@
   body {
     background-color: white;
   }
-.timesheet tr th, .timesheet tr td {
-  text-align:left;
-  vertical-align: middle !important;
-  border-bottom: 1px solid #e0e0e0;
-}
 .date {
   font-weight:normal;
 }
@@ -57,7 +52,7 @@ border-radius:50%;
       <thead>
         <tr>
           <th><div class="equal">Date</div></th>
-          <th *ngFor="let prod of data"><div class="equal">{{prod.project_name}}</div></th>
+          <th *ngFor="let prod of data"><div class="equal">{{prod.project_name}} <div>({{prod.project_code}}-{{prod.client_code}})</div></div></th>
         </tr>
       </thead>
       <tr *ngFor="let itemdate of datesData;let i = index ">

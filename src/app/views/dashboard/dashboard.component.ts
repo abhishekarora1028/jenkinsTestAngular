@@ -62,7 +62,7 @@ assignpro: any = {};
           options.headers.append('Content-Type', 'application/json');
           options.headers.append('Accept', 'application/json');
 
-  this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]}}', options)
+  this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
     if(response.json().length)
     {
@@ -73,7 +73,7 @@ assignpro: any = {};
             
   });   
 
-  this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"inactive"}]}}', options)
+  this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"inactive"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
     if(response.json().length)
     {
@@ -84,7 +84,7 @@ assignpro: any = {};
             
   });      
 
-  this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"deleted"}]}}', options)
+  this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"deleted"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
     if(response.json().length)
     {
@@ -95,7 +95,7 @@ assignpro: any = {};
             
   });  
 
-  this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"active"},{"role_id":"2"}]}}', options)
+  this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"active"},{"role_id":"2"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
     if(response.json().length)
     {
@@ -106,7 +106,7 @@ assignpro: any = {};
             
   }); 
 
-this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"role_id":"2"}]}}', options)
+this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"role_id":"2"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
     if(response.json().length)
     {
@@ -117,7 +117,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
             
   }); 
 
-  this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"deleted"},{"role_id":"2"}]}}', options)
+  this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"deleted"},{"role_id":"2"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
     if(response.json().length)
     {
@@ -139,13 +139,13 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
         });
    
 
-        this.http.get(API_URL+'/Members/count?where=%7B%22role_id%22%3A%20%222%22%7D', options)
+        this.http.get(API_URL+'/Members/count?where=%7B%22role_id%22%3A%20%222%22%7D&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           this.countContractor = response.json();
           this.countContractor = this.countContractor.count;
         });
 
-        this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
+        this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC", "limit":"10"}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -159,7 +159,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
         }); 
 
         
-        this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"},{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
+        this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"},{"status":"active"}]},"order":"id DESC", "limit":"10"}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -184,7 +184,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
             
         }); 
 
-         /*this.http.get(API_URL+'/projects?filter={"where":{"and":[{"assign":"0"}]},"order":"id DESC", "limit":"10"}', options)
+         /*this.http.get(API_URL+'/projects?filter={"where":{"and":[{"assign":"0"}]},"order":"id DESC", "limit":"10"}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -196,7 +196,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
           
         });*/
 
-         this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC","limit":"10"}', options)
+         this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC","limit":"10"}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -205,7 +205,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
             for(let i=0; i< this.unassdata.length; i++ ) {
             let projectId = this.unassdata[i].id;
             
-            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"1"}]},"order":"id DESC"}', options)
+            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"1"}]},"order":"id DESC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
             .subscribe(response2 => {     
             if(response2.json().length)
             {
@@ -237,7 +237,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
 
   
 
-    this.http.get(API_URL+'/projects/', options)
+    this.http.get(API_URL+'/projects?access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -248,13 +248,13 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
           
         });          
 
-    this.http.get(API_URL+'/Members/count?where=%7B%22role_id%22%3A%20%222%22%7D', options)
+    this.http.get(API_URL+'/Members/count?where=%7B%22role_id%22%3A%20%222%22%7D&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           this.countContractor = response.json();
           this.countContractor = this.countContractor.count;
         });  
         
-    this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
+    this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC", "limit":"10"}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -267,7 +267,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
         });  
         
 
-    this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"},{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
+    this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"},{"status":"active"}]},"order":"id DESC", "limit":"10"}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -293,7 +293,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
         });        
 
 
-        this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
+        this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC", "limit":"10"}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -302,7 +302,7 @@ this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"inactive"},{"
             for(let i=0; i< this.unassdata.length; i++ ) {
             let projectId = this.unassdata[i].id;
             
-            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"1"}]},"order":"id DESC"}', options)
+            this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"1"}]},"order":"id DESC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
             .subscribe(response2 => {     
             if(response2.json().length)
             {
@@ -343,17 +343,17 @@ this.toasterService.clear();
           options.headers.append('Accept', 'application/json');
 
 
-        this.http.post(API_URL+'/projects/update?where=%7B%22id%22%3A%20%22'+proid+'%22%7D', {"status":"deleted"},  options)
+        this.http.post(API_URL+'/projects/update?where=%7B%22id%22%3A%20%22'+proid+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), {"status":"deleted"},  options)
           .subscribe(response => {
 
-            this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
+            this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"active"}]},"order":"id DESC", "limit":"10"}&access_token='+ localStorage.getItem('currentUserToken'), options)
             .subscribe(response => {
             if(response.json().length)
             {
               this.model = response.json();
               this.activeProjectCount = response.json().length;
               for(let i=0; i< this.model.length; i++ ) {
-              this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.model[i].client_id+'"}]}}', options)
+              this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.model[i].client_id+'"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
                   .subscribe(response => {
                   if(response.json().length)
                   {
@@ -373,7 +373,7 @@ this.toasterService.clear();
             
           }); 
             this.prodel = 1;
-              this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"deleted"}]}}', options)
+              this.http.get(API_URL+'/projects?filter={"where":{"and":[{"status":"deleted"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
               if(response.json().length)
               {
@@ -410,10 +410,10 @@ this.toasterService.clear();
 
         this.data.splice(index, 1); */
 
-        this.http.post(API_URL+'/Members/update?where=%7B%22id%22%3A%20%22'+proid+'%22%7D', {"status":"deleted"},  options)
+        this.http.post(API_URL+'/Members/update?where=%7B%22id%22%3A%20%22'+proid+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), {"status":"deleted"},  options)
           .subscribe(response => {
 
-            this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"},{"status":"active"}]},"order":"id DESC", "limit":"10"}', options)
+            this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"},{"status":"active"}]},"order":"id DESC", "limit":"10"}&access_token='+ localStorage.getItem('currentUserToken'), options)
             .subscribe(response => {
             if(response.json().length)
             {
@@ -426,7 +426,7 @@ this.toasterService.clear();
               
           });
 
-           this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"deleted"},{"role_id":"2"}]}}', options)
+           this.http.get(API_URL+'/Members?filter={"where":{"and":[{"status":"deleted"},{"role_id":"2"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
             if(response.json().length)
             {

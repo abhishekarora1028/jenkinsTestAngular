@@ -32,6 +32,15 @@
                     </div>
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
+                            <label for="contact_name" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Contact Name <span class="text-danger font-20">*</span></label>
+                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="contact_name" [(ngModel)]="model.contact_name" #contact_name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && contact_name.invalid }" required />
+                            <div *ngIf="f.submitted && contact_name.invalid" class="invalid-feedback offset-lg-4 offset-md-4 offset-sm-0 offset-0 col-lg-8 col-md-8 col-sm-12 col-12 p-0">
+                                <div *ngIf="contact_name.errors.required">Contact Name is required</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-12">
+                        <div class="form-group">
                             <label for="email" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Email <span class="text-danger font-20">*</span></label>
                             <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" [(ngModel)]="model.email" #email="ngModel"  (change)="onChange($event.target.value)" (keypress)="keyPress($event)" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }" required email />
                             <div *ngIf="f.submitted && email.invalid" class="invalid-feedback offset-lg-4 offset-md-4 offset-sm-0 offset-0 col-lg-8 col-md-8 col-sm-12 col-12 p-0">
@@ -46,11 +55,8 @@
                     </div>
                     <div class="col-sm-6 col-12">
                         <div class="form-group">
-                            <label for="phone" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Phone Number <span class="text-danger font-20">*</span></label>
-                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" (keypress)="checkNumber($event);RemoveSpace($event)" name="phone" [(ngModel)]="model.phone" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid }" required minlength=10 maxlength=10 />
-                            <div *ngIf="f.submitted && phone.invalid" class="invalid-feedback offset-lg-4 offset-md-4 offset-sm-0 offset-0 col-lg-8 col-md-8 col-sm-12 col-12 p-0">
-                                <div *ngIf="phone.errors.required">Phone Number is required</div>
-                            </div>
+                            <label for="phone" class="col-lg-4 col-md-4 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Phone Number</label>
+                            <input type="text" class="form-control col-lg-8 col-md-8 col-sm-12 col-12" (keypress)="checkNumber($event);RemoveSpace($event)" name="phone" [(ngModel)]="model.phone" #phone="ngModel" [ngClass]="{ 'is-invalid': f.submitted && phone.invalid }" minlength=10 maxlength=10 />
                             <div style="color: red;padding-left: 170px;" *ngIf="phone.errors?.minlength">Phone Number must be at least 10 numbers</div>
                             <div *ngIf="phone.errors?.pattern">Phone Number must be numbers only</div>
                         </div>

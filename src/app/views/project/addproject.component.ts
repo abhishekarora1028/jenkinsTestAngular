@@ -59,7 +59,7 @@ public toasterconfig : ToasterConfig =
           options.headers.append('Content-Type', 'application/json');
           options.headers.append('Accept', 'application/json');
 
-          this.http.get(API_URL+'/projects/', options)
+          this.http.get(API_URL+'/projects?access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           this.countPro = response.json().length;
           
@@ -92,11 +92,11 @@ public toasterconfig : ToasterConfig =
     		action: 'edit'
     	}
 
-	    	this.http.get(API_URL+'/projects/'+ this.editparam.id, options)
+	    	this.http.get(API_URL+'/projects/'+ this.editparam.id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
 	        .subscribe(response => {
 	        	this.model = response.json();
 
-            this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.model.client_id+'"}]}}', options)
+            this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.model.client_id+'"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
               if(response.json()[0].status=='active')
               {
@@ -113,7 +113,7 @@ public toasterconfig : ToasterConfig =
         let projectId = this.editparam.id;
         let userId = localStorage.getItem("currentUserId");
 
-        this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"1"}]}}', options)
+        this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+projectId+'"},{"assign":"1"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
             this.data = response.json();
         for(let i=0; i<this.data.length; i++){
@@ -150,15 +150,16 @@ public toasterconfig : ToasterConfig =
   }
 
 
-this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"},{"status":"active"}]},"order":"id ASC"}', options)
+this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"},{"status":"active"}]},"order":"id ASC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
         this.conData = response.json();
       });
 
 
-  this.http.get(API_URL+'/clients?filter={"where":{"and":[{"status":"active"}]},"order":"id ASC"}', options)
+  this.http.get(API_URL+'/clients?filter={"where":{"and":[{"status":"active"}]},"order":"client_name ASC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
         this.clientData = response.json();
+        this.clientData = _.orderBy(this.clientData, [user => user.client_name.toLowerCase()], ['asc']);
       });     
    
    this.toasterService = toasterService;
@@ -184,7 +185,7 @@ getDefPay(contId, index)
           options.headers.append('Content-Type', 'application/json');
           options.headers.append('Accept', 'application/json');
 
-    this.http.get(API_URL+'/Members?filter={"where":{"and":[{"id":"'+contId+'"}]}}', options)
+    this.http.get(API_URL+'/Members?filter={"where":{"and":[{"id":"'+contId+'"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           this.users[index].percentage = response.json()[0].default_pay;
       });     
@@ -242,7 +243,7 @@ removeUser(i, dcon, assignid){
                       .subscribe(response => {
         this.data.splice(i, 1);               
     });*/
-    this.http.post(API_URL+'/assignprojects/update?where=%7B%22id%22%3A%20%22'+assignid+'%22%7D', this.proData,  options)
+    this.http.post(API_URL+'/assignprojects/update?where=%7B%22id%22%3A%20%22'+assignid+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), this.proData,  options)
           .subscribe(data => {
           this.data.splice(i, 1); 
 
@@ -261,14 +262,14 @@ disProject()
           options.headers.append('Content-Type', 'application/json');
           options.headers.append('Accept', 'application/json');
 
-          this.http.get(API_URL+'/projects?filter={"order":"id DESC"}', options)
+          this.http.get(API_URL+'/projects?filter={"order":"id DESC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
             .subscribe(response => {
             this.router.navigate(['projects']); 
             if(response.json().length)
             {
               this.data = response.json();
               for(let i=0; i< this.data.length; i++ ) {
-              this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}', options)
+              this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
                   .subscribe(response => {
                   if(response.json().length)
                   {
@@ -301,7 +302,11 @@ onSubmit() {
 	          options.headers.append('Accept', 'application/json'); 
 
      let sDate = this.model.sdate;
-     let eDate = this.model.edate;
+     if(this.model.edate)
+     {
+      let eDate = this.model.edate;
+     }
+     
 
      //let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();        
 
@@ -315,7 +320,10 @@ onSubmit() {
      this.proData.status         = this.model.status;
      this.proData.rate           = this.model.rate;
      this.proData.sdate          = sDate;
-     this.proData.edate          = eDate;
+     if(this.model.edate)
+     {
+      this.proData.edate        = eDate;
+     }
      this.proData.description    = this.model.description;
 
      if(this.users.length || this.data.length)
@@ -326,7 +334,7 @@ onSubmit() {
      }
       
 
-			this.http.post(API_URL+'/projects/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', this.proData,  options)
+			this.http.post(API_URL+'/projects/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), this.proData,  options)
 	        .subscribe(data => {
 	      if(data)
 	      {
@@ -342,7 +350,7 @@ onSubmit() {
                   let assId                 = this.data[i].id;
                   this.assData.percentage   = this.data[i].percentage; 
 
-                  this.http.post(API_URL+'/assignprojects/update?where=%7B%22id%22%3A%22'+assId+'%22%7D', this.assData,  options)
+                  this.http.post(API_URL+'/assignprojects/update?where=%7B%22id%22%3A%22'+assId+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), this.assData,  options)
                   .subscribe(data => {
 
                   });  
@@ -354,7 +362,7 @@ onSubmit() {
              
              for(let i=0; i< this.users.length; i++ ) {  
 
-              this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+this.users[i].member_id+'"},{"project_id":"'+this.editparam.id+'"}]}}', options)
+              this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"member_id":"'+this.users[i].member_id+'"},{"project_id":"'+this.editparam.id+'"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
             .subscribe(response => {      
               
               if(response.json().length)
@@ -364,7 +372,7 @@ onSubmit() {
                   this.assData2.percentage    = this.users[i].percentage;  
                   this.assData2.assign        = "1";
 
-                  this.http.post(API_URL+'/assignprojects/update?where=%7B%22id%22%3A%20%22'+response.json()[i].id+'%22%7D', this.assData2,  options)
+                  this.http.post(API_URL+'/assignprojects/update?where=%7B%22id%22%3A%20%22'+response.json()[i].id+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), this.assData2,  options)
                       .subscribe(data => { 
                       
                   });
@@ -424,7 +432,12 @@ onSubmit() {
 
      let sDate = (this.model.sdate.getMonth()+1) + "/" + this.model.sdate.getDate() + "/" + this.model.sdate.getFullYear();
 
-     let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();
+     if(this.model.edate)
+     {
+      let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();
+     }
+
+     
 
 
 
@@ -439,7 +452,11 @@ onSubmit() {
      this.proData.status            = this.model.status;
      this.proData.rate              = this.model.rate;
      this.proData.sdate             = sDate;
-     this.proData.edate             = eDate;
+     if(this.model.edate)
+     {
+      this.proData.edate            = eDate;
+     }
+
      this.proData.description       = this.model.description;
      this.proData.cdate             = strDate;
 

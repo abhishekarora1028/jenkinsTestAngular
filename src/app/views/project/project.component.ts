@@ -56,13 +56,13 @@ public filterQuery = '';
 		        options.headers.append('Content-Type', 'application/json');
 		        options.headers.append('Accept', 'application/json');
 
-		    	this.http.get(API_URL+'/projects?filter={"order":"id DESC"}', options)
+		    	this.http.get(API_URL+'/projects?filter={"order":"id DESC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
 		        .subscribe(response => {
 		        if(response.json().length)
 		        {
 		        	this.data = response.json();
 		        	for(let i=0; i< this.data.length; i++ ) {
-					    this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}', options)
+					    this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
 				          .subscribe(response => {
 				          if(response.json().length)
 				          {
@@ -93,13 +93,13 @@ public filterQuery = '';
 		        options.headers.append('Content-Type', 'application/json');
 		        options.headers.append('Accept', 'application/json');
 
-		    	this.http.get(API_URL+'/projects?filter={"order":"id DESC"}', options)
+		    	this.http.get(API_URL+'/projects?filter={"order":"id DESC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
 		        .subscribe(response => {
 		        if(response.json().length)
 		        {
 		        	this.data = response.json();
 		        	for(let i=0; i< this.data.length; i++ ) {
-					    this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}', options)
+					    this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
 				          .subscribe(response => {
 				          if(response.json().length)
 				          {
@@ -112,7 +112,7 @@ public filterQuery = '';
 				        });
 	          		}
 		        	for(let i=0; i< this.data.length; i++ ) {
-					    this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"},{"member_id":"'+userID+'"},{"assign":"1"}]}}', options)
+					    this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"},{"member_id":"'+userID+'"},{"assign":"1"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
 				          .subscribe(response => {
 				          if(response.json().length)
 				          {
@@ -168,16 +168,16 @@ public filterQuery = '';
 				this.prodel = 1;
 		    });*/
 
-		    this.http.post(API_URL+'/projects/update?where=%7B%22id%22%3A%20%22'+proid+'%22%7D', {"status":"deleted"},  options)
+		    this.http.post(API_URL+'/projects/update?where=%7B%22id%22%3A%20%22'+proid+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), {"status":"deleted"},  options)
 	        .subscribe(response => {
 
-	        	this.http.get(API_URL+'/projects?filter={"order":"id DESC"}', options)
+	        	this.http.get(API_URL+'/projects?filter={"order":"id DESC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
 		        .subscribe(response => {
 		        if(response.json().length)
 		        {
 		        	this.data = response.json();
 		        	for(let i=0; i< this.data.length; i++ ) {
-					    this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}', options)
+					    this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
 				          .subscribe(response => {
 				          if(response.json().length)
 				          {
@@ -215,22 +215,22 @@ public filterQuery = '';
 	          options.headers.append('Content-Type', 'application/json');
 	          options.headers.append('Accept', 'application/json');
 
-	  this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+proId+'"},{"member_id":"'+memId+'"},{"assign":"0"}]}}', options)
+	  this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+proId+'"},{"member_id":"'+memId+'"},{"assign":"0"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
       .subscribe(response => {
       	
       if(response.json().length)
       {
-      	this.http.post(API_URL+'/assignprojects/update?where=%7B%22id%22%3A%20%22'+response.json()[0].id+'%22%7D', {"assign":"1"},  options)
+      	this.http.post(API_URL+'/assignprojects/update?where=%7B%22id%22%3A%20%22'+response.json()[0].id+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), {"assign":"1"},  options)
 	        .subscribe(response => {
 	        if(response.json().count)
 	        {
-	        	this.http.get(API_URL+'/projects?filter={"order":"id DESC"}', options)
+	        	this.http.get(API_URL+'/projects?filter={"order":"id DESC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
 		        .subscribe(response => {
 		        if(response.json().length)
 		        {
 		        	this.data = response.json();
 		        	for(let i=0; i< this.data.length; i++ ) {
-					    this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}', options)
+					    this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
 				          .subscribe(response => {
 				          if(response.json().length)
 				          {
@@ -243,7 +243,7 @@ public filterQuery = '';
 				        });
 	          		}
 		        	for(let i=0; i< this.data.length; i++ ) {
-					    this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"},{"member_id":"'+this.currentUserID+'"},{"assign":"1"}]}}', options)
+					    this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"},{"member_id":"'+this.currentUserID+'"},{"assign":"1"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
 				          .subscribe(response => {
 				          if(response.json().length)
 				          {
@@ -264,7 +264,7 @@ public filterQuery = '';
 
 	     });   
       }else{
-      	this.http.get(API_URL+'/Members?filter={"where":{"and":[{"id":"'+memId+'"}]}}', options)
+      	this.http.get(API_URL+'/Members?filter={"where":{"and":[{"id":"'+memId+'"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           if(response.json().length)
           {
@@ -274,13 +274,13 @@ public filterQuery = '';
 	      	this.assignData.percentage = response.json()[0].default_pay;
 	      	this.assignData.assign     = "1";
 	      	this.http.post(API_URL+'/assignprojects?access_token='+localStorage.getItem('currentUserToken'), this.assignData, options).subscribe(response => {
-          		this.http.get(API_URL+'/projects?filter={"order":"id DESC"}', options)
+          		this.http.get(API_URL+'/projects?filter={"order":"id DESC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
 		        .subscribe(response => {
 		        if(response.json().length)
 		        {
 		        	  this.data = response.json();
 		        	  for(let i=0; i< this.data.length; i++ ) {
-					    this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}', options)
+					    this.http.get(API_URL+'/clients?filter={"where":{"and":[{"id":"'+this.data[i].client_id+'"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
 				          .subscribe(response => {
 				          if(response.json().length)
 				          {
@@ -293,7 +293,7 @@ public filterQuery = '';
 				        });
 	          		}
 		              for(let i=0; i< this.data.length; i++ ) {
-		              this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"},{"member_id":"'+this.currentUserID+'"},{"assign":"1"}]}}', options)
+		              this.http.get(API_URL+'/assignprojects?filter={"where":{"and":[{"project_id":"'+this.data[i].id+'"},{"member_id":"'+this.currentUserID+'"},{"assign":"1"}]}}&access_token='+ localStorage.getItem('currentUserToken'), options)
 		                  .subscribe(response => {
 		                  if(response.json().length)
 		                  {
