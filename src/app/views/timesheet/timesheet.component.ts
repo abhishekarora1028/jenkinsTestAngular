@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import {Injectable, Inject} from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { RouterModule, Routes, Router, NavigationEnd, NavigationStart } from '@angular/router';
+import * as _ from 'lodash';
 import * as $ from 'jquery';
 import { API_URL } from '../../globals';
 import { ModalDirective } from 'ngx-bootstrap/modal';

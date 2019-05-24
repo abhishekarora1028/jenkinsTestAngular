@@ -9,6 +9,7 @@ import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { RouterModule, Routes, Router } from '@angular/router';
 import { ActivatedRoute } from "@angular/router";
+import * as _ from 'lodash';
 import * as $ from 'jquery';
 import { API_URL } from '../../globals';
 
@@ -302,10 +303,8 @@ onSubmit() {
 	          options.headers.append('Accept', 'application/json'); 
 
      let sDate = this.model.sdate;
-     if(this.model.edate)
-     {
-      let eDate = this.model.edate;
-     }
+     let eDate = this.model.edate;
+    
      
 
      //let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();        
@@ -320,10 +319,9 @@ onSubmit() {
      this.proData.status         = this.model.status;
      this.proData.rate           = this.model.rate;
      this.proData.sdate          = sDate;
-     if(this.model.edate)
-     {
+     
       this.proData.edate        = eDate;
-     }
+    
      this.proData.description    = this.model.description;
 
      if(this.users.length || this.data.length)
@@ -432,10 +430,9 @@ onSubmit() {
 
      let sDate = (this.model.sdate.getMonth()+1) + "/" + this.model.sdate.getDate() + "/" + this.model.sdate.getFullYear();
 
-     if(this.model.edate)
-     {
+     
       let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();
-     }
+     
 
      
 
@@ -452,10 +449,9 @@ onSubmit() {
      this.proData.status            = this.model.status;
      this.proData.rate              = this.model.rate;
      this.proData.sdate             = sDate;
-     if(this.model.edate)
-     {
+     
       this.proData.edate            = eDate;
-     }
+     
 
      this.proData.description       = this.model.description;
      this.proData.cdate             = strDate;
