@@ -64,7 +64,7 @@ public toasterconfig : ToasterConfig =
 	        options.headers.append('Content-Type', 'application/json');
 	        options.headers.append('Accept', 'application/json');
 
-	    	this.http.get(API_URL+'/members/'+ this.editparam.id, options)
+	    	this.http.get(API_URL+'/members/'+ this.editparam.id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
 	        .subscribe(response => {	
 	        	this.model = response.json();
 	        	this.editparam.action = "edit";
@@ -158,12 +158,12 @@ removePic(contId, picName)
 
     this.toasterService.pop('success', 'Success ', "Profile image has deleted successfully!");
 
-    this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', {"picstatus":"0"},  options)
+    this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), {"picstatus":"0"},  options)
           .subscribe(data => {
 
      });      
 
-    this.http.get(API_URL+'/members/'+ this.editparam.id, options)
+    this.http.get(API_URL+'/members/'+ this.editparam.id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {  
             this.model = response.json();
             this.editparam.action = "edit";
@@ -192,7 +192,7 @@ removePic(contId, picName)
             options.headers.append('Content-Type', 'application/json');
             options.headers.append('Accept', 'application/json');
             
-     this.http.get(API_URL+'/Members?filter=%7B%22where%22%3A%7B%22email%22%3A%20%22'+event+'%22%7D%7D', options).subscribe(data => {
+     this.http.get(API_URL+'/Members?filter=%7B%22where%22%3A%7B%22email%22%3A%20%22'+event+'%22%7D%7D&access_token='+ localStorage.getItem('currentUserToken'), options).subscribe(data => {
         if(data.json().length)
         {
           this.uniqueEmail = 0;
@@ -215,7 +215,7 @@ removePic(contId, picName)
           options.headers.append('Content-Type', 'application/json');
           options.headers.append('Accept', 'application/json');
 
-        this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC"}', options)
+        this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
           this.router.navigate(['contractors']);
           if(response.json().length)
@@ -243,7 +243,7 @@ removePic(contId, picName)
     {
         
         this.fileStatus = 1;
-        this.http.get(API_URL+'/Imagecontainers/'+this.editparam.id, options)
+        this.http.get(API_URL+'/Imagecontainers/'+this.editparam.id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => { 
                   this.http.get(API_URL+'/Imagecontainers/'+this.editparam.id+'/files?access_token='+ localStorage.getItem('currentUserToken'), options)
                   .subscribe(response => {  
@@ -290,12 +290,12 @@ removePic(contId, picName)
 
                       this.model.picstatus =  1;
 
-                      this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', this.model,  options)
+                      this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), this.model,  options)
                             .subscribe(data => {
                           if(data.json().count)
                           {
                             this.dataStatus = 1;
-                            this.http.get(API_URL+'/members/'+ this.editparam.id, options)
+                            this.http.get(API_URL+'/members/'+ this.editparam.id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                             .subscribe(response => {  
                               this.model = response.json();
                               
@@ -366,12 +366,12 @@ removePic(contId, picName)
 
                       this.model.picstatus =  1;
 
-                      this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', this.model,  options)
+                      this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), this.model,  options)
                             .subscribe(data => {
                           if(data.json().count)
                           {
                             this.dataStatus = 1;
-                            this.http.get(API_URL+'/members/'+ this.editparam.id, options)
+                            this.http.get(API_URL+'/members/'+ this.editparam.id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                             .subscribe(response => {  
                               this.model = response.json();
                               
@@ -416,12 +416,13 @@ removePic(contId, picName)
          
     }else{
 
-      this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', this.model,  options)
+      this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), this.model,  options)
             .subscribe(data => {
           if(data.json().count)
           {
             this.dataStatus = 1;
-            this.http.get(API_URL+'/members/'+ this.editparam.id, options)
+            this.http.get(API_URL+'/members/'+this.editparam.id
++'?access_token='+ localStorage.getItem('currentUserToken'), options)
             .subscribe(response => {  
               this.model = response.json();
               this.editparam.action = "edit";
@@ -455,7 +456,7 @@ removePic(contId, picName)
             
 
 	          
-	   this.http.post(API_URL+'/members', this.model, options).subscribe(data => {
+	   this.http.post(API_URL+'/members?access_token='+ localStorage.getItem('currentUserToken'), this.model, options).subscribe(data => {
 	      if(data)
 	      {
             this.dataStatus = 1;

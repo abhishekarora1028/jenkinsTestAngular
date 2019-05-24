@@ -43,7 +43,7 @@ public filterQuery = '';
 	        options.headers.append('Content-Type', 'application/json');
 	        options.headers.append('Accept', 'application/json');
 
-	    	this.http.get(API_URL+'/clients?filter={"order":"id DESC"}', options)
+	    	this.http.get(API_URL+'/clients?filter={"order":"id DESC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
 	        .subscribe(response => {
 	        if(response.json().length)
 	        {
@@ -81,9 +81,9 @@ public filterQuery = '';
 
 		    this.proData.status = 'deleted';
 
-		    this.http.post(API_URL+'/clients/update?where=%7B%22id%22%3A%20%22'+clientId+'%22%7D', this.proData,  options)
+		    this.http.post(API_URL+'/clients/update?where=%7B%22id%22%3A%20%22'+clientId+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), this.proData,  options)
 	        .subscribe(data => {
-	        	this.http.get(API_URL+'/clients?filter={"order":"id DESC"}', options)
+	        	this.http.get(API_URL+'/clients?filter={"order":"id DESC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
 		        .subscribe(response => {
 		        if(response.json().length)
 		        {

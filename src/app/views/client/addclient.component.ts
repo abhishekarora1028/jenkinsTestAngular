@@ -53,7 +53,7 @@ public toasterconfig : ToasterConfig =
 	        options.headers.append('Content-Type', 'application/json');
 	        options.headers.append('Accept', 'application/json');
 
-	    	this.http.get(API_URL+'/clients/'+ this.editparam.id, options)
+	    	this.http.get(API_URL+'/clients/'+this.editparam.id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
 	        .subscribe(response => {	
 	        	this.model = response.json();
 	        	this.editparam.action = "edit";
@@ -114,7 +114,7 @@ onChange(event: any) {
             options.headers.append('Content-Type', 'application/json');
             options.headers.append('Accept', 'application/json');
             
-     this.http.get(API_URL+'/clients?filter=%7B%22where%22%3A%7B%22email%22%3A%20%22'+event+'%22%7D%7D', options).subscribe(data => {
+     this.http.get(API_URL+'/clients?filter=%7B%22where%22%3A%7B%22email%22%3A%20%22'+event+'%22%7D%7D&access_token='+ localStorage.getItem('currentUserToken'), options).subscribe(data => {
         if(data.json().length)
         {
           this.uniqueEmail = 0;
@@ -137,7 +137,7 @@ disClient()
           options.headers.append('Content-Type', 'application/json');
           options.headers.append('Accept', 'application/json');
 
-        this.http.get(API_URL+'/clients/'+ this.editparam.id, options)
+        this.http.get(API_URL+'/clients/'+ this.editparam.id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {  
             this.model = response.json();
             this.editparam.action = "edit";
@@ -155,7 +155,7 @@ disClient()
 	          options.headers.append('Content-Type', 'application/json');
 	          options.headers.append('Accept', 'application/json');
 
-			this.http.post(API_URL+'/clients/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D', this.model,  options)
+			this.http.post(API_URL+'/clients/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), this.model,  options)
 	        .subscribe(data => {
 	      if(data)
 	      {
@@ -178,7 +178,7 @@ disClient()
      
      this.model.cdate = strDate;       
 	          
-	   this.http.post(API_URL+'/clients', this.model, options).subscribe(data => {
+	   this.http.post(API_URL+'/clients?access_token='+ localStorage.getItem('currentUserToken'), this.model, options).subscribe(data => {
 	      if(data)
 	      {
 	        //this.proStatus = 1;

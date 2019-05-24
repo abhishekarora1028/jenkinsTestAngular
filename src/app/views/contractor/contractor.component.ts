@@ -41,7 +41,7 @@ public filterQuery = '';
 	        options.headers.append('Content-Type', 'application/json');
 	        options.headers.append('Accept', 'application/json');
 
-	    	this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC"}', options)
+	    	this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
 	        .subscribe(response => {
 	        if(response.json().length)
 	        {
@@ -76,10 +76,10 @@ public filterQuery = '';
 
 		    this.data.splice(index, 1); */
 
-		    this.http.post(API_URL+'/Members/update?where=%7B%22id%22%3A%20%22'+proid+'%22%7D', {"status":"deleted"},  options)
+		    this.http.post(API_URL+'/Members/update?where=%7B%22id%22%3A%20%22'+proid+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), {"status":"deleted"},  options)
 	        .subscribe(response => {
 
-	        	this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC"}', options)
+	        	this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"}]},"order":"id DESC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
 		        .subscribe(response => {
 		        if(response.json().length)
 		        {

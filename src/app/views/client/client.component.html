@@ -47,7 +47,8 @@
                 <td>{{item.client_name}}</td>
                 <td class="text-left">{{item.email}}</td>
                 <td class="text-left">{{item.client_code}}</td>
-                <td class="text-left">{{item.phone}}</td>
+                <td class="text-left" *ngIf="item.phone != ''">{{item.phone}}</td>
+                <td class="text-left" *ngIf="item.phone == ''">-</td>
                 <td>
                   <span class="badge badge-success rounded" *ngIf="item.status == 'active'">Active</span>
                    <span class="badge badge-danger rounded" *ngIf="item.status == 'inactive'">Inactive</span>
