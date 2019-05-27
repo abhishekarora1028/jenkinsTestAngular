@@ -323,10 +323,9 @@ onSubmit() {
      this.proData.status         = this.model.status;
      this.proData.rate           = this.model.rate;
      this.proData.sdate          = sDate;
-     if(this.model.edate !='')
-     {
-      this.proData.edate        = eDate;
-     }
+     
+      this.proData.edate         = eDate;
+     
     
      this.proData.description    = this.model.description;
 
@@ -432,13 +431,14 @@ onSubmit() {
 
 
      let todayDate = new Date();
+     let eDate = this.model.edate;
      let strDate =  (todayDate.getMonth()+1) + "/" + todayDate.getDate() + "/" + todayDate.getFullYear();
 
      let sDate = (this.model.sdate.getMonth()+1) + "/" + this.model.sdate.getDate() + "/" + this.model.sdate.getFullYear();
 
      if(this.model.edate !='')
      {
-        let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();
+        eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();
      }
      
 
@@ -457,10 +457,9 @@ onSubmit() {
      this.proData.status            = this.model.status;
      this.proData.rate              = this.model.rate;
      this.proData.sdate             = sDate;
-     if(this.model.edate !='')
-     {
-       this.proData.edate            = eDate;
-     }
+     
+     this.proData.edate            = eDate;
+    
      
 
      this.proData.description       = this.model.description;
