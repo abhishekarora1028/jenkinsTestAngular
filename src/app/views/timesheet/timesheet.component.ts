@@ -510,20 +510,23 @@ for(let i=0; i<= 30; i++) {
                           this.http.get(API_URL+'/projects/'+this.data[i].project_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                           .subscribe(response => {      
                             this.data[i].project_name = response.json().project_name;  
+                            this.data[i].project_code = response.json().project_code;  
                             this.data[i].member_id   = contId;  
                             this.data[i].rate        = response.json().rate;  
                             this.data[i].type        = response.json().project_type;  
                             this.data[i].budget      = response.json().budget;  
-                            this.data[i].status      = response.json().status;  
+                            this.data[i].status      = response.json().status; 
+                            this.data[i].client_id    = response.json().client_id; 
 
                             this.http.get(API_URL+'/Members/'+contId+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                           .subscribe(response => { 
                               this.data[i].membername   = response.json().fname+' '+response.json().lname;
                               this.data[i].memberstatus = response.json().status;
                               this.data[i].contractorid = response.json().id;
+                              
                           });
 
-                          this.http.get(API_URL+'/clients/'+response.json().client_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
+                          this.http.get(API_URL+'/clients/'+this.data[i].client_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                           .subscribe(response => { 
                               this.data[i].client_code   = response.json().client_code;
                           });
@@ -795,12 +798,14 @@ if(localStorage.getItem('currentUserRoleId') == '1')
                           this.http.get(API_URL+'/projects/'+this.data[i].project_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                           .subscribe(response => {      
                             this.data[i].project_name = response.json().project_name;  
+                            this.data[i].project_code = response.json().project_code;  
                             this.data[i].member_id   = this.data[i].member_id;  
                             this.data[i].rate        = response.json().rate;  
                             this.data[i].type        = response.json().project_type;  
                             this.data[i].budget      = response.json().budget;  
                             this.data[i].status      = response.json().status;  
                             this.data[i].id          = response.json().id;  
+                            this.data[i].client_id   = response.json().client_id;  
 
                             this.http.get(API_URL+'/Members/'+this.data[i].member_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                           .subscribe(response => { 
@@ -809,11 +814,11 @@ if(localStorage.getItem('currentUserRoleId') == '1')
                               this.data[i].contractorid = response.json().id;
                           });
 
-                          this.http.get(API_URL+'/clients/'+response.json().client_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
+                          this.http.get(API_URL+'/clients/'+this.data[i].client_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                           .subscribe(response => { 
                               this.data[i].client_code   = response.json().client_code;
                           });
-                            
+
                         });
 
                         let ci = 1, totalStime=0, totalMin = 0, totalTime=0, tDate = 0, hours = 0, minutes = 0, fullstime = '';
@@ -1060,12 +1065,14 @@ if(localStorage.getItem('currentUserRoleId') == '1')
                           this.http.get(API_URL+'/projects/'+this.data[i].project_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                           .subscribe(response => {      
                             this.data[i].project_name = response.json().project_name;  
+                            this.data[i].project_code = response.json().project_code;  
                             this.data[i].member_id   = this.data[i].member_id;  
                             this.data[i].rate        = response.json().rate;  
                             this.data[i].type        = response.json().project_type;  
                             this.data[i].budget      = response.json().budget;  
                             this.data[i].status      = response.json().status;  
                             this.data[i].id          = response.json().id;  
+                            this.data[i].client_id   = response.json().client_id;  
 
                             this.http.get(API_URL+'/Members/'+this.data[i].member_id+'?access_token='+ localStorage.getItem('currentUserToken'), options)
                           .subscribe(response => { 
