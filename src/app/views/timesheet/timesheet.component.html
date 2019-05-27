@@ -52,7 +52,7 @@ border-radius:50%;
       <thead>
         <tr>
           <th><div class="equal">Date</div></th>
-          <th *ngFor="let prod of data"><div class="equal">{{prod.project_name}} <div>({{prod.project_code}}-{{prod.client_code}})</div></div></th>
+          <th *ngFor="let prod of data"><div class="equal">{{prod.project_name}} <div class="text-wrap">({{prod.project_code}}-{{prod.client_code}})</div></div></th>
         </tr>
       </thead>
       <tr *ngFor="let itemdate of datesData;let i = index ">

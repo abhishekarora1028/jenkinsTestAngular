@@ -54,10 +54,10 @@
                     </div>
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
-                            <label for="budget" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Budget <span class="text-danger font-20">*</span></label>
-                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12 pr-0" (keypress)="checkNumber($event);RemoveSpace($event)" name="budget" [(ngModel)]="model.budget" #budget="ngModel" [ngClass]="{ 'is-invalid': f.submitted && budget.invalid }" required />
-                            <div *ngIf="f.submitted && budget.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
-                                <div *ngIf="budget.errors.required">Project Budget is required</div>
+                            <label for="project_type" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Type <span class="text-danger font-20">*</span></label>
+                            <select (change)="onSelect($event.target.value)" class="form-control col-lg-8 col-md-7 col-sm-12 col-12 pr-0" name="project_type" [(ngModel)]="model.project_type" #project_type="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_type.invalid }" required><option value="" [selected]="">--Project Type--</option><option value="fixed">Fixed</option><option value="hourly">Hourly</option></select>
+                            <div *ngIf="f.submitted && project_type.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
+                                <div *ngIf="project_type.errors.required">Project Type is required</div>
                             </div>
                         </div>
                     </div>
@@ -72,10 +72,10 @@
                     </div>
                     <div class="col-md-6 col-sm-12 col-12">
                         <div class="form-group">
-                            <label for="project_type" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Type <span class="text-danger font-20">*</span></label>
-                            <select (change)="onSelect($event.target.value)" class="form-control col-lg-8 col-md-7 col-sm-12 col-12 pr-0" name="project_type" [(ngModel)]="model.project_type" #project_type="ngModel" [ngClass]="{ 'is-invalid': f.submitted && project_type.invalid }" required><option value="" [selected]="">--Project Type--</option><option value="fixed">Fixed</option><option value="hourly">Hourly</option></select>
-                            <div *ngIf="f.submitted && project_type.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
-                                <div *ngIf="project_type.errors.required">Project Type is required</div>
+                            <label for="budget" class="col-lg-4 col-md-5 col-sm-12 col-12 p-0 d-flex align-items-center justify-content-start">Project Budget <span class="text-danger font-20">*</span></label>
+                            <input type="text" class="form-control col-lg-8 col-md-7 col-sm-12 col-12 pr-0" (keypress)="checkNumber($event);RemoveSpace($event)" name="budget" [(ngModel)]="model.budget" #budget="ngModel" [ngClass]="{ 'is-invalid': f.submitted && budget.invalid }" required />
+                            <div *ngIf="f.submitted && budget.invalid" class="invalid-feedback offset-lg-4 offset-md-5 offset-sm-0 offset-0 col-lg-8 col-md-7 col-sm-12 col-12 p-0">
+                                <div *ngIf="budget.errors.required">Project Budget is required</div>
                             </div>
                         </div>
                     </div>

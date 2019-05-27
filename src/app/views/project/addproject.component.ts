@@ -154,6 +154,7 @@ public toasterconfig : ToasterConfig =
 this.http.get(API_URL+'/Members?filter={"where":{"and":[{"role_id":"2"},{"status":"active"}]},"order":"id ASC"}&access_token='+ localStorage.getItem('currentUserToken'), options)
           .subscribe(response => {
         this.conData = response.json();
+        this.conData = _.orderBy(this.conData, [user => user.fname.toLowerCase()], ['asc']);
       });
 
 
@@ -305,9 +306,12 @@ onSubmit() {
      let sDate = this.model.sdate;
      let eDate = this.model.edate;
     
-     
+     if(this.model.edate !='')
+     {
+      let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();
+     }
 
-     //let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();        
+             
 
      //this.proData.member_id    = this.model.member_id;       
      this.proData.client_id      = this.model.client_id;
@@ -319,8 +323,10 @@ onSubmit() {
      this.proData.status         = this.model.status;
      this.proData.rate           = this.model.rate;
      this.proData.sdate          = sDate;
-     
+     if(this.model.edate !='')
+     {
       this.proData.edate        = eDate;
+     }
     
      this.proData.description    = this.model.description;
 
@@ -430,8 +436,10 @@ onSubmit() {
 
      let sDate = (this.model.sdate.getMonth()+1) + "/" + this.model.sdate.getDate() + "/" + this.model.sdate.getFullYear();
 
-     
-      let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();
+     if(this.model.edate !='')
+     {
+        let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();
+     }
      
 
      
@@ -449,8 +457,10 @@ onSubmit() {
      this.proData.status            = this.model.status;
      this.proData.rate              = this.model.rate;
      this.proData.sdate             = sDate;
-     
-      this.proData.edate            = eDate;
+     if(this.model.edate !='')
+     {
+       this.proData.edate            = eDate;
+     }
      
 
      this.proData.description       = this.model.description;
