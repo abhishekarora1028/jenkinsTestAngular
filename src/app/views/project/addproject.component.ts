@@ -145,7 +145,7 @@ public toasterconfig : ToasterConfig =
     		project_time:'',
     		rate:'',
         sdate:'',
-    		edate:'',
+    		//edate:'',
     		description:'',
     	}	
   }
