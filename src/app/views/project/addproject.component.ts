@@ -41,6 +41,7 @@ public toasterconfig : ToasterConfig =
   clientId:any = 0;
   conData:any;
   clientData:any;
+  percentage:any;
   private data: any;
   model: any = {};
   proData: any = {};
@@ -145,7 +146,7 @@ public toasterconfig : ToasterConfig =
     		project_time:'',
     		rate:'',
         sdate:'',
-    		//edate:'',
+    		edate:'',
     		description:'',
     	}	
   }
@@ -301,14 +302,23 @@ onSubmit() {
    	  let options = new RequestOptions();
 	          options.headers = new Headers();
 	          options.headers.append('Content-Type', 'application/json');
-	          options.headers.append('Accept', 'application/json'); 
+	          options.headers.append('Accept', 'application/json');    
+
+     let todaySdate = new Date(this.model.sdate);  
+     let todayEdate = new Date(this.model.edate);  
 
      let sDate = this.model.sdate;
      let eDate = this.model.edate;
-    
+
+     
+     if(this.model.sdate !='')
+     {
+      let sDate = (todaySdate.getMonth()+1) + "/" + todaySdate.getDate() + "/" + todaySdate.getFullYear();
+     }
+     
      if(this.model.edate !='')
      {
-      let eDate = (this.model.edate.getMonth()+1) + "/" + this.model.edate.getDate() + "/" + this.model.edate.getFullYear();
+      let eDate = (todayEdate.getMonth()+1) + "/" + todayEdate.getDate() + "/" + todayEdate.getFullYear();
      }
 
              
@@ -323,9 +333,10 @@ onSubmit() {
      this.proData.status         = this.model.status;
      this.proData.rate           = this.model.rate;
      this.proData.sdate          = sDate;
-     
+     if(this.model.edate !='')
+     {
       this.proData.edate         = eDate;
-     
+     }
     
      this.proData.description    = this.model.description;
 
@@ -338,26 +349,41 @@ onSubmit() {
       
 
 			this.http.post(API_URL+'/projects/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), this.proData,  options)
-	        .subscribe(data => {
-	      if(data)
+	        .subscribe(prodata => {
+	      if(prodata)
 	      {
-          this.sData   = data.json();
+          this.sData   = prodata.json();
 
-          if(this.data.length)
+          if(this.sData.count)
           {
 
               this.checkUser = 0;
-               for(let i=0; i< this.data.length; i++ ) {
-                  let projectId             = this.editparam.id; 
-                  let memberId              = this.data[i].member_id;
-                  let assId                 = this.data[i].id;
-                  this.assData.percentage   = this.data[i].percentage; 
 
-                  this.http.post(API_URL+'/assignprojects/update?where=%7B%22id%22%3A%22'+assId+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), this.assData,  options)
-                  .subscribe(data => {
+              if(this.data.length)
+              {
 
-                  });  
-              }   
+                  for(let i=0; i< this.data.length; i++ ) {
+                    this.assData = {};
+
+                    let projectId             = this.editparam.id; 
+                    let memberId              = this.data[i].member_id2;
+                    let assId                 = this.data[i].id;
+                    this.assData.percentage   = this.data[i].percentage; 
+
+                    if(assId!='')
+                    {
+
+                       this.http.post(API_URL+'/assignprojects/update?where=%7B%22id%22%3A%20%22'+assId+'%22%7D', this.assData,  options)
+                      .subscribe(data => { 
+
+                        });
+                    }
+
+                    }
+
+
+                  }
+              
           }
 
           if(this.users.length)
