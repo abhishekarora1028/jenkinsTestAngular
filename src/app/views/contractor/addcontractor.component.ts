@@ -43,6 +43,7 @@ public toasterconfig : ToasterConfig =
   uniqueEmail:any = 0;
   checkData:any = 0;
   private data: any;
+  colordata: any;
   model: any = {};
   constructor(@Inject(Http) private http: Http, @Inject(Router)private router:Router,private route: ActivatedRoute, toasterService: ToasterService) {
   if(!localStorage.getItem("currentUserId"))
@@ -98,6 +99,7 @@ public toasterconfig : ToasterConfig =
         gender:'',
         about:'',
         status:'',
+        colorcode:'',
     	}	
   }
 
@@ -185,6 +187,12 @@ removePic(contId, picName)
     
 }
 
+
+colorChanged(event: any) {
+  this.colordata = '';
+  this.colordata = event;
+}
+
   onChange(event: any) {
   this.uniqueEmail = 0;
     let options = new RequestOptions();
@@ -234,6 +242,10 @@ removePic(contId, picName)
    this.toasterService.clear();
    if(this.editparam.id)
    {
+      if(this.colordata!='')
+      {
+        this.model.colorcode = this.colordata;
+      }
    	  let options = new RequestOptions();
 	          options.headers = new Headers();
 	          options.headers.append('Content-Type', 'application/json');
@@ -416,6 +428,8 @@ removePic(contId, picName)
          
     }else{
 
+    //console.log(this.model)
+
       this.http.post(API_URL+'/members/update?where=%7B%22id%22%3A%20%22'+this.editparam.id+'%22%7D&access_token='+ localStorage.getItem('currentUserToken'), this.model,  options)
             .subscribe(data => {
           if(data.json().count)
@@ -452,6 +466,11 @@ removePic(contId, picName)
                this.model.picstatus =  1;
             }else{
               this.model.picstatus  =  0;
+            }
+
+            if(this.colordata!='')
+            {
+              this.model.colorcode = this.colordata;
             }
             
 
