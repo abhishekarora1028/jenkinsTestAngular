@@ -24,6 +24,8 @@ import { FileSelectDirective, FileDropDirective, FileUploadModule, FileUploader 
 
 import {PopoverModule} from "ngx-smart-popover";
 
+import { ColorPickerModule } from 'ngx-color-picker';
+
 @NgModule({
   imports: [
   	CommonModule,
@@ -35,6 +37,7 @@ import {PopoverModule} from "ngx-smart-popover";
     ToasterModule,
     FileUploadModule,
     PopoverModule,
+    ColorPickerModule,
     ButtonsModule.forRoot()
   ],
   declarations: [ ContractorsComponent, AddcontractorComponent, ViewcontractorComponent, DataFilterPipe, StriphtmlPipe ]
